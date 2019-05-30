@@ -33,8 +33,8 @@ for line in vcf_in:
 vcf_in.close()
 vcf_out.close()
 ################################################annotate cnv vcf
-cmd="cd %s && perl %s/table_annovar.pl %s.cnv.vcf %s/humandb/ -out %.cnv" \
-    " -remove -protocol refGene -operation g --nastring . -buildver hg19"%(args.outdir,annovar,out,annovar,args.prefix)
+cmd="cd %s && perl %s/table_annovar.pl %s.cnv.vcf %s/humandb/ -out %s.cnv" \
+    " -remove -protocol refGene -operation g --nastring . -buildver hg19" %(args.outdir,annovar,out,annovar,args.prefix)
 subprocess.check_call(cmd,shell=True)
 ################################################read gene list
 dict={}
