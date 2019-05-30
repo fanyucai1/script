@@ -33,8 +33,8 @@ for line in vcf_in:
 vcf_in.close()
 vcf_out.close()
 ################################################annotate cnv vcf
-cmd="cd %s && perl %s/table_annovar.pl %s.cnv.vcf %s/humandb/ -out cnv" \
-    " -remove -protocol refGene -operation g --nastring . -buildver hg19"%(args.outdir,annovar,out,annovar)
+cmd="cd %s && perl %s/table_annovar.pl %s.cnv.vcf %s/humandb/ -out %.cnv" \
+    " -remove -protocol refGene -operation g --nastring . -buildver hg19"%(args.outdir,annovar,out,annovar,args.prefix)
 subprocess.check_call(cmd,shell=True)
 ################################################read gene list
 dict={}
@@ -44,8 +44,8 @@ for line in infile:
     dict[line] = 1
 infile.close()
 ############################################parse cnv file
-vcf_in=open("%s/cnv.hg19_multianno.txt" %(args.outdir),"r")
-vcf_out=open("%s/%s.cnv.final.txt" %(out),"w")
+vcf_in=open("%s.cnv.hg19_multianno.txt" %(out),"r")
+vcf_out=open("%s.cnv.final.txt" %(out),"w")
 vcf_out.write("Chr\tStart\tEnd\tFunc.refGene\tGene.refGene\tCNV\tType\n")
 num=0
 for line in vcf_in:
