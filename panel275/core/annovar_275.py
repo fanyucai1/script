@@ -10,7 +10,7 @@ database = ['1000g2015aug_all','1000g2015aug_eas', 'ExAC_ALL', 'esp6500siv2_all'
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene','ExonicFunc.refGene','AAChange.refGene','cytoBand',
           'avsnp150','ExAC_ALL','ExAC_EAS','esp6500siv2_all','1000g2015aug_all','1000g2015aug_eas','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas',
           'cosmic88_coding','CLNALLELEID','CLNDN','CLNDISDB','CLNREVSTAT','CLNSIG','SIFT_pred','Polyphen2_HDIV_pred', 'Polyphen2_HVAR_pred','MutationTaster_pred','MutationAssessor_pred','FATHMM_pred',
-          'CADD_phred','InterVar_automated']
+          'CADD_phred','InterVar_automated','UMT','VMT','VMF']
 
 def anno(vcf,out):
     ##########################run snpeff
@@ -30,7 +30,6 @@ def anno(vcf,out):
             outfile.write("%s" % (out_name[i]))
         else:
             outfile.write("\t%s" % (out_name[i]))
-    outfile.write("\tUMT\tVMT\tVMF(%)\n")
     outfile.write("\n")
     dict = {}
     for line in infile:
