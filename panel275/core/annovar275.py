@@ -41,9 +41,9 @@ def anno(vcf,out):
                 name.append(array[i])
                 dict[array[i]] = i
         else:
-            p1 = re.compile(r'UMT=([0-9.-e]+)')
-            p2 = re.compile(r'VMT=([0-9.-e]+)')
-            p3 = re.compile(r'VMF=([0-9.-e]+)')
+            p1 = re.compile(r'UMT=([0-9]+)')
+            p2 = re.compile(r'VMT=([0-9]+)')
+            p3 = re.compile(r'VMF=(\S+);')
             a = p1.findall(line)
             b = p2.findall(line)
             e = p3.findall(line)
