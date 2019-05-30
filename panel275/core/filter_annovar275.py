@@ -130,6 +130,6 @@ if __name__=="__main__":
     out=sys.argv[3]
     set=sys.argv[4]
     if set.startswith("s"):
-        somatic(maf, annovar, out)
+        somatic(maf, annovar, out,set)
     else:
-        germline(maf, annovar, out)
+        germline(maf, annovar, out,set)
