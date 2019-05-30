@@ -47,7 +47,6 @@ def anno(vcf,out):
             UMT = p1.findall(line)
             VMT = p2.findall(line)
             VMF = p3.findall(line)
-            print(VMF[0])
             ##########################format output knownCanonical transcript
             p = re.compile(r'transcript\|(\S+)\|protein_coding')
             a = p.findall(line)
@@ -64,7 +63,9 @@ def anno(vcf,out):
                     outfile.write("%s" % (array[dict[out_name[l]]]))
                 else:
                     outfile.write("\t%s" % (array[dict[out_name[l]]]))
-            num=float(VMF[0])*100
+            num=float(VMF[0])
+            num=num*100
+            print (num)
             outfile.write("\t%s\t%s\t%s\n" % (UMT[0], VMT[0], num))
     infile.close()
     outfile.close()
