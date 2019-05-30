@@ -50,8 +50,8 @@ subprocess.check_call(cmd, shell=True)
 #######################################anno germline、somatic and all
 maf=config['par']['maf']
 core.annovar275.anno("%s.somatic.vcf" %(out),"%s.somatic"%(out))
-#core.annovar275.anno("%s.germline.vcf" %(out),"%s.germline"%(out))
-#core.annovar275.anno("%s.all.vcf" %(out),"%s.all"%(out))
+core.annovar275.anno("%s.germline.vcf" %(out),"%s.germline"%(out))
+core.annovar275.anno("%s.all.vcf" %(out),"%s.all"%(out))
 """
 #####################################filter germline and somatic,respectively
 core.filter_annovar275.somatic(maf,"%s.somatic.final.txt" %(out),"%s"%(out))
