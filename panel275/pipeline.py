@@ -63,8 +63,8 @@ core.split.split_gene(genelist,"%s.filter.annovar.somatic"%(out),"%s.somatic_275
 core.MSI.run_msi("%s.bam"%(out),"%s"%(out))
 #####################################run CNV
 ###################################filter CNV gene list
-cmd = "cd %s && %s %s/cnv.py -v %s.copy-number.vcf -p %s -g %s " % (config['par']['outdir'], config['par']['python3'], 
-script, config['par']['tumor_name'], config['par']['tumor_name'],config['par']['gene_list'])
+cmd = "cd %s && %s %s/cnv.py -v %s.copy-number.vcf -p %s -g %s -o %s" % (config['par']['outdir'], config['par']['python3'],
+script, config['par']['tumor_name'], config['par']['tumor_name'],config['par']['gene_list'],config['par']['outdir'])
 subprocess.check_call(cmd, shell=True)
 end=time.time()
 print("Elapse time is %g seconds" %(end-start))
