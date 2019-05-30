@@ -59,7 +59,7 @@ def anno(vcf,out):
                     if re.search(b[0], tmp[j]):
                         final_nm = tmp[j]
             array[dict['AAChange.refGene']] = final_nm
-            for l in range(len(out_name)-3):
+            for l in range(len(out_name)):
                 if l == 0:
                     outfile.write("%s" % (array[dict[out_name[l]]]))
                 else:
