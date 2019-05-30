@@ -25,4 +25,4 @@ start=time.time()
 subprocess.check_call("cd %s && %s && speedseq align -t 20 -o %s -R \"@RG\\tID:%s\\tSM:%s\\tLB:lib:\\tPL:Illumina\" %s %s %s"
                       %(args.outdir,speedseq,args.prefix,args.prefix,args.prefix,ref,args.pe1,args.pe2),shell=True)
 end=time.time()
-print("Elapse time  is %g seconds" %(end-start))
+print("Elapse time is %g seconds" %(end-start))
