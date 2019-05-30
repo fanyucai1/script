@@ -63,7 +63,7 @@ def anno(vcf,out):
                     outfile.write("%s" % (array[dict[out_name[l]]]))
                 else:
                     outfile.write("\t%s" % (array[dict[out_name[l]]]))
-            outfile.write("\t%s\t%s\t%s\n" % (UMT[0], VMT[0], int(VMT[0])*100/UMT[0]))
+            outfile.write("\t%s\t%s\t%s\n" % (UMT[0], VMT[0], int(VMT[0])*100/int(UMT[0])))
     infile.close()
     outfile.close()
     subprocess.check_call("rm -rf %s.hg19_multianno.txt" %(out),shell=True)
