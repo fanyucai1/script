@@ -46,12 +46,7 @@ def germline(maf,annovar,out):
                 else:
                     pass
             if result == "true":
-                for l in range(len(out_name)):
-                    if l == 0:
-                        outfile.write("%s" % (array[dict[out_name[l]]]))
-                    else:
-                        outfile.write("\t%s" % (array[dict[out_name[l]]]))
-                outfile.write("\n")
+                outfile.write("\n%s" % (line))
     infile.close()
     outfile.close()
 if __name__=="__main__":
