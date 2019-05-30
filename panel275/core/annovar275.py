@@ -44,9 +44,9 @@ def anno(vcf,out):
             p1 = re.compile(r'UMT=([0-9]+)')
             p2 = re.compile(r'VMT=([0-9]+)')
             p3 = re.compile(r'VMF=([0-9.]+)')
-            a = p1.findall(line)
-            b = p2.findall(line)
-            e = p3.findall(line)
+            UMT = p1.findall(line)
+            VMT = p2.findall(line)
+            VMF = p3.findall(line)
             ##########################format output knownCanonical transcript
             p = re.compile(r'transcript\|(\S+)\|protein_coding')
             a = p.findall(line)
@@ -63,7 +63,7 @@ def anno(vcf,out):
                     outfile.write("%s" % (array[dict[out_name[l]]]))
                 else:
                     outfile.write("\t%s" % (array[dict[out_name[l]]]))
-            outfile.write("\t%s\t%s\t%s\n" % (a[0], b[0], float(e[0]) * 100))
+            outfile.write("\t%s\t%s\t%s\n" % (UMT[0], VMT[0], float(VMF[0]) * 100))
     infile.close()
     outfile.close()
     subprocess.check_call("rm -rf %s.hg19_multianno.txt" %(out),shell=True)
