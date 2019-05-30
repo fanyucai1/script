@@ -52,7 +52,6 @@ maf=config['par']['maf']
 core.annovar275.anno("%s.somatic.vcf" %(out),"%s.somatic"%(out))
 core.annovar275.anno("%s.germline.vcf" %(out),"%s.germline"%(out))
 core.annovar275.anno("%s.all.vcf" %(out),"%s.all"%(out))
-"""
 #####################################filter germline and somatic,respectively
 core.filter_annovar275.somatic(maf,"%s.somatic.final.txt" %(out),"%s"%(out))
 core.filter_annovar275.germline(maf,"%s.germline.final.txt" %(out),"%s"%(out))
@@ -67,6 +66,5 @@ core.MSI.run_msi("%s.bam"%(out),"%s"%(out))
 cmd = "cd %s && %s %s/cnv.py -v %s.copy-number.vcf -p %s -g %s " % (config['par']['outdir'], config['par']['python3'], 
 script, config['par']['tumor_name'], config['par']['tumor_name'],config['par']['gene_list'])
 subprocess.check_call(cmd, shell=True)
-"""
 end=time.time()
 print("Elapse time is %g seconds" %(end-start))
