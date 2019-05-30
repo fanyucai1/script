@@ -47,6 +47,7 @@ def anno(vcf,out):
             UMT = p1.findall(line)
             VMT = p2.findall(line)
             VMF = p3.findall(line)
+            print(VMF[0])
             ##########################format output knownCanonical transcript
             p = re.compile(r'transcript\|(\S+)\|protein_coding')
             a = p.findall(line)
