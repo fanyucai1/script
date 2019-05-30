@@ -12,6 +12,12 @@ maf=0.01
 def germline(maf,annovar,out):
     infile = open(annovar, "r")
     outfile = open("%s.filter.annovar.germline" % (out), "w")
+    for i in range(len(out_name)):
+        if i == 0:
+            outfile.write("%s" % (out_name[i]))
+        else:
+            outfile.write("\t%s" % (out_name[i]))
+    outfile.write("\n")
     dict = {}
     for line in infile:
         line = line.strip()
@@ -46,7 +52,7 @@ def germline(maf,annovar,out):
                 else:
                     pass
             if result == "true":
-                outfile.write("\n%s" % (line))
+                outfile.write("%s\n" % (line))
     infile.close()
     outfile.close()
 if __name__=="__main__":
