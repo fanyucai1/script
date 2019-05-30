@@ -120,16 +120,3 @@ def germline(maf,annovar,out):
                 outfile.write("\n")
     infile.close()
     outfile.close()
-if __name__=="__main__":
-    if len(sys.argv)!=5:
-        print("\nUsage:\npython filter_annovar maf annovarfile outdir/outprefix somatic\n")
-        print("python filter_annovar maf annovarfile outdir/outprefix germline\n")
-        sys.exit(-1)
-    maf=sys.argv[1]
-    annovar=sys.argv[2]
-    out=sys.argv[3]
-    set=sys.argv[4]
-    if set.startswith("s"):
-        somatic(maf, annovar, out,set)
-    else:
-        germline(maf, annovar, out,set)
