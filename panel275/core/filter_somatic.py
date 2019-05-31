@@ -23,6 +23,12 @@ def somatic(maf,annovar,out):
     ##############################################
     infile = open(annovar, "r")
     outfile = open("%s.filter.annovar.somatic" % (out), "w")
+    for i in range(len(out_name)):
+        if i == 0:
+            outfile.write("%s" % (out_name[i]))
+        else:
+            outfile.write("\t%s" % (out_name[i]))
+    outfile.write("\n")
     dict = {}
     for line in infile:
         line = line.strip()
