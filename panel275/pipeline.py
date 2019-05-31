@@ -59,6 +59,7 @@ core.filter_germline.germline(maf,"%s.germline.final.txt" %(out),"%s"%(out))
 genelist=config['par']['gene_list']
 core.split.split_gene(genelist,"%s.filter.annovar.germline"%(out),"%s.germline_275.tsv"%(out))
 core.split.split_gene(genelist,"%s.filter.annovar.somatic"%(out),"%s.somatic_275.tsv"%(out))
+core.split.split_gene(genelist,"%s.all.final.txt"%(out),"%s.all.")
 ####################################MSI
 core.MSI.run_msi("%s.bam"%(out),"%s"%(out))
 #####################################run CNV and filter CNV gene list
