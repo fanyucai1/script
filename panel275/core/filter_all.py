@@ -11,7 +11,13 @@ def all(annovar,genelist,out):
         dict[line] = 1
     infile.close()
     infile = open(annovar, "r")
-    outfile = open("%s.filter.annovar.all" % (out), "w")
+    outfile = open("%s.all_275.tsv" % (out), "w")
+    for i in range(len(out_name)):
+        if i == 0:
+            outfile.write("%s" % (out_name[i]))
+        else:
+            outfile.write("\t%s" % (out_name[i]))
+    outfile.write("\n")
     for line in infile:
         line = line.strip()
         array = line.split("\t")
