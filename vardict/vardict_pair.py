@@ -19,8 +19,10 @@ def tumor_normal(vaf,tname,tbam,nbam,bed,nname,outdir):
         else:
             p1 = re.compile(r'LikelySomatic')
             p2 = re.compile(r'StrongSomatic')
+            p3=re.compile(r'VD=(\d+)')
             a = p1.findall(line)
             b = p2.findall(line)
+            c3=p3.findall(line)
             if a != [] or b != []:
                 outfile.write("%s\n" % (line))
     infile.close()

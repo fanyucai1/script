@@ -42,11 +42,11 @@ cmd = "docker run -v /software/qiaseq-dna/data/:/srv/qgen/data/ -v %s:/project/ 
       "%s python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 %s" \
       % (config['par']['outdir'], config['par']['docker'], par)
 print(cmd)
-#subprocess.check_call(cmd, shell=True)
+subprocess.check_call(cmd, shell=True)
 #########################################prefilter vcf split somatic and germline
 cmd = '%s %s/prefilter.py -i %s.smCounter.cut.vcf -p %s -v %s -o %s'\
       % (config['par']['python3'], script, out,prefix, config['par']['vaf'],outdir)
-#subprocess.check_call(cmd, shell=True)
+subprocess.check_call(cmd, shell=True)
 #######################################anno germline、somatic and all
 maf=config['par']['maf']
 core.annovar275.anno("%s.somatic.vcf" %(out),"%s.somatic"%(out))
@@ -63,8 +63,7 @@ core.split.split_gene(genelist,"%s.filter.annovar.somatic"%(out),"%s.somatic_275
 ####################################MSI
 core.MSI.run_msi("%s.bam"%(out),"%s"%(out))
 #####################################run CNV and filter CNV gene list
-cmd = "cd %s && %s %s/cnv.py -v %s.copy-number.vcf -p %s -g %s -o %s" % (config['par']['outdir'], config['par']['python3'],
-script, config['par']['tumor_name'], config['par']['tumor_name'],config['par']['gene_list'],config['par']['outdir'])
+cmd = "cd %s && %s %s/cnv.py -v %s.copy-number.vcf -p %s -g %s -o %s" % (config['par']['outdir'], config['par']['python3'],script, config['par']['tumor_name'], config['par']['tumor_name'],config['par']['gene_list'],config['par']['outdir'])
 subprocess.check_call(cmd, shell=True)
 end=time.time()
 print("Elapse time is %g seconds" %(end-start))
