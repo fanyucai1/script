@@ -71,7 +71,8 @@ if __name__=="__main__":
         print("Version:1.0")
         print("Email:fanyucai1@126.com")
         sys.exit(-1)
-    vcf=sys.argv[1]
-    outdir=sys.argv[2]
-    prefix=sys.argv[3]
-    run(vcf,outdir,prefix)
+    else:
+        vcf=sys.argv[1]
+        outdir=sys.argv[2]
+        prefix=sys.argv[3]
+        run(vcf,outdir,prefix)
