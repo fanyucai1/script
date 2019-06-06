@@ -28,7 +28,6 @@ def run_split(ivcf,out):
     dict={}
     for line in infile2:
         line=line.strip()
-        print (line)
         if not line.startswith("#"):
             array = line.split("\t")
             pattern=re.compile(r'ALLELEID=(\d+)')
