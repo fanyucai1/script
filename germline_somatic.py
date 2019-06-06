@@ -29,8 +29,8 @@ def run_split(ivcf,dir,prefix):
     dict={}
     for line in infile:
         line=line.strip()
-        array = line.split("\t")
         if not line.startswith("#"):
+            array = line.split("\t")
             pattern=re.compile(r'ALLELEID=(\d+)')
             allele_id=pattern.findall(line)
             tmp=array[0]+"_"+array[1]+"_"+array[3]+"_"+array[4]
