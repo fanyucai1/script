@@ -25,10 +25,11 @@ def run_split(ivcf,out):
                     pass
     infile.close()
     ###################################################read clinvar vcf to get relationship between position information and OriginSimple
-    infile2=open(clinvar,"rb")
+    infile2=open(clinvar,"r")
     dict={}
     for line in infile2:
         line=line.strip()
+        print (line)
         if not line.startswith("#"):
             array = line.split("\t")
             pattern=re.compile(r'ALLELEID=(\d+)')
