@@ -24,7 +24,7 @@ def run_split(ivcf,out):
                     pass
     infile.close()
     ###################################################read clinvar vcf to get relationship between position information and OriginSimple
-    infile2=open(clinvar,"r",encoding='GBK')
+    infile2=open(clinvar,"r",encoding='ascii')
     dict={}
     for line in infile2:
         line=line.strip()
