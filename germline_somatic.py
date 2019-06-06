@@ -34,7 +34,8 @@ def run_split(ivcf,dir,prefix):
             pattern=re.compile(r'ALLELEID=(\d+)')
             allele_id=pattern.findall(line)
             tmp=array[0]+"_"+array[1]+"_"+array[3]+"_"+array[4]
-            dict[tmp]=status[allele_id[0]]#chr_pos_ref_alt to class
+            if allele_id[0] in status:
+                dict[tmp]=status[allele_id[0]]#chr_pos_ref_alt to class
     infile.close()
     #################################################
     infile = open(ivcf, "r")
