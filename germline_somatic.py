@@ -6,7 +6,7 @@ import re
 
 variant="/data/Database/clinvar_vcf_GRCh37/variant_summary.txt"#ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/var_citations.txt
 clinvar="/data/Database/clinvar_vcf_GRCh37/hg19_clinvar.vcf"
-def run(ivcf,dir,prefix):
+def run_split(ivcf,dir,prefix):
     ###############################################read summary file to get the relationship betwwen allele_id and OriginSimple
     infile=open(variant,"r")
     status={}
@@ -75,4 +75,4 @@ if __name__=="__main__":
         vcf=sys.argv[1]
         outdir=sys.argv[2]
         prefix=sys.argv[3]
-        run(vcf,outdir,prefix)
+        run_split(vcf,outdir,prefix)
