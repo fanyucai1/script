@@ -6,7 +6,7 @@ import re
 
 variant="/data/Database/clinvar/variant_summary.txt"#ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/var_citations.txt
 clinvar="/data/Database/clinvar/hg19_clinvar.vcf"
-def run_split(ivcf,dir,prefix):
+def run_split(ivcf,out):
     ###############################################read summary file to get the relationship betwwen allele_id and OriginSimple
     infile=open(variant,"r")
     status={}
@@ -39,9 +39,9 @@ def run_split(ivcf,dir,prefix):
     infile.close()
     #################################################
     infile = open(ivcf, "r")
-    outfile1=open("%s/%s.germline.vcf"%(dir,prefix),"w")
-    outfile2 = open("%s/%s.somatic.vcf" % (dir, prefix), "w")
-    outfile3 = open("%s/%s.unknow.vcf" % (dir, prefix), "w")
+    outfile1=open("%s.germline.vcf"%(out),"w")
+    outfile2 = open("%s.somatic.vcf" % (out), "w")
+    outfile3 = open("%s.unknow.vcf" % (out), "w")
     for line in infile:
         line = line.strip()
         if not line.startswith("#"):
@@ -65,15 +65,18 @@ def run_split(ivcf,dir,prefix):
                         outfile3.write("%s\n" % (line))
             else:
                 outfile3.write("%s\n" % (line))
+    infile.close()
+    outfile1.close()
+    outfile2.close()
+    outfile3.close()
 
 if __name__=="__main__":
-    if len(sys.argv)!=4:
-        print("Usage:python3 germline_somatic.py input.vcf outdir prefix\n")
+    if len(sys.argv)!=3:
+        print("Usage:python3 germline_somatic.py input.vcf outdir/prefix\n")
         print("Version:1.0")
         print("Email:fanyucai1@126.com")
         sys.exit(-1)
     else:
         vcf=sys.argv[1]
-        outdir=sys.argv[2]
-        prefix=sys.argv[3]
-        run_split(vcf,outdir,prefix)
+        out=sys.argv[2]
+        run_split(vcf,out)
