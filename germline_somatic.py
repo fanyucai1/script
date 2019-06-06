@@ -25,9 +25,9 @@ def run_split(ivcf,out):
                     pass
     infile.close()
     ###################################################read clinvar vcf to get relationship between position information and OriginSimple
-    infile=open(clinvar,"r")
+    infile2=open(clinvar,"r")
     dict={}
-    for line in infile:
+    for line in infile2:
         line=line.strip()
         if not line.startswith("#"):
             array = line.split("\t")
@@ -36,7 +36,7 @@ def run_split(ivcf,out):
             tmp=array[0]+"_"+array[1]+"_"+array[3]+"_"+array[4]
             if allele_id[0] in status:
                 dict[tmp]=status[allele_id[0]]#chr_pos_ref_alt to class
-    infile.close()
+    infile2.close()
     #################################################
     infile = open(ivcf, "r")
     outfile1=open("%s.germline.vcf"%(out),"w")
