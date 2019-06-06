@@ -16,7 +16,7 @@ def run(ivcf,dir,prefix):
         array = line.split()
         if line.startswith("#"):
             for i in range(len(array)):
-                name[i]=array[i]
+                name.append(array[i])
         else:
             for i in range(len(array)):
                 if name[i]=="OriginSimple":
