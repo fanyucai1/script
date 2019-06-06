@@ -67,7 +67,7 @@ def run(ivcf,dir,prefix):
 
 if __name__=="__main__":
     if len(sys.argv)!=4:
-        print("usage\npython3 germline_somatic.py input.vcf outdir prefix")
+        print("Usage:python3 germline_somatic.py input.vcf outdir prefix\n")
         print("Version:1.0")
         print("Email:fanyucai1@126.com")
         sys.exit(-1)
