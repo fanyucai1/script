@@ -1,9 +1,8 @@
 #Email:fanyucai1@126.com
 #2019.6.6
 
-import sys
 import re
-
+import sys
 variant="/data/Database/clinvar/variant_summary.txt"#ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/var_citations.txt
 clinvar="/data/Database/clinvar/hg19_clinvar.vcf"
 def run_split(ivcf,out):
@@ -77,7 +76,6 @@ if __name__=="__main__":
         print("Version:1.0")
         print("Email:fanyucai1@126.com")
         sys.exit(-1)
-    else:
-        vcf=sys.argv[1]
-        out=sys.argv[2]
-        run_split(vcf,out)
+    vcf=sys.argv[1]
+    out=sys.argv[2]
+    run_split(vcf,out)
