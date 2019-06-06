@@ -13,8 +13,8 @@ def run_split(ivcf,dir,prefix):
     name=[]
     for line in infile:
         line=line.strip()
-        array = line.split("\t")
         if line.startswith("#"):
+            array = line.split("\t")
             for i in range(len(array)):
                 name.append(array[i])
         else:
