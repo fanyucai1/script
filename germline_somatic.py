@@ -51,6 +51,11 @@ def run_split(ivcf,out):
             outfile3.write("%s\n" % (line))
         else:
             array = line.split("\t")
+            pmod=re.search(r',',array[4])
+            if pmod:
+                print(line)
+                print("your vcf contains multiple loci")
+                sys.exit()
             tmp = array[0] + "_" + array[1] + "_" + array[3] + "_" + array[4]
             if tmp in dict:
                 p1=re.compile(r'somatic',re.I)
