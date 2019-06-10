@@ -27,7 +27,7 @@ all.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
 for line in infile:
     line=line.strip()
     if not line.startswith("#"):
-        array=line.split()
+        array=line.split("\t")
         p1=re.compile(r'UMT=([0-9,]+)')
         p2=re.compile(r'VMT=([0-9,]+)')
         p3=re.compile(r'VMF=([0-9,.e-]+)')
