@@ -11,7 +11,7 @@ maf=0.01
 ##############################################
 def germline(maf,annovar,out):
     infile = open(annovar, "r")
-    outfile = open("%s.filter.annovar.germline" % (out), "w")
+    outfile = open("%s.germline.annovar.filter.tsv" % (out), "w")
     for i in range(len(out_name)):
         if i == 0:
             outfile.write("%s" % (out_name[i]))

@@ -9,6 +9,7 @@ dir_name=os.path.dirname(sub)
 sys.path.append(dir_name)
 import core
 import time
+import shutil
 
 parser=argparse.ArgumentParser("Run 275 panel analysis.")
 parser.add_argument("-p1","--pe1",help="tumor 5 reads",required=True)
@@ -34,7 +35,19 @@ core.print_config.tumor_only(a, b, args.prefix, args.outdir,purity)
 #####################################################################filter VAF and genelist
 core.prefilter.run("%s.smCounter.anno.vcf"%(out),args.genelist,args.vaf,args.outdir,args.prefix)
 #####################################################################split germline and somatic
-core.germline_somatic("%s.vaf.%s.vcf" % (out,args.vaf),"")
+core.germline_somatic("%s.vaf.%s.vcf" % (out,args.vaf),args.outdir,args.prefix)
+######################################################################anno vcf
+core.annovar275.anno("%s.germline.vcf"%(out),"%s.germline"%(out))
+core.annovar275.anno("%s.somatic.vcf"%(out),"%s.somatic"%(out))
+core.annovar275.anno("%s.unknow.vcf"%(out),"%s.unknow"%(out))
+os.mkdir("%s/result/SNV"%(args.outdir))
+shutil.copy("%s.germline.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
+shutil.copy("%s.somatic.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
+shutil.copy("%s.unknow.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
+#####################################################################filter
+core.filter_somatic.somatic(maf,"%s.somatic.final.txt" %(out),"%s"%(out))
+core.filter_germline.germline(maf,"%s.germline.final.txt" %(out),"%s"%(out))
+
 
 
 
