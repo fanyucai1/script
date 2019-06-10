@@ -47,21 +47,36 @@ def run(vcf,sex,genelist,outdir,prefix):
     vcf_out.write("Chr\tStart\tEnd\tFunc.refGene\tGene.refGene\tCNV\tType\n")
     vcf_filter.write("Chr\tStart\tEnd\tFunc.refGene\tGene.refGene\tCNV\tType\n")
     num = 0
+    result="f"
+    filter="f"
     for line in vcf_in:
         num += 1
         line = line.strip()
-        array = line.split()
-        if num != 1 and array[6] in dict:
-            vcf_out.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (array[0], array[1], array[2], array[5], array[6], CNV[array[0]], CNV_type[array[0]]))
+        array = line.split("\t")
+        dot=array[6].split(";")
+        if num != 1:
+            if dot==[]:
+                if array[6] in dict:
+                    result="t"
+                    vcf_out.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (array[0], array[1], array[2], array[5], array[6], CNV[array[0]], CNV_type[array[0]]))
+            else:
+                for i in dot:
+                    if i in dict:
+                        result="t"
+
         if sex=="male":
             if array[0]!="chrX" and array[0]!="chrY" and float(CNV[array[0]])>=6:
-                vcf_filter.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (array[0], array[1], array[2], array[5], array[6], CNV[array[0]], CNV_type[array[0]]))
+                filter="t"
             if array[0] != "chrX" and array[0] != "chrY" and float(CNV[array[0]]) < 1:
-                vcf_filter.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (array[0], array[1], array[2], array[5], array[6], CNV[array[0]], CNV_type[array[0]]))
+                filter="t"
         else:
             if array[0]!="chrY" and float(CNV[array[0]])>=6:
-                vcf_filter.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (array[0], array[1], array[2], array[5], array[6], CNV[array[0]], CNV_type[array[0]]))
+                filter = "t"
             if array[0] != "chrY" and float(CNV[array[0]]) < 1:
+                filter = "t"
+        if result=="t":
+            vcf_out.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (array[0], array[1], array[2], array[5], array[6], CNV[array[0]], CNV_type[array[0]]))
+            if filter=="t":
                 vcf_filter.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (array[0], array[1], array[2], array[5], array[6], CNV[array[0]], CNV_type[array[0]]))
     vcf_out.close()
     vcf_in.close()
