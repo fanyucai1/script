@@ -51,6 +51,8 @@ def run_split(ivcf,out):
             outfile3.write("%s\n" % (line))
         else:
             array = line.split("\t")
+            print(array[0])
+            continue
             tmp = array[0] + "_" + array[1] + "_" + array[3] + "_" + array[4]
             if tmp in dict:
                 p1=re.compile(r'somatic',re.I)
