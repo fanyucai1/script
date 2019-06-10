@@ -10,7 +10,7 @@ database = ['1000g2015aug_all','1000g2015aug_eas', 'ExAC_ALL', 'esp6500siv2_all'
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene','ExonicFunc.refGene','AAChange.refGene','cytoBand',
           'avsnp150','ExAC_ALL','ExAC_EAS','esp6500siv2_all','1000g2015aug_all','1000g2015aug_eas','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas',
           'cosmic88_coding','CLNALLELEID','CLNDN','CLNDISDB','CLNREVSTAT','CLNSIG','SIFT_pred','Polyphen2_HDIV_pred', 'Polyphen2_HVAR_pred','MutationTaster_pred','MutationAssessor_pred','FATHMM_pred',
-          'CADD_phred','InterVar_automated','Canonical_transcript']
+          'CADD_phred','InterVar_automated']
 
 def anno(vcf,out):
     ##########################run snpeff
@@ -30,7 +30,7 @@ def anno(vcf,out):
             outfile.write("%s" % (out_name[i]))
         else:
             outfile.write("\t%s" % (out_name[i]))
-    outfile.write("\tUMT\tVMT\tVMF\tGT\n")
+    outfile.write("\tCanonical_transcript\tUMT\tVMT\tVMF\tGT\n")
     dict = {}
     for line in infile:
         line = line.strip()
@@ -59,13 +59,12 @@ def anno(vcf,out):
                 for j in range(len(tmp)):
                     if re.search(b[0], tmp[j]):
                         final_nm = tmp[j]
-            array[dict['Canonical_transcript']] = final_nm
             for l in range(len(out_name)):
                 if l == 0:
                     outfile.write("%s" % (array[dict[out_name[l]]]))
                 else:
                     outfile.write("\t%s" % (array[dict[out_name[l]]]))
-            outfile.write("\t%s\t%s\t%s\t%s\n" % (UMT[0], VMT[0], VMF[0],GT[0]))
+            outfile.write("\t%s\t%s\t%s\t%s\t%s\n" % (final_nm,UMT[0], VMT[0], VMF[0],GT[0]))
     infile.close()
     outfile.close()
     subprocess.check_call("rm -rf %s.hg19_multianno.txt" %(out),shell=True)
