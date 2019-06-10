@@ -30,6 +30,7 @@ p2 = config['tumor']['fq2']
 outdir = config['par']['outdir']
 prefix = config['par']['tumor_name']
 out = outdir + "/" + prefix
+genelist=config['par']['gene_list']
 if config['par']['type'] == "single":
     core.print_config.tumor_only(p1, p2, prefix, outdir)
     par = " single %s " % (config['par']['tumor_name'])
@@ -43,8 +44,8 @@ cmd = "docker run -v /software/qiaseq-dna/data/:/srv/qgen/data/ -v %s:/project/ 
       % (config['par']['outdir'], config['par']['docker'], par)
 print(cmd)
 subprocess.check_call(cmd, shell=True)
-#########################################prefilter vcf split somatic and germline
-cmd = '%s %s/prefilter.py -i %s.smCounter.cut.vcf -p %s -v %s -o %s'\
+#########################################prefilter vcf
+cmd = '%s %s/prefilter.py -i %s.smCounter.cut.vcf -p %s -v %s -o %s/result/'\
       % (config['par']['python3'], script, out,prefix, config['par']['vaf'],outdir)
 subprocess.check_call(cmd, shell=True)
 #######################################anno germline、somatic and all
@@ -56,10 +57,6 @@ core.annovar275.anno("%s.all.vcf" %(out),"%s.all"%(out))
 core.filter_somatic.somatic(maf,"%s.somatic.final.txt" %(out),"%s"%(out))
 core.filter_germline.germline(maf,"%s.germline.final.txt" %(out),"%s"%(out))
 core.filter_all.all("%s.all.final.txt"%(out),config['par']['gene_list'],"%s"%(out))
-####################################filter gnene
-genelist=config['par']['gene_list']
-core.split.split_gene(genelist,"%s.filter.annovar.germline"%(out),"%s.germline_275.tsv"%(out))
-core.split.split_gene(genelist,"%s.filter.annovar.somatic"%(out),"%s.somatic_275.tsv"%(out))
 ####################################MSI
 core.MSI.run_msi("%s.bam"%(out),"%s"%(out))
 #####################################run CNV and filter CNV gene list
