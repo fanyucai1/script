@@ -54,7 +54,7 @@ def run_split(ivcf,out):
             pmod=re.search(r',',array[4])
             if pmod:
                 print(line)
-                print("your vcf contains multiple loci,please check it")
+                print("\nErro:Your vcf contains multiple loci,please check it!!!")
                 sys.exit()
             tmp = array[0] + "_" + array[1] + "_" + array[3] + "_" + array[4]
             if tmp in dict:
