@@ -47,7 +47,7 @@ def germline(maf,annovar,out):
                 elif array[dict['InterVar_automated']].startswith("Pathogenic") or array[
                     dict['InterVar_automated']].startswith("Likely pathogenic"):
                     result = "true"
-                elif freq > 0:  # at least 1<MAF
+                elif freq >= 1:  # at least 1<MAF
                     result = "true"
                 else:
                     pass

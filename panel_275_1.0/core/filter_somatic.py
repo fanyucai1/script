@@ -59,7 +59,7 @@ def somatic(maf,annovar,out):
                 if array[dict['InterVar_automated']].startswith("Pathogenic") or array[
                     dict['InterVar_automated']].startswith("Likely pathogenic"):
                     result = "true"
-                if freq >= 0:  # at least 0<MAF
+                if freq >= 1:  # at least 1<MAF
                     result = "true"
             if array[dict['cosmic88_coding']].startswith("ID="):
                 pattern = re.compile(r'ID=(\S+);')
