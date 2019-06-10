@@ -34,6 +34,7 @@ def run_split(ivcf,out):
             pattern=re.compile(r'ALLELEID=(\d+)')
             allele_id=pattern.findall(line)
             tmp=array[0]+"_"+array[1]+"_"+array[3]+"_"+array[4]
+            
             if allele_id[0] in status:
                 dict[tmp]=status[allele_id[0]]#chr_pos_ref_alt to class
     infile2.close()
@@ -56,15 +57,19 @@ def run_split(ivcf,out):
                 a=p1.findall(dict[tmp])
                 if a!=[]:
                     outfile2.write("%s\n" % (line))
+                    continue
                 else:
                     p2 = re.compile(r'germline', re.I)
                     b = p2.findall(dict[tmp])
                     if b!=[]:
                         outfile1.write("%s\n" % (line))
+                        continue
                     else:
                         outfile3.write("%s\n" % (line))
+                        continue
             else:
                 outfile3.write("%s\n" % (line))
+                continue
     infile.close()
     outfile1.close()
     outfile2.close()
