@@ -58,6 +58,6 @@ os.mkdir("%s/result/MSI"%(args.outdir))
 shutil.copy("%s.msi.tsv"%(out),"%s/result/MSI/"%(args.outdir))
 ######################################################################run CNV and filter CNV gene list
 os.mkdir("%s/result/CNV"%(args.outdir))
-core.CNV.run("%s.copy-number.vcf"%(out),args.sex,args.genelist,"%s/result/CNV"%(args.outdir),args.prefix)
+core.cnv.run("%s.copy-number.vcf"%(out),args.sex,args.genelist,"%s/result/CNV"%(args.outdir),args.prefix)
 end=time.time()
 print("Elapse time is %g seconds" %(end-start))
