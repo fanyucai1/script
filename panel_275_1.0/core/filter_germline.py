@@ -1,6 +1,6 @@
 import re
 import sys
-
+import os
 database = ['1000g2015aug_all','1000g2015aug_eas', 'ExAC_ALL', 'esp6500siv2_all','ExAC_EAS','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas']
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene','ExonicFunc.refGene','AAChange.refGene','cytoBand',
           'avsnp150','ExAC_ALL','ExAC_EAS','esp6500siv2_all','1000g2015aug_all','1000g2015aug_eas','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas',
@@ -9,7 +9,10 @@ out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDet
 cosmic_vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.hg19.vcf"
 maf=0.01
 ##############################################
-def germline(maf,annovar,out):
+def germline(maf,annovar,outdir,prefix):
+    if not os.path.exists(outdir):
+        os.mkdir(outdir)
+    out=outdir+"/"+prefix
     infile = open(annovar, "r")
     outfile = open("%s.germline.annovar.filter.tsv" % (out), "w")
     for i in range(len(out_name)):
@@ -56,9 +59,9 @@ def germline(maf,annovar,out):
     infile.close()
     outfile.close()
 if __name__=="__main__":
-    if len(sys.argv)!=4:
-        print("Usage:\npython3 filter_germline.py maf annovarfile outdir/prefix")
+    if len(sys.argv)!=5:
+        print("Usage:\npython3 filter_germline.py maf annovarfile outdir prefix")
         print("Copyright:fanyucai")
         print("Version:1.0")
         sys.exit(-1)
-    germline(sys.argv[1],sys.argv[2],sys.argv[3])
+    germline(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4])
