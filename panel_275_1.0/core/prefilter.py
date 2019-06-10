@@ -6,7 +6,6 @@ import argparse
 import re
 import sys
 
-
 def run(vcf,genelist,vaf,outdir,prefix):
     dict = {}
     infile = open(genelist, "r")

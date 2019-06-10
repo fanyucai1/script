@@ -2,7 +2,6 @@
 #2019.5.23
 import os
 import argparse
-import subprocess
 import sys
 sub=os.path.abspath(__file__)
 dir_name=os.path.dirname(sub)
@@ -18,6 +17,8 @@ parser.add_argument("-p","--prefix",help="prefix output",required=True)
 parser.add_argument("-o","--outdir",help="output directory",required=True)
 parser.add_argument("-g","--genelist",help="gene list",required=True)
 parser.add_argument("-v","--vaf",help="VAF threshold",choices=[0.02,0.005],required=True,type=float)
+parser.add_argument("-m","--maf",help="maf",default=0.01,type=float)
+parser.add_argument("-s","--sex",help="sex",choices=["male","female"],required=True)
 args=parser.parse_args()
 start=time.time()
 if not os.path.exists(args.outdir):
@@ -44,19 +45,16 @@ os.mkdir("%s/result/SNV"%(args.outdir))
 shutil.copy("%s.germline.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 shutil.copy("%s.somatic.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 shutil.copy("%s.unknow.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
-#####################################################################filter
-core.filter_somatic.somatic(maf,"%s.somatic.final.txt" %(out),"%s"%(out))
-core.filter_germline.germline(maf,"%s.germline.final.txt" %(out),"%s"%(out))
-
-
-
-
-
-
-
-
-
-
-
+#####################################################################filter MAF
+core.filter_somatic.somatic(args.maf,"%s.somatic.anno.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s"%(args.prefix))
+core.filter_germline.germline(args.maf,"%s.germline.anno.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s"%(args.prefix))
+core.filter_somatic.somatic(args.maf,"%s.unknow.anno.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s"%(args.prefix))
+######################################################################MSI
+core.MSI.run_msi("%s.bam"%(out),"%s"%(args.outdir),"%s"%(args.prefix))
+os.mkdir("%s/result/MSI"%(args.outdir))
+shutil.copy("%s.msi.tsv"%(out),"%s/result/MSI/"%(args.outdir))
+######################################################################run CNV and filter CNV gene list
+os.mkdir("%s/result/CNV"%(args.outdir))
+core.CNV.run("%s.copy-number.vcf"%(out),args.sex,args.genelist,"%s/result/CNV"%(args.outdir),args.prefix)
 end=time.time()
 print("Elapse time is %g seconds" %(end-start))

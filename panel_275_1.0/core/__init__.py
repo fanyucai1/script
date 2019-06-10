@@ -5,3 +5,4 @@ from . import filter_germline
 from . import filter_somatic
 from . import prefilter
 from . import MSI
+from . import cnv
