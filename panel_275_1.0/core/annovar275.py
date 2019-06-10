@@ -44,7 +44,7 @@ def anno(vcf,out):
             p1 = re.compile(r'UMT=([0-9]+)')
             p2 = re.compile(r'VMT=([0-9]+)')
             p3 = re.compile(r'VMF=(\d+\.\d+)')
-            p4=re.compile(r'GT=(\S+)')
+            p4=re.compile(r'GT=(\d+\/\d+)')
             UMT = p1.findall(line)
             VMT = p2.findall(line)
             VMF = p3.findall(line)
