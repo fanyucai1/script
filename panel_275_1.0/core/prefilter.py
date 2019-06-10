@@ -12,6 +12,8 @@ parser.add_argument("-v","--vaf",help="filter site using vaf",required=True,choi
 parser.add_argument("-p","--prefix",help="prefix of output",required=True)
 parser.add_argument("-o","--outdir",help="output directory",default=os.getcwd())
 args=parser.parse_args()
+if not os.path.exists(args.outdir):
+    os.mkdir(args.outdir)
 out=args.outdir+"/"+args.prefix
 ######################################get gene list
 dict={}
