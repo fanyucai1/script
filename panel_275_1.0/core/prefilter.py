@@ -22,7 +22,7 @@ for line in infile:
 infile.close()
 #######################################anno
 infile=open(args.vcf,"r")
-all=open("%s.all.vcf"%(out),"w")
+all=open("%s.vaf.%s.vcf"%(out,args.vaf),"w")
 all.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
 for line in infile:
     line=line.strip()
