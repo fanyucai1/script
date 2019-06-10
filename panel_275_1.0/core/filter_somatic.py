@@ -56,21 +56,19 @@ def somatic(maf,annovar,out):
                 if array[dict['CLNSIG']].startswith("Pathogenic") or array[dict['CLNSIG']].startswith(
                         "Likely_pathogenic") or array[dict['CLNSIG']].startswith("drug_response"):
                     result = "true"
-                elif array[dict['InterVar_automated']].startswith("Pathogenic") or array[
+                if array[dict['InterVar_automated']].startswith("Pathogenic") or array[
                     dict['InterVar_automated']].startswith("Likely pathogenic"):
                     result = "true"
-                elif freq > 0:  # at least 1<MAF
+                if freq >= 0:  # at least 0<MAF
                     result = "true"
-                elif array[dict['cosmic88_coding']].startswith("ID="):
-                    pattern = re.compile(r'ID=(\S+);')
-                    a = pattern.findall(array[dict['cosmic88_coding']])
-                    cosmic = a[0].split(",")
-                    for i in cosmic:
-                        counts += int(cnt[i])
-                    if counts >=50:
-                        result = "true"
-                else:
-                    pass
+            if array[dict['cosmic88_coding']].startswith("ID="):
+                pattern = re.compile(r'ID=(\S+);')
+                a = pattern.findall(array[dict['cosmic88_coding']])
+                cosmic = a[0].split(",")
+                for i in cosmic:
+                    counts += int(cnt[i])
+                if counts >=50:
+                    result = "true"
             if result == "true":
                 for l in range(len(out_name)):
                     if l == 0:
