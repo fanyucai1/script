@@ -41,6 +41,7 @@ core.germline_somatic.run_split("%s.vaf.%s.vcf" % (out,args.vaf),args.outdir,arg
 core.annovar275.anno("%s.germline.vcf"%(out),"%s.germline"%(out))
 core.annovar275.anno("%s.somatic.vcf"%(out),"%s.somatic"%(out))
 core.annovar275.anno("%s.unknow.vcf"%(out),"%s.unknow"%(out))
+os.mkdir("%s/result/"%(args.outdir))
 os.mkdir("%s/result/SNV"%(args.outdir))
 shutil.copy("%s.germline.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 shutil.copy("%s.somatic.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
