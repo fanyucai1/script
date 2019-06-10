@@ -31,9 +31,7 @@ else:
 #####################################################################run docker
 core.print_config.tumor_only(a, b, args.prefix, args.outdir,purity)
 #####################################################################filter VAF and genelist
-cmd = '%s %s/prefilter.py -i %s.smCounter.cut.vcf -p %s -v %s -o %s/result/'\
-      % (config['par']['python3'], script, out,prefix, config['par']['vaf'],outdir)
-subprocess.check_call(cmd, shell=True)
+core.
 
 
 
