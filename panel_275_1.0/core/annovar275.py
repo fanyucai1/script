@@ -1,6 +1,7 @@
 import subprocess
 import re
 import sys
+import os
 
 annovar="/software/docker_tumor_base/Resource/Annovar/"
 snpsift="/software/SnpEff/4.3/snpEff/"
@@ -67,7 +68,8 @@ def anno(vcf,out):
             outfile.write("\t%s\t%s\t%s\t%s\t%s\n" % (final_nm,UMT[0], VMT[0], VMF[0],GT[0]))
     infile.close()
     outfile.close()
-    subprocess.check_call("rm -rf %s.hg19_multianno.txt" %(out),shell=True)
+    if os.path.exists("%s.hg19_multianno.txt"%(out)):
+        subprocess.check_call("rm -rf %s.hg19_multianno.txt" %(out),shell=True)
     ###########################################################
 
 if __name__=="__main__":
