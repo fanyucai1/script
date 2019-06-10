@@ -80,8 +80,7 @@ def run(vcf,sex,genelist,outdir,prefix):
     vcf_in.close()
     vcf_filter.close()
     #########################################
-    subprocess.check_call("rm -rf %s/cnv.hg19_multianno.txt %s/cnv.hg19_multianno.vcf" % (outdir, outdir),
-                          shell=True)
+    subprocess.check_call("rm -rf %s.cnv.hg19_multianno.txt %s.cnv.vcf" % (out, out),shell=True)
 if __name__=="__main__":
     if len(sys.argv)!=6:
         print("Usage:python3 %s vcf sex genelist outdir prefix"%(sys.argv[0]))
