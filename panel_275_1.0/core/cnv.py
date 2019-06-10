@@ -57,21 +57,21 @@ def run(vcf,sex,genelist,outdir,prefix):
         if num != 1:
             if dot==[]:
                 if array[6] in dict:
-                    result="t"
+                    if float(CNV[array[0]])>=6 or float(CNV[array[0]])<1:
+                        result="t"
             else:
                 for i in dot:
                     if i in dict:
-                        result="t"
+                        if float(CNV[array[0]])<1 or float(CNV[array[0]])>=6:
+                            result="t"
             if sex=="male":
-                if array[0]!="chrX" and array[0]!="chrY" and float(CNV[array[0]])>=6:
-                    filter="t"
-                if array[0] != "chrX" and array[0] != "chrY" and float(CNV[array[0]]) < 1:
-                    filter="t"
+                if array[0]!="chrX" and array[0]!="chrY":
+                    if float(CNV[array[0]])>=6 or float(CNV[array[0]]) < 1:
+                        filter="t"
             else:
-                if array[0]!="chrY" and float(CNV[array[0]])>=6:
-                    filter = "t"
-                if array[0] != "chrY" and float(CNV[array[0]]) < 1:
-                    filter = "t"
+                if array[0]!="chrY":
+                        if float(CNV[array[0]])>=6 or float(CNV[array[0]]) < 1:
+                            filter = "t"
             if result=="t":
                 vcf_out.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (array[0], array[1], array[2], array[5], array[6], CNV[array[0]], CNV_type[array[0]]))
                 if filter=="t":
