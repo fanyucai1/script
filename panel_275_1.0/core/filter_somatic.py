@@ -1,6 +1,6 @@
 import re
 import sys
-
+import os
 database = ['1000g2015aug_all','1000g2015aug_eas', 'ExAC_ALL', 'esp6500siv2_all','ExAC_EAS','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas']
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene','ExonicFunc.refGene','AAChange.refGene','cytoBand',
           'avsnp150','ExAC_ALL','ExAC_EAS','esp6500siv2_all','1000g2015aug_all','1000g2015aug_eas','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas',
@@ -8,7 +8,10 @@ out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDet
           'CADD_phred','InterVar_automated','Canonical_transcript','UMT','VMT','VMF','GT']
 cosmic_vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.hg19.vcf"
 maf=0.01
-def somatic(maf,annovar,out):
+def somatic(maf,annovar,outdir,prefix):
+    if not os.path.exists(outdir):
+        os.mkdir(outdir)
+    out=outdir+"/"+prefix
     ###########################################read cosmic
     cnt={}
     file1 = open(cosmic_vcf, "r")
@@ -80,9 +83,9 @@ def somatic(maf,annovar,out):
     outfile.close()
 
 if __name__=="__main__":
-    if len(sys.argv)!=4:
-        print("Usage:\npython3 filter_somatic.py maf annovarfile outdir/prefix")
+    if len(sys.argv)!=5:
+        print("Usage:\npython3 filter_somatic.py maf annovarfile outdir prefix")
         print("Copyright:fanyucai")
         print("Version:1.0")
         sys.exit(-1)
-    somatic(sys.argv[1],sys.argv[2],sys.argv[3])
+    somatic(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4])
