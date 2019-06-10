@@ -32,17 +32,13 @@ for line in infile:
         p2=re.compile(r'VMT=([0-9,]+)')
         p3=re.compile(r'VMF=([0-9,.e-]+)')
         p4=re.compile(r',')
-        p5=re.compile(r'TYPE=([A-Za-z,]+)')
-        p6=re.compile(r'ANN=(\S+)')
+        p5=re.compile(r'ANN=(\S+)')
         a=p1.findall(line)#UMT
         b=p2.findall(line)#VMT
         c = p3.findall(line)#VMF
         d=p4.findall(array[4])#ALT
-        e=p5.findall(line)#SNP or Indel
-        f=p6.findall(line)#ANNO
-        print(f[0])
-        gene=f[0].split("\|")#gene name
-        up=0
+        e=p5.findall(line)#ANNO
+        gene=e[0].split("|")#gene name
         if gene!=[] and gene[3] in dict:
             if a==[] and b==[] and c==[] and d==[]:
                 p1 = re.compile(r'DP=([0-9,]+)')
@@ -59,7 +55,6 @@ for line in infile:
                 VMT=b[0].split(",")
                 VMF=c[0].split(",")
                 ALT=array[4].split(",")
-                type=e[0].split(",")
                 for i in range(len(VMT)):
                     tmp = "%s\t%s\t.\t%s\t%s\t.\t.\tUMT=%s;VMT=%s;VMF=%s" % (array[0], array[1], array[3], ALT[i], a[0], VMT[i], VMF[i])
                     if float(VMF[i]) >= args.vaf:
