@@ -43,8 +43,10 @@ core.annovar275.anno("%s.germline.vcf"%(out),"%s.germline"%(out))
 core.annovar275.anno("%s.somatic.vcf"%(out),"%s.somatic"%(out))
 core.annovar275.anno("%s.unknow.vcf"%(out),"%s.unknow"%(out))
 """
-os.mkdir("%s/result/"%(args.outdir))
-os.mkdir("%s/result/SNV"%(args.outdir))
+if not os.path.exists("%s/result/"%(args.outdir)):
+    os.mkdir("%s/result/"%(args.outdir))
+if not os.path.exists("%s/result/SNV"%(args.outdir)):
+    os.mkdir("%s/result/SNV"%(args.outdir))
 shutil.copy("%s.germline.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 shutil.copy("%s.somatic.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 shutil.copy("%s.unknow.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
@@ -54,10 +56,12 @@ core.filter_germline.germline(args.maf,"%s.germline.anno.tsv"%(out),"%s/result/S
 core.filter_somatic.somatic(args.maf,"%s.unknow.anno.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s"%(args.prefix))
 ######################################################################MSI
 core.MSI.run_msi("%s.bam"%(out),"%s"%(args.outdir),"%s"%(args.prefix))
-os.mkdir("%s/result/MSI"%(args.outdir))
+if not os.path.exists("%s/result/MSI"%(args.outdir)):
+    os.mkdir("%s/result/MSI"%(args.outdir))
 shutil.copy("%s.msi.tsv"%(out),"%s/result/MSI/"%(args.outdir))
 ######################################################################run CNV and filter CNV gene list
-os.mkdir("%s/result/CNV"%(args.outdir))
+if not os.path.exists("%s/result/CNV"%(args.outdir)):
+    os.mkdir("%s/result/CNV"%(args.outdir))
 core.cnv.run("%s.copy-number.vcf"%(out),args.sex,args.genelist,"%s/result/CNV"%(args.outdir),args.prefix)
 end=time.time()
 print("Elapse time is %g seconds" %(end-start))
