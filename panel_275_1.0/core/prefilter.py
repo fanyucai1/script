@@ -40,6 +40,7 @@ for line in infile:
         d=p4.findall(array[4])#ALT
         e=p5.findall(line)#SNP or Indel
         f=p6.findall(line)#ANNO
+        print(f[0])
         gene=f[0].split("\|")#gene name
         up=0
         if gene!=[] and gene[3] in dict:
