@@ -36,7 +36,7 @@ core.print_config.tumor_only(a, b, args.prefix, args.outdir,purity)
 #####################################################################filter VAF and genelist
 core.prefilter.run("%s.smCounter.anno.vcf"%(out),args.genelist,args.vaf,args.outdir,args.prefix)
 #####################################################################split germline and somatic
-core.germline_somatic("%s.vaf.%s.vcf" % (out,args.vaf),args.outdir,args.prefix)
+core.germline_somatic.run_split("%s.vaf.%s.vcf" % (out,args.vaf),args.outdir,args.prefix)
 ######################################################################anno vcf
 core.annovar275.anno("%s.germline.vcf"%(out),"%s.germline"%(out))
 core.annovar275.anno("%s.somatic.vcf"%(out),"%s.somatic"%(out))
