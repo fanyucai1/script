@@ -31,6 +31,7 @@ if args.vaf==0.02:
     purity=0.1
 else:
     purity=0.01
+"""
 #####################################################################run docker
 core.print_config.tumor_only(a, b, args.prefix, args.outdir,purity)
 #####################################################################filter VAF and genelist
@@ -41,6 +42,7 @@ core.germline_somatic.run_split("%s.vaf.%s.vcf" % (out,args.vaf),args.outdir,arg
 core.annovar275.anno("%s.germline.vcf"%(out),"%s.germline"%(out))
 core.annovar275.anno("%s.somatic.vcf"%(out),"%s.somatic"%(out))
 core.annovar275.anno("%s.unknow.vcf"%(out),"%s.unknow"%(out))
+"""
 os.mkdir("%s/result/"%(args.outdir))
 os.mkdir("%s/result/SNV"%(args.outdir))
 shutil.copy("%s.germline.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
