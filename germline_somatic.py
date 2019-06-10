@@ -3,13 +3,17 @@
 
 import re
 import sys
+import os
 variant="/data/Database/clinvar/variant_summary.txt"#ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/var_citations.txt
 clinvar="/data/Database/clinvar/hg19_clinvar.vcf"
-def run_split(ivcf,out):
+def run_split(ivcf,outdir,prefix):
     ###############################################read summary file to get the relationship betwwen allele_id and OriginSimple
     infile=open(variant,"r")
     status={}
     name=[]
+    if not os.path.exists(outdir):
+        os.mkdir(outdir)
+    out=outdir+"/"+prefix
     for line in infile:
         line=line.strip()
         array = line.split("\t")
@@ -34,7 +38,6 @@ def run_split(ivcf,out):
             pattern=re.compile(r'ALLELEID=(\d+)')
             allele_id=pattern.findall(line)
             tmp=array[0]+"_"+array[1]+"_"+array[3]+"_"+array[4]
-            
             if allele_id[0] in status:
                 dict[tmp]=status[allele_id[0]]#chr_pos_ref_alt to class
     infile2.close()
@@ -81,11 +84,12 @@ def run_split(ivcf,out):
     outfile3.close()
 
 if __name__=="__main__":
-    if len(sys.argv)!=3:
-        print("Usage:python3 germline_somatic.py input.vcf outdir/prefix\n")
+    if len(sys.argv)!=4:
+        print("Usage:python3 germline_somatic.py input.vcf outdir prefix\n")
         print("Version:1.0")
         print("Email:fanyucai1@126.com")
         sys.exit(-1)
     vcf=sys.argv[1]
-    out=sys.argv[2]
-    run_split(vcf,out)
+    outdir=sys.argv[2]
+    prefix=sys.argv[3]
+    run_split(vcf,outdir,prefix)
