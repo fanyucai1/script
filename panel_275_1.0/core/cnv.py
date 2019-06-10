@@ -47,13 +47,13 @@ def run(vcf,sex,genelist,outdir,prefix):
     vcf_out.write("Chr\tStart\tEnd\tFunc.refGene\tGene.refGene\tCNV\tType\n")
     vcf_filter.write("Chr\tStart\tEnd\tFunc.refGene\tGene.refGene\tCNV\tType\n")
     num = 0
-    result="f"
-    filter="f"
     for line in vcf_in:
         num += 1
         line = line.strip()
         array = line.split("\t")
         dot=array[6].split(";")
+        result = "f"
+        filter = "f"
         if num != 1:
             if dot==[]:
                 if array[6] in dict:
