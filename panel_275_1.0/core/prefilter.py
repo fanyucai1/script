@@ -5,7 +5,7 @@ import os
 import argparse
 import re
 
-parser=argparse.ArgumentParser("Filter panel 275 vcf(VAF>=0.02).")
+parser=argparse.ArgumentParser("Filter panel 275 vcf and gene list.")
 parser.add_argument("-i","--vcf",help="input vcf file",required=True)
 parser.add_argument("-g","--genelist",help="gene list",required=True)
 parser.add_argument("-v","--vaf",help="filter site using vaf",required=True,choices=[0.02,0.005],type=float)
