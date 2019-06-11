@@ -32,7 +32,7 @@ if args.vaf==0.02:
 else:
     purity=0.01
 #####################################################################run docker
-core.print_config.tumor_only(a, b, args.prefix, args.outdir,purity)
+core.print_config.tumor_only(a, b, args.prefix, args.outdir,purity,args.sex)
 #####################################################################filter VAF and genelist
 core.prefilter.run("%s.smCounter.anno.vcf"%(out),args.genelist,args.vaf,args.outdir,args.prefix)
 #####################################################################split germline and somatic
