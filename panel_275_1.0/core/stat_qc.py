@@ -32,7 +32,9 @@ def run(outdir,prefix):
         num+=1
         array=line.split("\t")
         if num==1:
-           dict['Total_reads']=array[0]
+           pattern = re.compile(r'(\d+)')
+           a = pattern.findall(line)
+           dict['Total_reads']=a[0]
         elif num==9:
             pattern=re.compile(r'(\d+)')
             a=pattern.findall(array[0])
