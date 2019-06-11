@@ -1,8 +1,11 @@
 import sys
 import re
 import subprocess
+import os
 samtools="/software/samtools/samtools-1.9/bin/samtools flagstat"
 def run(outdir,prefix):
+    if not os.path.exists("%s/result/"%(outdir)):
+        os.mkdir("%s/result/"%(outdir))
     infile1=open("%s/%s.umi_depths.summary.txt","r")
     outfile2=open("%s/result/%s.qc.tsv","w")
     num=0
@@ -46,3 +49,11 @@ def run(outdir,prefix):
                      dict["read_depth"],dict["UMI_depth"]))
     outfile2.close()
 
+if __name__=="__main__":
+    if len(sys.argv)!=3:
+        print("python3 stat_qc.py outdir prefix\n")
+        print("Email:fanyucai1@126.com")
+        sys.exit(-1)
+    outdir=sys.argv[0]
+    prefix=sys.argv[1]
+    run(outdir,prefix)
