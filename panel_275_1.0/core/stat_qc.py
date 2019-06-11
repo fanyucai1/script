@@ -54,6 +54,6 @@ if __name__=="__main__":
         print("python3 stat_qc.py outdir prefix\n")
         print("Email:fanyucai1@126.com")
         sys.exit(-1)
-    outdir=sys.argv[0]
-    prefix=sys.argv[1]
+    outdir=sys.argv[1]
+    prefix=sys.argv[2]
     run(outdir,prefix)
