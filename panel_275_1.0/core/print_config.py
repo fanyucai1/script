@@ -63,7 +63,7 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex):
                    "runCNV = True\n"
                   "sampleType =  Single\n"
                   "duplex = False\n"
-                  "refUmiFiles =/project/%s1.sum.primer.umis.txt,/project/%s2.sum.primer.umis.txt,/project/%s3.sum.primer.umis.txt"
+                  "refUmiFiles =/srv/qgen/data/base_line_tissue/%s1.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s2.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s3.sum.primer.umis.txt"
                   % (purity,sampelID, pe1, pe2,sex,sex,sex))
     outfile.close()
     cmd = "docker run -v /software/qiaseq-dna/data/:/srv/qgen/data/ -v %s:/project/ " \
