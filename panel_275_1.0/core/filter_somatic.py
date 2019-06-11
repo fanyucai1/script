@@ -25,7 +25,7 @@ def somatic(maf,annovar,outdir,prefix):
     file1.close()
     ##############################################
     infile = open(annovar, "r")
-    outfile = open("%s.somatic.anno.filter.tsv" % (out), "w")
+    outfile = open("%s.anno.filter.tsv" % (out), "w")
     for i in range(len(out_name)):
         if i == 0:
             outfile.write("%s" % (out_name[i]))
