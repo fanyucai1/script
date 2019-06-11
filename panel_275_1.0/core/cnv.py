@@ -57,13 +57,11 @@ def run(vcf,sex,genelist,outdir,prefix):
         if num != 1:
             if dot==[]:
                 if array[6] in dict:
-                    if float(CNV[array[0]])>=6 or float(CNV[array[0]])<1:
-                        result="t"
+                    result="t"
             else:
                 for i in dot:
                     if i in dict:
-                        if float(CNV[array[0]])<1 or float(CNV[array[0]])>=6:
-                            result="t"
+                        result="t"
             if sex=="male":
                 if array[0]!="chrX" and array[0]!="chrY":
                     if float(CNV[array[0]])>=6 or float(CNV[array[0]]) < 1:
