@@ -6,8 +6,8 @@ samtools="/software/samtools/samtools-1.9/bin/samtools flagstat"
 def run(outdir,prefix):
     if not os.path.exists("%s/result/"%(outdir)):
         os.mkdir("%s/result/"%(outdir))
-    infile1=open("%s/%s.umi_depths.summary.txt","r")
-    outfile2=open("%s/result/%s.qc.tsv","w")
+    infile1=open("%s/%s.umi_depths.summary.txt"%(outdir,prefix),"r")
+    outfile2=open("%s/result/%s.qc.tsv"%(outdir,prefix),"w")
     num=0
     dict={}
     for line in infile1:
@@ -25,7 +25,7 @@ def run(outdir,prefix):
     infile1.close()
     cmd="%s %s/%s.align.bam >%s/%s.align.stat.tsv"%(samtools,outdir,prefix,outdir,prefix)
     subprocess.check_call(cmd,shell=True)
-    infile1=open("%s/%s.align.stat.tsv","r")
+    infile1=open("%s/%s.align.stat.tsv"%(outdir,prefix),"r")
     num=0
     for line in infile1:
         line=line.strip()
