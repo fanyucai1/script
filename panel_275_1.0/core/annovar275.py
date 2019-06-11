@@ -13,9 +13,12 @@ out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDet
           'cosmic88_coding','CLNALLELEID','CLNDN','CLNDISDB','CLNREVSTAT','CLNSIG','SIFT_pred','Polyphen2_HDIV_pred', 'Polyphen2_HVAR_pred','MutationTaster_pred','MutationAssessor_pred','FATHMM_pred',
           'CADD_phred','InterVar_automated']
 
-def anno(vcf,out):
+def anno(vcf,outdir,prefix):
+    if not os.path.exists(outdir):
+        os.mkdir(outdir)
+    out=outdir+"/"+prefix
     ##########################run snpeff
-    cmd = "%s -Xmx40g -jar %s/snpEff.jar -v hg19 -canon -hgvs %s >%s.snpeff.anno.vcf" % (java, snpsift, vcf, out)
+    cmd = "cd %s && %s -Xmx40g -jar %s/snpEff.jar -v hg19 -canon -hgvs %s >%s.snpeff.anno.vcf" % (outdir,java, snpsift, vcf, out)
     subprocess.check_call(cmd, shell=True)
     ##########################run annovar
     par=" -protocol refGene,cytoBand,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,1000g2015aug_eas,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305,ljb26_all,intervar_20180118 "
@@ -73,10 +76,11 @@ def anno(vcf,out):
     ###########################################################
 
 if __name__=="__main__":
-    if len(sys.argv)!=3:
-        print ("\nUsage:\npython annovar.py vcffile outdir/outprefix\n")
+    if len(sys.argv)!=4:
+        print ("\nUsage:\npython annovar.py vcffile outdir outprefix\n")
         print("Copyright:fanyucai\nVersion:1.0")
         sys.exit(-1)
     vcf=sys.argv[1]
-    out=sys.argv[2]
-    anno(vcf,out)
+    outdir=sys.argv[2]
+    prefix=sys.argv[3]
+    anno(vcf,outdir,prefix)
