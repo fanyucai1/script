@@ -38,9 +38,9 @@ core.prefilter.run("%s.smCounter.anno.vcf"%(out),args.genelist,args.vaf,args.out
 #####################################################################split germline and somatic
 core.germline_somatic.run_split("%s.vaf.%s.vcf" % (out,args.vaf),args.outdir,args.prefix)
 ######################################################################anno vcf
-core.annovar275.anno("%s.germline.vcf"%(out),"%s.germline"%(out))
-core.annovar275.anno("%s.somatic.vcf"%(out),"%s.somatic"%(out))
-core.annovar275.anno("%s.unknow.vcf"%(out),"%s.unknow"%(out))
+core.annovar275.anno("%s.germline.vcf"%(out),"%s"%(args.outdir),"%s.germline"%(args.prefix))
+core.annovar275.anno("%s.somatic.vcf"%(out),"%s"%(args.outdir),"%s.somatic"%(args.prefix))
+core.annovar275.anno("%s.unknow.vcf"%(out),"%s"%(args.outdir),"%s.unknow"%(args.prefix))
 if not os.path.exists("%s/result/"%(args.outdir)):
     os.mkdir("%s/result/"%(args.outdir))
 if not os.path.exists("%s/result/SNV"%(args.outdir)):
