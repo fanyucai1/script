@@ -44,7 +44,7 @@ outfile=open("msi_stat.tsv","w")
 for key1 in dict1:
     outfile.write(key1)
     for key2 in sample1:
-        if id[key1][key2]==1:
+        if id[key2][key1]==1:
             outfile.write("\t1")
         else:
             outfile.write("\t.")
