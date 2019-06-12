@@ -21,12 +21,12 @@ for line in infile:
 infile.close()
 for id in sample:
     path=args.dir+"/Logs_Intermediates/CNV/%s_CopyNumberVariants.vcf" %(id)
-    print (path)
     if os.path.exists(path):
         infile=open(path,"r")
         outfile=open("%s/%s.cnv.tsv" %(args.outdir,id),"w")
         outfile.write("#Chr\tStart\tend\tRef\tType\tGene\n")
         i=0
+        print(path)
         for line in infile:
             if not line.startswith("#"):
                 line = line.strip()
