@@ -8,6 +8,7 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex):
         os.mkdir(outdir)
     if not os.path.exists("%s/%s" %(outdir,pe1)):
         shutil.copy(p1,outdir)
+    if not os.path.exists("%s/%s" % (outdir, pe2)):
         shutil.copy(p2,outdir)
     outfile = open("%s/run_sm_counter_v2.params.txt" % (outdir), "w")
     outfile.write("[general]\n"
