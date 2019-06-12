@@ -23,7 +23,6 @@ for id in sample:
     path=args.dir+"/Logs_Intermediates/CNV/%s_CopyNumberVariants.vcf" %(id)
     print (path)
     if os.path.exists(path):
-        print(path)
         infile=open(path,"r")
         outfile=open("%s/%s.cnv.tsv" %(args.outdir,id),"w")
         outfile.write("#Chr\tStart\tend\tRef\tType\tGene\n")
@@ -44,4 +43,4 @@ for id in sample:
         outfile.close()
         if i==0:
             subprocess.check_call("rm -rf %s/%s.cnv.tsv" %(args.outdir,id),shell=True)
-            print(" sample %s not find CNV")
+            print("sample %s not find CNV"%(id))
