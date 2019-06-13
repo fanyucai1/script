@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import time
-import os
 
 vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.hg19.vcf"
 infile=open(vcf,"r")
@@ -29,6 +28,5 @@ for line in infile:
         else:
             print("%s\tSNP\n" % (array[2]))
             outfile.write("%s\tSNP\n" % (array[2]))
-        time.sleep(2)
 infile.close()
 outfile.close()
