@@ -14,25 +14,22 @@ for line in infile:
         id=pattern.findall(array[2])
         url = 'https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s' %(id[0])
         res=requests.get(url)
-        if res.status_code==200:
-            print(url)
-            ret = res.text
-            soup=BeautifulSoup(ret,'html.parser')
-            dt=soup.find_all('dt')
-            dd=soup.find_all('dd')
-            dbsnp = soup.find(text='The mutation %s has been flagged as a SNP'%(array[2]))
-            if dbsnp =="%s has been flagged as a SNP" %(array[2]):
-                dict[array[2]] = "SNP"
-                print("%s\tSNP" % (array[2]))
-                continue
-            else:
-                for i in range(len(dt)):
-                    if dt[i].string=="Ever confirmed somatic?":
-                        dict[array[2]]=dd[i].string
-                        print("%s\t%s"%(array[2],dd[i].string))
-                        continue
+        print(url)
+        ret = res.text
+        soup=BeautifulSoup(ret,'html.parser')
+        dt=soup.find_all('dt')
+        dd=soup.find_all('dd')
+        dbsnp = soup.find(text='The mutation %s has been flagged as a SNP'%(array[2]))
+        if dbsnp =="%s has been flagged as a SNP" %(array[2]):
+            dict[array[2]] = "SNP"
+            print("%s\tSNP" % (array[2]))
+            continue
         else:
-            pass
+            for i in range(len(dt)):
+                if dt[i].string=="Ever confirmed somatic?":
+                    dict[array[2]]=dd[i].string
+                    print("%s\t%s"%(array[2],dd[i].string))
+                    continue
 infile.close()
 for key in dict:
     outfile.write("%s\t%s\n" % (key, dict[key]))
