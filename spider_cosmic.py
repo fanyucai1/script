@@ -19,16 +19,15 @@ for line in infile:
         soup=BeautifulSoup(ret,'html.parser')
         dbsnp = soup.find(text='The mutation %s has been flagged as a SNP'%(array[2]))
         print (dbsnp)
+        dt = soup.find_all('dt')
+        dd = soup.find_all('dd')
+        for i in range(len(dt)):
+            if dt[i].string == "Ever confirmed somatic?":
+                print("%s\t%s" % (array[2], dd[i].string))
+                dict[array[2]] = dd[i].string
         if dbsnp =="%s has been flagged as a SNP" %(array[2]):
             dict[array[2]] = "SNP"
             print("%s\tSNP" % (array[2]))
-        else:
-            dt = soup.find_all('dt')
-            dd = soup.find_all('dd')
-            for i in range(len(dt)):
-                if dt[i].string=="Ever confirmed somatic?":
-                    print("%s\t%s" % (array[2], dd[i].string))
-                    dict[array[2]]=dd[i].string
 infile.close()
 for key in dict:
     outfile.write("%s\t%s\n" % (key, dict[key]))
