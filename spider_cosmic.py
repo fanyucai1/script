@@ -38,6 +38,7 @@ for line in infile:
                         print("%s\t%s\n"%(array[2],dd[i].string))
                         outfile.write("%s\t%s\n"%(array[2],dd[i].string))
             else:
+                print("%s\tSNP\n" % (array[2]))
                 outfile.write("%s\tSNP\n" % (array[2]))
             time.sleep(2)
 infile.close()
