@@ -13,7 +13,7 @@ outfile.write("#ID\tType\n")
 dict={}
 for line in infile:
     line=line.strip()
-    time.sleep(random.randint())# 暂停0~1秒，时间区间：[0,1)
+    time.sleep(random.randint(0,1))# 暂停0~1秒，时间区间：[0,1)
     if not line.startswith("#"):
         array=line.split("\t")
         pattern=re.compile(r'(\d+)')
