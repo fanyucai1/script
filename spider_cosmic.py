@@ -22,6 +22,8 @@ for line in infile:
                 for i in range(len(dt)):
                     if dt[i].string=="Ever confirmed somatic?":
                         print("%s\t%s"%(array[2],dd[i].string))
+                        continue
             else:
                 print("%s\tSNP" % (array[2]))
+                continue
 infile.close()
