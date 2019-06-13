@@ -18,7 +18,6 @@ for line in infile:
         ret = res.text
         soup=BeautifulSoup(ret,'html.parser')
         dbsnp = soup.find(text='The mutation %s has been flagged as a SNP'%(array[2]))
-        print (dbsnp)
         dt = soup.find_all('dt')
         dd = soup.find_all('dd')
         for i in range(len(dt)):
