@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import time
-
 vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.hg19.vcf"
 infile=open(vcf,"r")
 outfile=open("cosmic.site.classify.tsv","w")
@@ -13,10 +12,10 @@ for line in infile:
         pattern=re.compile(r'(\d+)')
         id=pattern.findall(array[2])
         url = 'https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s' %(id[0])
-        print (url)
         res=requests.get(url)
         ret=res.text
         soup=BeautifulSoup(ret,'html.parser')
+        time.sleep(3)
         dt=soup.find_all('dt')
         dd=soup.find_all('dd')
         dbsnp = soup.find(text=re.compile(r'has been flagged as a SNP'))
