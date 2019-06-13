@@ -27,8 +27,8 @@ for line in infile:
         else:
             for i in range(len(dt)):
                 if dt[i].string=="Ever confirmed somatic?":
+                    print("%s\t%s" % (array[2], dd[i].string))
                     dict[array[2]]=dd[i].string
-                    print("%s\t%s"%(array[2],dd[i].string))
 infile.close()
 for key in dict:
     outfile.write("%s\t%s\n" % (key, dict[key]))
