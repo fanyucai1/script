@@ -14,12 +14,13 @@ if os.path.exists("cosmic.site.classify.tsv") and os.path.getsize("cosmic.site.c
         dict[array[0]]=1
     infile.close()
 infile=open(vcf,"r")
-outfile=open("cosmic.site.classify.tsv","a+")
+outfile=open("cosmic.site.classify.tsv","w")
 for line in infile:
     line=line.strip()
     if not line.startswith("#"):
         array=line.split("\t")
         if array[2] in dict:
+            print(array[2])
             continue
         else:
             pattern=re.compile(r'(\d+)')
