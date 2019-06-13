@@ -14,7 +14,7 @@ if os.path.exists("cosmic.site.classify.tsv"):
         dict[array[0]]=1
     infile.close()
 infile=open(vcf,"r")
-outfile=open("cosmic.site.classify.tsv","a")
+outfile=open("cosmic.site.classify.tsv","a+")
 for line in infile:
     line=line.strip()
     if not line.startswith("#"):
