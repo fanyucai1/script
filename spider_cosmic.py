@@ -31,9 +31,9 @@ for line in infile:
         if not dbsnp:
             for i in range(len(dt)):
                 if dt[i].string=="Ever confirmed somatic?":
-                    print (dt[i].string,"\t",dd[i].string)
+                    outfile.write("%s\t%s\n"%(array[2],dd[i].string))
         else:
-            print(array[2],"\t","SNP")
+            outfile.write("%s\tSNP\n" % (array[2]))
         time.sleep(2)
 infile.close()
 outfile.close()
