@@ -21,7 +21,8 @@ for line in infile:
         url = 'https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s' %(id[0])
         headers = {'User-Agent': random.choice(user_agents)}#随机选择一个User-Agent的
         #res=requests.get(url,headers = headers,proxies=proxies)
-        res = requests.get(url, headers=headers)
+        #res = requests.get(url, headers=headers)
+        res = requests.get(url, proxies=proxies)
         print(url)
         ret = res.text
         soup=BeautifulSoup(ret,'html.parser')
