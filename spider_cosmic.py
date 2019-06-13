@@ -22,7 +22,9 @@ for line in infile:
         if array[2] in dict:
             continue
         else:
-            url = 'https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s' %(array[2])
+            pattern=re.compile(r'(\d+)')
+            id=pattern.findall(array[2])
+            url = 'https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s' %(id)
             print (url)
             res=requests.get(url)
             ret=res.text
