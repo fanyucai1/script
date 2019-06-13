@@ -10,14 +10,14 @@ if os.path.exists("cosmic.site.classify.tsv"):
     infile=open("cosmic.site.classify.tsv","r")
     for line in infile:
         line=line.strip()
-        array=line.split()
+        array=line.split("\t")
         dict[array[0]]=1
     infile.close()
 infile=open(vcf,"r")
 outfile=open("cosmic.site.classify.tsv","a")
 for line in infile:
     line=line.strip()
-    array=line.split()
+    array=line.split("\t")
     if array[2] in dict:
         continue
     else:
