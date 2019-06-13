@@ -13,7 +13,7 @@ for line in infile:
         pattern=re.compile(r'(\d+)')
         id=pattern.findall(array[2])
         url = 'https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s' %(id[0])
-        res=requests.get(url,timeout=10)
+        res=requests.get(url)
         ret = res.text
         soup=BeautifulSoup(ret,'html.parser')
         dt=soup.find_all('dt')
