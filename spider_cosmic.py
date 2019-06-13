@@ -12,6 +12,7 @@ for line in infile:
         pattern=re.compile(r'(\d+)')
         id=pattern.findall(array[2])
         url = 'https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s' %(id[0])
+        print(url)
         res=requests.get(url)
         ret=res.text
         soup=BeautifulSoup(ret,'html.parser')
@@ -22,10 +23,10 @@ for line in infile:
         if not dbsnp:
             for i in range(len(dt)):
                 if dt[i].string=="Ever confirmed somatic?":
-                    print("%s\t%s\n"%(array[2],dd[i].string))
+                    print("%s\t%s"%(array[2],dd[i].string))
                     outfile.write("%s\t%s\n"%(array[2],dd[i].string))
         else:
-            print("%s\tSNP\n" % (array[2]))
+            print("%s\tSNP" % (array[2]))
             outfile.write("%s\tSNP\n" % (array[2]))
 infile.close()
 outfile.close()
