@@ -10,8 +10,8 @@ for line in infile:
         pattern=re.compile(r'(\d+)')
         id=pattern.findall(array[2])
         url = 'https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s' %(id[0])
-        print("#%s"%(url))
         res=requests.get(url)
+        print("#%s" % (url))
         ret = res.text
         if res.status_code==200:
             soup=BeautifulSoup(ret,'html.parser')
