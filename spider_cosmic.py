@@ -2,8 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import re
 vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.hg19.vcf"
-infile=open("/home/fanyucai/test.txt","r")
+infile=open(vcf,"r")
 outfile=open("cosmic.tsv","w")
+outfile.write("#ID\tType\n")
 dict={}
 for line in infile:
     line=line.strip()
