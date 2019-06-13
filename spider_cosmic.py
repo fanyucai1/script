@@ -30,6 +30,8 @@ for line in infile:
             print("%s\tSNP" % (array[2]))
             continue
 infile.close()
+
 for key in dict:
     outfile.write("%s\t%s\n"%(key,dict[key]))
 outfile.close()
+print("#This pcocess done.")
