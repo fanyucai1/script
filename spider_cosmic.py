@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import re
 vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.hg19.vcf"
 infile=open(vcf,"r")
-outfile=open("cosmic.site.classify.tsv","w")
 for line in infile:
     line=line.strip()
     if not line.startswith("#"):
