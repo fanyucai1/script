@@ -23,13 +23,11 @@ for line in infile:
         if dbsnp =="%s has been flagged as a SNP" %(array[2]):
             dict[array[2]] = "SNP"
             print("%s\tSNP" % (array[2]))
-            continue
         else:
             for i in range(len(dt)):
                 if dt[i].string=="Ever confirmed somatic?":
                     dict[array[2]]=dd[i].string
                     print("%s\t%s"%(array[2],dd[i].string))
-                    continue
 infile.close()
 for key in dict:
     outfile.write("%s\t%s\n" % (key, dict[key]))
