@@ -6,7 +6,7 @@ import os
 
 vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.hg19.vcf"
 dict={}
-if os.path.exists("cosmic.site.classify.tsv"):
+if os.path.getsize("cosmic.site.classify.tsv")>0:
     infile=open("cosmic.site.classify.tsv","r")
     for line in infile:
         line=line.strip()
