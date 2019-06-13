@@ -13,25 +13,27 @@ for line in infile:
         pattern=re.compile(r'(\d+)')
         id=pattern.findall(array[2])
         url = 'https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s' %(id[0])
-        res=requests.get(url)
-        ret = res.text
-        soup=BeautifulSoup(ret,'html.parser')
-        dt=soup.find_all('dt')
-        dd=soup.find_all('dd')
-        dbsnp = soup.find(text=re.compile(r'has been flagged as a SNP'))
-        if dt!=[]:
-            for i in range(len(dt)):
-                if dt[i].string=="Ever confirmed somatic?":
-                    dict[array[2]]=dd[i].string
-                    print("%s\t%s"%(array[2],dd[i].string))
-                    continue
+        res=requests.get(url,timeout=20)
+        if res.status_code==200:
+            ret = res.text
+            soup=BeautifulSoup(ret,'html.parser')
+            dt=soup.find_all('dt')
+            dd=soup.find_all('dd')
+            dbsnp = soup.find(text=re.compile(r'has been flagged as a SNP'))
+            if dbsnp:
+                dict[array[2]] = "SNP"
+                print("%s\tSNP" % (array[2]))
+                continue
+            else:
+                for i in range(len(dt)):
+                    if dt[i].string=="Ever confirmed somatic?":
+                        dict[array[2]]=dd[i].string
+                        print("%s\t%s"%(array[2],dd[i].string))
+                        continue
         else:
-            dict[array[2]] = "SNP"
-            print("%s\tSNP" % (array[2]))
-            continue
+            pass
 infile.close()
-
 for key in dict:
-    outfile.write("%s\t%s\n"%(key,dict[key]))
+    outfile.write("%s\t%s\n" % (key, dict[key]))
 outfile.close()
 print("#This pcocess done.")
