@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.hg19.vcf"
-infile=open(vcf,"r")
+infile=open("/home/fanyucai/test.txt","r")
 outfile=open("cosmic.tsv","w")
 dict={}
 for line in infile:
@@ -23,11 +23,12 @@ for line in infile:
                 if dt[i].string=="Ever confirmed somatic?":
                     dict[array[2]]=dd[i].string
                     print("%s\t%s"%(array[2],dd[i].string))
-                    outfile.write("%s\t%s\n"%(array[2],dict[array[2]]))
                     continue
         else:
+            dict[array[2]] = "SNP"
             print("%s\tSNP" % (array[2]))
-            outfile.write("%s\tSNP\n" % (array[2]))
             continue
 infile.close()
+for key in dict:
+    outfile.write("%s\t%s\n"%(key,dict[key]))
 outfile.close()
