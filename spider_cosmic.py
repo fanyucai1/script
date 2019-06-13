@@ -23,6 +23,7 @@ for line in infile:
             continue
         else:
             url = 'https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s' %(array[2])
+            print (url)
             res=requests.get(url)
             ret=res.text
             soup=BeautifulSoup(ret,'html.parser')
