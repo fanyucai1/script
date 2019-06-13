@@ -25,4 +25,3 @@ for line in infile:
             else:
                 print("%s\tSNP" % (array[2]))
 infile.close()
-outfile.close()
