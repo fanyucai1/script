@@ -5,7 +5,7 @@ import time
 import random
 ##########在请求头中把User-Agent设置成浏览器中的User-Agent，来伪造浏览器访问
 user_agents = ['Mozilla/5.0 (Windows NT 6.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1','Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50','Opera/9.80 (Windows NT 6.1; U; en) Presto/2.8.131 Version/11.11']
-proxies = {'https':'https://112.85.170.154:9999'}
+proxies = {'https':'https://112.85.170.154:9999','http':'http://112.85.128.70:9999'}
 vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.hg19.vcf"
 infile=open(vcf,"r")
 outfile=open("cosmic.tsv","w")
