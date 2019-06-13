@@ -14,6 +14,7 @@ for line in infile:
         id=pattern.findall(array[2])
         url = 'https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s' %(id[0])
         res=requests.get(url)
+        print(url)
         if res.status_code==200:
             ret = res.text
             soup=BeautifulSoup(ret,'html.parser')
