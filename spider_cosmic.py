@@ -20,6 +20,7 @@ for line in infile:
         dt=soup.find_all('dt')
         dd=soup.find_all('dd')
         dbsnp = soup.find(text='The mutation %s has been flagged as a SNP'%(array[2]))
+        print (dbsnp)
         if dbsnp =="%s has been flagged as a SNP" %(array[2]):
             dict[array[2]] = "SNP"
             print("%s\tSNP" % (array[2]))
