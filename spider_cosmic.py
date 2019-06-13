@@ -20,7 +20,6 @@ for line in infile:
     if not line.startswith("#"):
         array=line.split("\t")
         if array[2] in dict:
-            print(array[2])
             continue
         else:
             pattern=re.compile(r'(\d+)')
@@ -36,6 +35,7 @@ for line in infile:
             if not dbsnp:
                 for i in range(len(dt)):
                     if dt[i].string=="Ever confirmed somatic?":
+                        print("%s\t%s\n"%(array[2],dd[i].string))
                         outfile.write("%s\t%s\n"%(array[2],dd[i].string))
             else:
                 outfile.write("%s\tSNP\n" % (array[2]))
