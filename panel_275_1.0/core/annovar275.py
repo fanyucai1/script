@@ -2,7 +2,6 @@ import subprocess
 import re
 import sys
 import os
-import math
 
 annovar="/software/docker_tumor_base/Resource/Annovar/"
 snpsift="/software/SnpEff/4.3/snpEff/"
