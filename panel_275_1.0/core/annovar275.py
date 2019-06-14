@@ -2,6 +2,7 @@ import subprocess
 import re
 import sys
 import os
+import math
 
 annovar="/software/docker_tumor_base/Resource/Annovar/"
 snpsift="/software/SnpEff/4.3/snpEff/"
@@ -67,7 +68,8 @@ def anno(vcf,outdir,prefix):
                 if l == 0:
                     outfile.write("%s" % (array[dict[out_name[l]]]))
                 elif out_name[l]=="VAF":
-                    outfile.write("\t%s" % (VMF[0]))
+                    tmp_num=float(VMF[0])*100
+                    outfile.write("\t%.2f" % (tmp_num))
                 elif out_name[l]=="Alt_Depth":
                     outfile.write("\t%s" % (VMT[0]))
                 elif out_name[l] == "Total_Depth":
