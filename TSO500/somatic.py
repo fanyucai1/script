@@ -135,7 +135,8 @@ for key in sample_ID:
                     elif out_name[l] == "Canonical_transcript":
                         outfile.write("\t%s" % (final_nm))
                     elif out_name[l] == "Total_Depth":
-                        outfile.write("\t%s" % (b[0]))
+                        tmp_num=float(b[0])*100
+                        outfile.write("\t%.2f" % (tmp_num))
                     elif out_name[l] == "Alt_Depth":
                         outfile.write("\t.")
                     elif out_name[l] == "GT":
