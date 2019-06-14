@@ -68,7 +68,7 @@ def anno(vcf,outdir,prefix):
             outfile.write("\n")
     infile.close()
     outfile.close()
-    subprocess.check_call("rm -rf %s.hg19_multianno.txt" %(out),shell=True)
+    subprocess.check_call("rm -rf %s.hg19_multianno.txt %s/snpEff_summary.html %s/snpEff_genes.txt %s.snpeff.anno.vcf" %(out,outdir,outdir,out),shell=True)
     ###########################################################
 
 if __name__=="__main__":
