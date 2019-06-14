@@ -121,7 +121,6 @@ def run(dir,samplelist,vaf,outdir):
                     for j in range(len(tmp)):
                         if array[1] in nm and re.search(nm[array[1]],tmp[j]):
                             final_nm = tmp[j]
-                    array[dict['AAChange.refGene']] = final_nm
                     for l in range(len(out_name)):
                         if l == 0:
                             outfile.write("%s" % (array[dict[out_name[l]]]))
