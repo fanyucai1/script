@@ -45,9 +45,9 @@ if not os.path.exists("%s/result/"%(args.outdir)):
     os.mkdir("%s/result/"%(args.outdir))
 if not os.path.exists("%s/result/SNV"%(args.outdir)):
     os.mkdir("%s/result/SNV"%(args.outdir))
-shutil.copy("%s.germline.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
-shutil.copy("%s.somatic.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
-shutil.copy("%s.unknow.anno.tsv"%(out), "%s/result/SNV/"%(args.outdir))
+shutil.copy("%s.germline.annovar.tsv"%(out), "%s/result/SNV/"%(args.outdir))
+shutil.copy("%s.somatic.annovar.tsv"%(out), "%s/result/SNV/"%(args.outdir))
+shutil.copy("%s.unknow.annovar.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 #####################################################################filter MAF
 core.filter_somatic.somatic(args.maf,"%s.somatic.anno.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s.somatic"%(args.prefix))
 core.filter_germline.germline(args.maf,"%s.germline.anno.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s.germline"%(args.prefix))
