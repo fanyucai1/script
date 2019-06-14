@@ -82,7 +82,7 @@ def anno(vcf,outdir,prefix):
     infile.close()
     outfile.close()
     if os.path.exists("%s.hg19_multianno.txt"%(out)):
-        subprocess.check_call("rm -rf %s.hg19_multianno.txt" %(out),shell=True)
+        subprocess.check_call("rm -rf %s.hg19_multianno.txt %s/snpEff_genes.txt %s/snpEff_summary.html %s.snpeff.anno.vcf" %(out,outdir,outdir,out),shell=True)
     ###########################################################
 
 if __name__=="__main__":
