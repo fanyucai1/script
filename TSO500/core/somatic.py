@@ -53,7 +53,7 @@ def run(dir,samplelist,vaf,outdir):
                     for i in range(len(name)):
                         if name[i]=="VAF" and float(array[i])>= vaf:
                             result+=1
-                            vaf=float(array[i])*100
+                            vaf=array[i]
                         if name[i]=="Depth":
                             Depth=array[i]
                         if name[i]=="CodingVariant" and array[i]=="True":
@@ -126,12 +126,12 @@ def run(dir,samplelist,vaf,outdir):
                         if l == 0:
                             outfile.write("%s" % (array[dict[out_name[l]]]))
                         elif out_name[l]=="VAF":
-                            outfile.write("\t%s" % (a[0]))
+                            tmp_num = float(a[0]) * 100
+                            outfile.write("\t%.2f" % (tmp_num))
                         elif out_name[l] == "Canonical_transcript":
                             outfile.write("\t%s" % (final_nm))
                         elif out_name[l] == "Total_Depth":
-                            tmp_num=float(b[0])*100
-                            outfile.write("\t%.2f" % (tmp_num))
+                            outfile.write("\t%s" % (b[0]))
                         elif out_name[l] == "Alt_Depth":
                             outfile.write("\t.")
                         elif out_name[l] == "GT":
