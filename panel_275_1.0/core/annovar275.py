@@ -9,9 +9,9 @@ java="/software/java/jdk1.8.0_202/bin/java"
 
 database = ['1000g2015aug_all','1000g2015aug_eas', 'ExAC_ALL', 'esp6500siv2_all','ExAC_EAS','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas']
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene','ExonicFunc.refGene','AAChange.refGene','cytoBand',
-          'avsnp150','ExAC_ALL','ExAC_EAS','esp6500siv2_all','1000g2015aug_all','1000g2015aug_eas','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas',
-          'cosmic88_coding','CLNALLELEID','CLNDN','CLNDISDB','CLNREVSTAT','CLNSIG','SIFT_pred','Polyphen2_HDIV_pred', 'Polyphen2_HVAR_pred','MutationTaster_pred','MutationAssessor_pred','FATHMM_pred',
-          'CADD_phred','InterVar_automated']
+          'avsnp150','snp138','ExAC_ALL','ExAC_EAS','esp6500siv2_all','1000g2015aug_all','1000g2015aug_eas','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas',
+          'cosmic88_coding','CLNALLELEID','CLNDN','CLNDISDB','CLNREVSTAT','CLNSIG','InterVar_automated','Canonical_transcript','Total_Depth','Alt_Depth','VAF','GT','SIFT_pred','Polyphen2_HDIV_pred', 'Polyphen2_HVAR_pred','MutationTaster_pred','MutationAssessor_pred','FATHMM_pred',
+          'CADD_phred']
 
 def anno(vcf,outdir,prefix):
     if not os.path.exists(outdir):
@@ -66,9 +66,19 @@ def anno(vcf,outdir,prefix):
             for l in range(len(out_name)):
                 if l == 0:
                     outfile.write("%s" % (array[dict[out_name[l]]]))
+                elif out_name[l]=="VAF":
+                    outfile.write("\t%s" % (VMF[0]))
+                elif out_name[l]=="Alt_Depth":
+                    outfile.write("\t%s" % (VMT[0]))
+                elif out_name[l] == "Total_Depth":
+                    outfile.write("\t%s" % (UMT[0]))
+                elif out_name[l] == "Canonical_transcript":
+                    outfile.write("\t%s" % (final_nm))
+                elif out_name[l] == "GT":
+                    outfile.write("\t%s" % (GT[0]))
                 else:
                     outfile.write("\t%s" % (array[dict[out_name[l]]]))
-            outfile.write("\t%s\t%s\t%s\t%s\t%s\n" % (final_nm,UMT[0], VMT[0], VMF[0],GT[0]))
+            outfile.write("\n")
     infile.close()
     outfile.close()
     if os.path.exists("%s.hg19_multianno.txt"%(out)):
