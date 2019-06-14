@@ -34,7 +34,7 @@ def anno(vcf,outdir,prefix):
             outfile.write("%s" % (out_name[i]))
         else:
             outfile.write("\t%s" % (out_name[i]))
-    outfile.write("\tCanonical_transcript\tUMT\tVMT\tVMF\tGT\n")
+    outfile.write("\n")
     dict = {}
     for line in infile:
         line = line.strip()
