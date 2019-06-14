@@ -49,9 +49,9 @@ shutil.copy("%s.germline.annovar.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 shutil.copy("%s.somatic.annovar.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 shutil.copy("%s.unknow.annovar.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 #####################################################################filter MAF
-core.filter_somatic.somatic(args.maf,"%s.somatic.anno.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s.somatic"%(args.prefix))
-core.filter_germline.germline(args.maf,"%s.germline.anno.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s.germline"%(args.prefix))
-core.filter_somatic.somatic(args.maf,"%s.unknow.anno.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s.unknow"%(args.prefix))
+core.filter_somatic.somatic(args.maf,"%s.somatic.annovar.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s.somatic"%(args.prefix))
+core.filter_germline.germline(args.maf,"%s.germline.annovar.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s.germline"%(args.prefix))
+core.filter_somatic.somatic(args.maf,"%s.unknow.annovar.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s.unknow"%(args.prefix))
 ######################################################################MSI
 core.MSI.run_msi("%s.bam"%(out),"%s"%(args.outdir),"%s"%(args.prefix))
 if not os.path.exists("%s/result/MSI"%(args.outdir)):
