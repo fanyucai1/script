@@ -10,9 +10,9 @@ snpeff="/software/SnpEff/4.3/snpEff/"
 java="/software/java/jdk1.8.0_202/bin/java"
 annovar="/software/docker_tumor_base/Resource/Annovar/"
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene','ExonicFunc.refGene','AAChange.refGene','cytoBand',
-          'avsnp150','ExAC_ALL','ExAC_EAS','esp6500siv2_all','1000g2015aug_all','1000g2015aug_eas','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas',
-          'cosmic88_coding','CLNALLELEID','CLNDN','CLNDISDB','CLNREVSTAT','CLNSIG','SIFT_pred','Polyphen2_HDIV_pred', 'Polyphen2_HVAR_pred','MutationTaster_pred','MutationAssessor_pred','FATHMM_pred',
-          'CADD_phred','InterVar_automated']
+          'avsnp150','snp138','ExAC_ALL','ExAC_EAS','esp6500siv2_all','1000g2015aug_all','1000g2015aug_eas','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas',
+          'cosmic88_coding','CLNALLELEID','CLNDN','CLNDISDB','CLNREVSTAT','CLNSIG','InterVar_automated','Canonical_transcript','Total_Depth','Alt_Depth','VAF','GT','SIFT_pred','Polyphen2_HDIV_pred', 'Polyphen2_HVAR_pred','MutationTaster_pred','MutationAssessor_pred','FATHMM_pred',
+          'CADD_phred']
 parser=argparse.ArgumentParser("")
 parser.add_argument("-d","--dir",help="TSO500 analysis directory",required=True)
 parser.add_argument("-s","--samplelist",required=True)
@@ -92,8 +92,8 @@ for key in sample_ID:
                     print(b[0])
         file1.close()
         ##########################run annovar
-        par=" -protocol refGene,cytoBand,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,1000g2015aug_eas,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305,ljb26_all,intervar_20180118 "
-        par+=" -operation g,r,f,f,f,f,f,f,f,f,f,f,f "
+        par=" -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,1000g2015aug_eas,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305,ljb26_all,intervar_20180118 "
+        par+=" -operation g,r,f,f,f,f,f,f,f,f,f,f,f,f "
         par+=" -nastring . -polish "
         subprocess.check_call("cd %s && perl %s/table_annovar.pl %s.snpeff.vcf %s/humandb -buildver hg19 -out %s -remove %s -vcfinput " %(args.outdir,annovar,key,annovar,key,par),shell=True)
         #########################output final result
