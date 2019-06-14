@@ -104,7 +104,7 @@ for key in sample_ID:
                 outfile.write("%s" % (out_name[i]))
             else:
                 outfile.write("\t%s" % (out_name[i]))
-        outfile.write("\tVAF(%)\tDepth")
+        outfile.write("\n")
         dict = {}
         for line in infile:
             line = line.strip()
@@ -129,10 +129,20 @@ for key in sample_ID:
                 array[dict['AAChange.refGene']] = final_nm
                 for l in range(len(out_name)):
                     if l == 0:
-                        outfile.write("\n%s" % (array[dict[out_name[l]]]))
+                        outfile.write("%s" % (array[dict[out_name[l]]]))
+                    elif out_name[l]=="VAF":
+                        outfile.write("\t%s" % (a[0]))
+                    elif out_name[l] == "Canonical_transcript":
+                        outfile.write("\t%s" % (final_nm))
+                    elif out_name[l] == "Total_Depth":
+                        outfile.write("\t%s" % (b[0]))
+                    elif out_name[l] == "Alt_Depth":
+                        outfile.write("\t.")
+                    elif out_name[l] == "GT":
+                        outfile.write("\t.")
                     else:
                         outfile.write("\t%s" % (array[dict[out_name[l]]]))
-                outfile.write("\t%s\t%s" % (a[0],b[0]))
+                outfile.write("\n")
         infile.close()
         outfile.close()
         subprocess.check_call("cd %s && rm -rf %s.hg19_multianno.txt %s.hg19_multianno.vcf %s.snpeff.vcf %s.snv.tmp.vcf %s.avinput snpEff_summary.html snpEff_genes.txt "%(args.outdir,key,key,key,key,key),shell=True)
