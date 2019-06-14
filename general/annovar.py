@@ -29,7 +29,7 @@ def anno(vcf,outdir,prefix):
     subprocess.check_call("rm -rf %s.hg19_multianno.vcf %s.avinput" %(out,out),shell=True)
     ###########################
     infile = open("%s.hg19_multianno.txt" % (out), "r")
-    outfile = open("%s.final.txt" % (out), "w")
+    outfile = open("%s.annovar.tsv" % (out), "w")
     for i in range(len(out_name)):
         if i == 0:
             outfile.write("%s" % (out_name[i]))
