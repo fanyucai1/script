@@ -98,7 +98,7 @@ for key in sample_ID:
         subprocess.check_call("cd %s && perl %s/table_annovar.pl %s.snpeff.vcf %s/humandb -buildver hg19 -out %s -remove %s -vcfinput " %(args.outdir,annovar,key,annovar,key,par),shell=True)
         #########################output final result
         infile=open("%s/%s.hg19_multianno.txt"%(args.outdir,key),"r")
-        outfile=open("%s/%s.final.snv.tsv"%(args.outdir,key),"w")
+        outfile=open("%s/%s.annovar.tsv"%(args.outdir,key),"w")
         for i in range(len(out_name)):
             if i == 0:
                 outfile.write("%s" % (out_name[i]))
