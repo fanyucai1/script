@@ -2,7 +2,7 @@ import subprocess
 import re
 import sys
 import os
-
+import xlsxwriter
 
 annovar="/software/docker_tumor_base/Resource/Annovar/"
 snpsift="/software/SnpEff/4.3/snpEff/"
@@ -34,14 +34,12 @@ def anno(vcf,outdir,prefix):
     subprocess.check_call("rm -rf %s.hg19_multianno.vcf %s.avinput" %(out,out),shell=True)
     ###########################
     infile = open("%s.hg19_multianno.txt" % (out), "r")
-    outfile = open("%s.annovar.tsv" % (out), "w")
+    workbook = xlsxwriter.Workbook('%s.annovar.xlsx'%(out))
+    worksheet = workbook.add_worksheet()
     for i in range(len(out_name)):
-        if i == 0:
-            outfile.write("%s" % (out_name[i]))
-        else:
-            outfile.write("\t%s" % (out_name[i]))
-    outfile.write("\n")
+        worksheet.write(0, i, "%s" % (out_name[i]))
     dict = {}
+    line_num=0
     for line in infile:
         line = line.strip()
         array = line.split("\t")
@@ -51,6 +49,7 @@ def anno(vcf,outdir,prefix):
                 name.append(array[i])
                 dict[array[i]] = i
         else:
+            line_num+=1
             ##########################format output knownCanonical transcript
             p = re.compile(r'transcript\|(\S+)\|protein_coding')
             a = p.findall(line)
@@ -62,18 +61,14 @@ def anno(vcf,outdir,prefix):
                     if re.search(b[0], tmp[j]):
                         Canonical_transcript = tmp[j]
             for l in range(len(out_name)):
-                if l == 0:
-                    outfile.write("%s" % (array[dict[out_name[l]]]))
-                elif out_name[l]=="Var" or out_name[l]=="Ref_Reads" or out_name[l]=="Alt_Reads" or out_name[l]=="GT":
-                    outfile.write("\t.")
-                #elif out_name[l]=="Canonical_transcript":
+                if out_name[l]=="Var" or out_name[l]=="Ref_Reads" or out_name[l]=="Alt_Reads" or out_name[l]=="GT":
+                    worksheet.write(line_num, l, ".")
                 elif out_name[1]=="AAChange.1":
-                    outfile.write("\t%s"%(Canonical_transcript))
+                    worksheet.write(line_num, l, "%s"%(Canonical_transcript))
                 else:
-                    outfile.write("\t%s" % (array[dict[out_name[l]]]))
-            outfile.write("\n")
+                    worksheet.write(line_num, l, "%s" % (array[dict[out_name[l]]]))
     infile.close()
-    outfile.close()
+    workbook.close()
     subprocess.check_call("rm -rf %s.hg19_multianno.txt %s/snpEff_summary.html %s/snpEff_genes.txt %s.snpeff.anno.vcf" %(out,outdir,outdir,out),shell=True)
     ###########################################################
 
