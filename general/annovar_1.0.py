@@ -58,7 +58,7 @@ def anno(vcf,outdir,prefix):
             for l in range(len(out_name)):
                 if out_name[l]=="Var" or out_name[l]=="Ref_Reads" or out_name[l]=="Alt_Reads" or out_name[l]=="GT":
                     worksheet.write(line_num, l, ".")
-                elif out_name[1]=="AAChange.1":
+                elif out_name[l]=="AAChange.1":
                     worksheet.write(line_num, l, "%s"%(Canonical_transcript))
                 else:
                     worksheet.write(line_num, l, "%s" % (array[dict[out_name[l]]]))
