@@ -5,7 +5,7 @@ import xlsxwriter
 import argparse
 
 annovar="/software/docker_tumor_base/Resource/Annovar/"
-snpsift="/software/SnpEff/4.3/snpEff/"
+snpeff="/software/SnpEff/4.3/snpEff/"
 java="/software/java/jdk1.8.0_202/bin/java"
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene',
           'ExonicFunc.refGene',	'AAChange.refGene',	'cytoBand',	'1000g2015aug_all',	'avsnp150',	'snp138',
@@ -14,12 +14,6 @@ out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDet
           '1000g2015aug_sas','1000g2015aug_afr','1000g2015aug_amr','1000g2015aug_eur','InterVar_automated','GT','AAChange.1',
           'Ref_Reads',	'Alt_Reads','Var']
 def run(dir,samplelist,vaf,outdir):
-    #####################################defined 2d dict
-    def dict2d(dict, key_a, key_b, val):
-        if key_a in dict:
-            dict[key_a].update({key_b: val})
-        else:
-            dict.update({key_a: {key_b: val}})
     #####################################get sample ID
     sample_ID=[]
     infile = open(samplelist, "r")
@@ -125,7 +119,7 @@ def run(dir,samplelist,vaf,outdir):
                         if out_name[l]=="Var":
                             tmp_num = float(a[0]) * 100
                             worksheet.write(line_num, l, "%.2f" % (tmp_num))
-                        elif out_name[l] == "Canonical_transcript":
+                        elif out_name[l] == "AAChange.1":
                             worksheet.write(line_num, l, "%s" % (final_nm))
                         elif out_name[l] == "Ref_Reads":
                             worksheet.write(line_num, l, ".")
