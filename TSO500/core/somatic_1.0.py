@@ -1,6 +1,5 @@
 import subprocess
 import re
-import sys
 import os
 import xlsxwriter
 import argparse
