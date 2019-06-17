@@ -1,14 +1,18 @@
-__author__ = 'Lee'
-import random
-ip_pool = [
-    '119.98.44.192:8118',
-    '111.198.219.151:8118',
-    '101.86.86.101:8118',
-]
-def ip_proxy():
-    ip = ip_pool[random.randrange(0,3)]
-    proxy_ip = 'http://'+ip
-    proxies = {'http':proxy_ip}
-    return proxies
-c=ip_proxy()
-print(type(c))
+import requests
+from bs4 import BeautifulSoup
+import re
+id=input("请输入你的COSMIC ID(e.g:COSM3677745)：")
+pattern=re.compile(r'\d+')
+num=pattern.findall(id)
+url="https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s" %(num[0])
+res=requests.get(url)
+ret = res.text
+soup=BeautifulSoup(ret,'html.parser')
+dbsnp=soup.find_all(text=re.compile("has been flagged as a SNP."))
+dt = soup.find_all('dt')
+dd = soup.find_all('dd')
+for i in range(len(dt)):
+    if dt[i].string == "Ever confirmed somatic?":
+        print("%s\t%s" % (id, dd[i].string))
+if dbsnp!=[]:
+    print("%s\tSNP" % (id))
