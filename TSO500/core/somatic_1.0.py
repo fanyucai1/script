@@ -129,7 +129,6 @@ def run(dir,samplelist,vaf,outdir):
                             worksheet.write(line_num, l, ".")
                         else:
                             worksheet.write(line_num, l, "%s" % (array[dict[out_name[l]]]))
-                    outfile.write("\n")
             infile.close()
             workbook.close()
             subprocess.check_call("cd %s && rm -rf %s.hg19_multianno.txt %s.hg19_multianno.vcf %s.snpeff.vcf %s.snv.tmp.vcf %s.avinput snpEff_summary.html snpEff_genes.txt "%(args.outdir,key,key,key,key,key),shell=True)
