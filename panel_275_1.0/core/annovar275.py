@@ -6,8 +6,6 @@ import os
 annovar="/software/docker_tumor_base/Resource/Annovar/"
 snpsift="/software/SnpEff/4.3/snpEff/"
 java="/software/java/jdk1.8.0_202/bin/java"
-
-database = ['1000g2015aug_all','1000g2015aug_eas', 'ExAC_ALL', 'esp6500siv2_all','ExAC_EAS','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas']
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene',
           'ExonicFunc.refGene',	'AAChange.refGene',	'cytoBand',	'1000g2015aug_all',	'avsnp150',	'snp138',
           'CLNALLELEID','CLNDN','CLNDISDB',	'CLNREVSTAT','CLNSIG','cosmic88_coding','SIFT_score','SIFT_pred',
@@ -20,12 +18,13 @@ def anno(vcf,outdir,prefix):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
     ##########################run snpeff
-    cmd = "cd %s && %s -Xmx40g -jar %s/snpEff.jar -v hg19 -canon -hgvs %s >%s.snpeff.anno.vcf" % (outdir,java, snpsift, vcf, out)
+    cmd = "cd %s && %s -Xmx40g -jar %s/snpEff.jar -v hg19 -canon -hgvs %s >%s.snpeff.anno.vcf" % (outdir,java, snpsift, vcf, prefix)
     subprocess.check_call(cmd, shell=True)
     ##########################run annovar
-    par=" -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,1000g2015aug_eas,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305,ljb26_all,intervar_20180118 "
-    par+=" -operation g,r,f,f,f,f,f,f,f,f,f,f,f,f "
-    par+=" -nastring . -polish "
+    par = " -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,1000g2015aug_eas,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305,ljb26_all,intervar_20180118"
+    par += ",1000g2015aug_sas,1000g2015aug_afr,1000g2015aug_amr,1000g2015aug_eur "
+    par += " -operation g,r,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f "
+    par += " -nastring . -polish "
     subprocess.check_call("perl %s/table_annovar.pl %s.snpeff.anno.vcf %s/humandb -buildver hg19 -out %s -remove %s -vcfinput " %(annovar,out,annovar,out,par),shell=True)
     subprocess.check_call("rm -rf %s.hg19_multianno.vcf %s.avinput" %(out,out),shell=True)
     ###########################
