@@ -22,7 +22,7 @@ def germline(maf,annovar,outdir,prefix):
     out_workbook = xlsxwriter.Workbook('%s.annovar.filter.xlsx' % (out))
     out_worksheet = out_workbook.add_worksheet()
     for i in range(len(out_name)):
-        out_worksheet(0,i,out_name[i])
+        out_worksheet.write(0,i,out_name[i])
     line_num=0
     for k in range(1,in_sheet.nrows):
         if in_sheet.cell(k,8)=="synonymous SNV":
@@ -58,7 +58,7 @@ def germline(maf,annovar,outdir,prefix):
             if result == "true":
                 line_num+=1
                 for l in range(len(out_name)):
-                    out_worksheet(line_num, l, in_sheet.cell(line_num,l))
+                    out_worksheet.write(line_num, l, in_sheet.cell(line_num,l))
         out_workbook.close()
 
 if __name__=="__main__":
