@@ -78,6 +78,7 @@ def anno(vcf,outdir,prefix):
                 else:
                     worksheet.write(line_num, l, "%s" % (array[dict[out_name[l]]]))
     infile.close()
+    workbook.close()
     if os.path.exists("%s.hg19_multianno.txt"%(out)):
         subprocess.check_call("rm -rf %s.hg19_multianno.txt %s/snpEff_genes.txt %s/snpEff_summary.html %s.snpeff.anno.vcf" %(out,outdir,outdir,out),shell=True)
     ###########################################################
