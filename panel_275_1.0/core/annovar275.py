@@ -8,10 +8,12 @@ snpsift="/software/SnpEff/4.3/snpEff/"
 java="/software/java/jdk1.8.0_202/bin/java"
 
 database = ['1000g2015aug_all','1000g2015aug_eas', 'ExAC_ALL', 'esp6500siv2_all','ExAC_EAS','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas']
-out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene','ExonicFunc.refGene','AAChange.refGene','cytoBand',
-          'avsnp150','snp138','ExAC_ALL','ExAC_EAS','esp6500siv2_all','1000g2015aug_all','1000g2015aug_eas','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas',
-          'cosmic88_coding','CLNALLELEID','CLNDN','CLNDISDB','CLNREVSTAT','CLNSIG','InterVar_automated','Canonical_transcript','Total_Depth','Alt_Depth','VAF','GT','SIFT_pred','Polyphen2_HDIV_pred', 'Polyphen2_HVAR_pred','MutationTaster_pred','MutationAssessor_pred','FATHMM_pred',
-          'CADD_phred']
+out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene',
+          'ExonicFunc.refGene',	'AAChange.refGene',	'cytoBand',	'1000g2015aug_all',	'avsnp150',	'snp138',
+          'CLNALLELEID','CLNDN','CLNDISDB',	'CLNREVSTAT','CLNSIG','cosmic88_coding','SIFT_score','SIFT_pred',
+          'Polyphen2_HDIV_score','Polyphen2_HDIV_pred','esp6500siv2_all','ExAC_ALL','ExAC_EAS','1000g2015aug_eas',
+          '1000g2015aug_sas','1000g2015aug_afr','1000g2015aug_amr','1000g2015aug_eur','InterVar_automated','GT','AAChange.1',
+          'Ref_Reads',	'Alt_Reads','Var']
 
 def anno(vcf,outdir,prefix):
     if not os.path.exists(outdir):
@@ -66,14 +68,14 @@ def anno(vcf,outdir,prefix):
             for l in range(len(out_name)):
                 if l == 0:
                     outfile.write("%s" % (array[dict[out_name[l]]]))
-                elif out_name[l]=="VAF":
+                elif out_name[l]=="Var":
                     tmp_num=float(VMF[0])*100
                     outfile.write("\t%.2f" % (tmp_num))
-                elif out_name[l]=="Alt_Depth":
+                elif out_name[l]=="Alt_Reads":
                     outfile.write("\t%s" % (VMT[0]))
-                elif out_name[l] == "Total_Depth":
-                    outfile.write("\t%s" % (UMT[0]))
-                elif out_name[l] == "Canonical_transcript":
+                elif out_name[l] == "Ref_Reads":
+                    outfile.write("\t.")
+                elif out_name[l] == "AAChange.1":
                     outfile.write("\t%s" % (final_nm))
                 elif out_name[l] == "GT":
                     outfile.write("\t%s" % (GT[0]))
