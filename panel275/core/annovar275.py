@@ -20,7 +20,7 @@ def anno(vcf,outdir,prefix):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
     ##########################run snpeff
-    cmd = "cd %s && %s -Xmx40g -jar %s/snpEff.jar -v hg19 -canon -hgvs %s >%s.snpeff.anno.vcf" % (outdir,java, snpsift, vcf, out)
+    cmd = "cd %s && %s -Xmx40g -jar %s/snpEff.jar -v hg19 -canon -hgvs %s >%s.snpeff.anno.vcf" % (outdir,java, snpsift, vcf,prefix)
     subprocess.check_call(cmd, shell=True)
     ##########################run annovar
     par = " -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,1000g2015aug_eas,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305,ljb26_all,intervar_20180118"

@@ -1,6 +1,8 @@
-import re
+
 import sys
 import os
+import xlrd
+import xlsxwriter
 database = ['1000g2015aug_all','1000g2015aug_eas', 'ExAC_ALL', 'esp6500siv2_all','ExAC_EAS','genome_AF','genome_AF_eas','exome_AF','exome_AF_eas']
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene',
           'ExonicFunc.refGene',	'AAChange.refGene',	'cytoBand',	'1000g2015aug_all',	'avsnp150',	'snp138',
@@ -15,51 +17,50 @@ def germline(maf,annovar,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
-    infile = open(annovar, "r")
-    outfile = open("%s.annovar.filter.tsv" % (out), "w")
+    in_workbook = xlrd.open_workbook(annovar)
+    in_sheet = in_workbook.sheet_by_index(0)
+    out_workbook = xlsxwriter.Workbook('%s.annovar.filter.xlsx' % (out))
+    out_worksheet = out_workbook.add_worksheet()
     for i in range(len(out_name)):
-        if i == 0:
-            outfile.write("%s" % (out_name[i]))
+        out_worksheet(0,i,out_name[i])
+    line_num=0
+    for k in range(1,in_sheet.nrows):
+        if in_sheet.cell(k,8)=="synonymous SNV":
+            continue
+        elif in_sheet.cell(k,5)=="intronic" or in_sheet.cell(k,5)=="intergenic" or in_sheet.cell(k,5).startswith("UTR"):
+            continue
         else:
-            outfile.write("\t%s" % (out_name[i]))
-    outfile.write("\n")
-    dict = {}
-    for line in infile:
-        line = line.strip()
-        array = line.split("\t")
-        name = []
-        if line.startswith("Chr"):
-            for i in range(len(array)):
-                name.append(array[i])
-                dict[array[i]] = i
-        else:
-            if array[8]=="synonymous SNV" or array[5]=="intronic" or array[5]=="intergenic" or array[5].startswith("UTR"):
-                continue
             freq = 0
             freq_counts = 0
-            result = ""
-            for i in database:
-                if array[dict[i]] == ".":
-                    pass
-                elif array[dict[i]] != "." and float(array[dict[i]]) <= float(maf):
-                    freq += 1
-                else:
-                    freq_counts += 1
-            if freq_counts < 3:  # not common snp
-                if array[dict['CLNSIG']].startswith("Pathogenic") or array[dict['CLNSIG']].startswith(
-                        "Likely_pathogenic") or array[dict['CLNSIG']].startswith("drug_response"):
-                    result = "true"
-                elif array[dict['InterVar_automated']].startswith("Pathogenic") or array[
-                    dict['InterVar_automated']].startswith("Likely pathogenic"):
-                    result = "true"
-                elif freq >= 1:  # at least 1<MAF
-                    result = "true"
-                else:
-                    pass
+            result = "false"
+            for j in range(0,in_sheet.ncols):
+                if in_sheet.cell(0,j)=="CLNSIG" or in_sheet.cell(0,j)=="InterVar_automated":
+                    if in_sheet.cell(k,j).startswith("Pathogenic"):
+                        result = "true"
+                    if in_sheet.cell(k,j).startswith("Likely_pathogenic"):
+                        result = "true"
+                    if in_sheet.cell(k,j).startswith("drug_response"):
+                        result = "true"
+                    if in_sheet.cell(k,j).startswith("Likely pathogenic"):
+                        result = "true"
+                    for n in database:
+                        if in_sheet.cell(0, j)==n:
+                            if in_sheet.cell(k,j)!=".":
+                                if float(in_sheet.cell(k,j))<= float(maf):
+                                    freq += 1
+                                else:
+                                    freq_counts += 1
+                            else:
+                                pass
+                    if freq_counts < 3:# not common snp
+                        if freq >= 1:  # at least 1<MAF
+                            result = "true"
             if result == "true":
-                outfile.write("%s\n" % (line))
-    infile.close()
-    outfile.close()
+                line_num+=1
+                for l in range(len(out_name)):
+                    out_worksheet(line_num, l, in_sheet.cell(line_num,l))
+        out_workbook.close()
+
 if __name__=="__main__":
     if len(sys.argv)!=5:
         print("Usage:\npython3 filter_germline.py maf annovarfile outdir prefix")
