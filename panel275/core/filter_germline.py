@@ -27,7 +27,7 @@ def germline(maf,annovar,outdir,prefix):
     for k in range(1,in_sheet.nrows):
         if in_sheet.cell(k,8)=="synonymous SNV":
             continue
-        elif in_sheet.cell(k,5)=="intronic" or in_sheet.cell(k,5)=="intergenic" or in_sheet.cell(k,5).startswith("UTR"):
+        elif in_sheet.cell(k,5)=="intronic" or in_sheet.cell(k,5)=="intergenic":
             continue
         else:
             freq = 0
