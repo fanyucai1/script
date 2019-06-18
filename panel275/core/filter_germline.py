@@ -35,13 +35,13 @@ def germline(maf,annovar,outdir,prefix):
             result = "false"
             for j in range(0,in_sheet.ncols):
                 if in_sheet.cell(0,j)=="CLNSIG" or in_sheet.cell(0,j)=="InterVar_automated":
-                    if in_sheet.cell(k,j).startswith("Pathogenic"):
+                    if in_sheet.cell(k,j)=="Pathogenic":
                         result = "true"
-                    if in_sheet.cell(k,j).startswith("Likely_pathogenic"):
+                    if in_sheet.cell(k,j)=="Likely_pathogenic":
                         result = "true"
-                    if in_sheet.cell(k,j).startswith("drug_response"):
+                    if in_sheet.cell(k,j)=="drug_response":
                         result = "true"
-                    if in_sheet.cell(k,j).startswith("Likely pathogenic"):
+                    if in_sheet.cell(k,j)=="Likely pathogenic":
                         result = "true"
                     for n in database:
                         if in_sheet.cell(0, j)==n:
