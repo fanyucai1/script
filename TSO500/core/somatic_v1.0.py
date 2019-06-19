@@ -137,10 +137,10 @@ def run(dir,samplelist,vaf,outdir):
                             outfile.write("\t%.2f" % (tmp_num))
                         elif out_name[l] == "AAChange.1":
                             outfile.write("\t%s" % (final_nm))
-                        elif out_name[l] == "Alt_Reads":
-                            outfile.write("\t%s" % (Reads[1]))
                         elif out_name[l] == "Ref_Reads":
                             outfile.write("\t%s"%(Reads[0]))
+                        elif out_name[l] == "Alt_Reads":
+                            outfile.write("\t%s" % (Reads[1]))
                         elif out_name[l] == "GT":
                             outfile.write("\t%s"%c[0])
                         else:
