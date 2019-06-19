@@ -46,7 +46,6 @@ def run(dir,samplelist,vaf,outdir):
                         name.append(array[i])
                 else:
                     result=0
-                    tmp = array[0] + "\t" + array[1] + "\t" + array[2] + "\t" + array[3]
                     for i in range(len(name)):
                         if name[i]=="VAF" and float(array[i])>= vaf:
                             result+=1
@@ -60,6 +59,7 @@ def run(dir,samplelist,vaf,outdir):
                         if name[i]=="SomaticStatus" and array[i]=="Somatic":
                             result +=1
                     if result==4:
+                        tmp = array[0] + "\t" + array[1] + "\t" + array[2] + "\t" + array[3]
                         dict[tmp]=1
             infile.close()
             infile=open(vcf,"r")
@@ -70,7 +70,8 @@ def run(dir,samplelist,vaf,outdir):
                     tmp=array[0] + "\t" + array[1] + "\t" + array[3] + "\t" + array[4]
                     if tmp in dict:
                         info=array[-1].split(":")
-                        outfile.write("%s\t%s\t.\t%s\t%s\t.\t.\tGT=%s;Alt_Reads=%s;Var=%s\n"%(array[0],array[1],array[3],array[4],info[0],info[2],info[4]))
+                        outfile.write("%s\t%s\t.\t%s\t%s\t.\t.\tGT=%s;AD=%s;Var=%s\n"%(array[0],array[1],array[3],array[4],info[0],info[2],info[4]))
+            infile.close()
             outfile.close()
             ############################anno snpeff
             cmd="%s -Xmx40g -jar %s/snpEff.jar -v hg19 -canon -hgvs %s/%s.snv.tmp.vcf >%s/%s.snpeff.vcf" %(java,snpeff,outdir,key,outdir,key)
@@ -111,7 +112,7 @@ def run(dir,samplelist,vaf,outdir):
                 array = line.split("\t")
                 name = []
                 p1=re.compile(r'Var=([0-9.]+)')
-                p2=re.compile(r'Alt_Reads=([0-9.]+)')
+                p2=re.compile(r'AD=([0-9.,]+)')
                 p3=re.compile(r'GT=(\d/\d)')
                 a=p1.findall(line)
                 b=p2.findall(line)
@@ -121,6 +122,7 @@ def run(dir,samplelist,vaf,outdir):
                         name.append(array[i])
                         dict[array[i]] = i
                 else:
+                    Reads=b[0].split(",")
                     ##############################format output knownCanonical transcript
                     tmp = array[dict['AAChange.refGene']].split(",")
                     final_nm = tmp[0]
@@ -136,9 +138,9 @@ def run(dir,samplelist,vaf,outdir):
                         elif out_name[l] == "AAChange.1":
                             outfile.write("\t%s" % (final_nm))
                         elif out_name[l] == "Alt_Reads":
-                            outfile.write("\t%s" % (b[0]))
+                            outfile.write("\t%s" % (Reads[1]))
                         elif out_name[l] == "Ref_Reads":
-                            outfile.write("\t.")
+                            outfile.write("\t%s"%(Reads[0]))
                         elif out_name[l] == "GT":
                             outfile.write("\t%s"%c[0])
                         else:
