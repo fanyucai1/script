@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-id=input("请输入你的COSMIC ID(e.g:COSM3677745)：")
+id=input("please input COSMIC ID(e.g:COSM3677745):")
 pattern=re.compile(r'\d+')
 num=pattern.findall(id)
 url="https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s" %(num[0])
