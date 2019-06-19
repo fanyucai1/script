@@ -14,12 +14,6 @@ out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDet
           'cosmic88_coding','CLNALLELEID','CLNDN','CLNDISDB','CLNREVSTAT','CLNSIG','InterVar_automated','Canonical_transcript','Total_Depth','Alt_Depth','VAF','GT','SIFT_pred','Polyphen2_HDIV_pred', 'Polyphen2_HVAR_pred','MutationTaster_pred','MutationAssessor_pred','FATHMM_pred',
           'CADD_phred']
 def run(dir,samplelist,vaf,outdir):
-    #####################################defined 2d dict
-    def dict2d(dict, key_a, key_b, val):
-        if key_a in dict:
-            dict[key_a].update({key_b: val})
-        else:
-            dict.update({key_a: {key_b: val}})
     #####################################get sample ID
     sample_ID=[]
     infile = open(samplelist, "r")
