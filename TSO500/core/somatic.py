@@ -140,7 +140,7 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser("")
     parser.add_argument("-d", "--dir", help="TSO500 analysis directory", required=True)
     parser.add_argument("-s", "--samplelist", required=True)
-    parser.add_argument("-v", "--vaf", required=True, default=0, type=float)
+    parser.add_argument("-v", "--vaf", default=0, type=float)
     parser.add_argument("-o", "--outdir", help="output directory", default=os.getcwd())
     args = parser.parse_args()
     run(args.dir, args.samplelist, args.vaf, args.outdir)
