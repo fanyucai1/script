@@ -96,7 +96,7 @@ def run(dir,samplelist,vaf,outdir):
             par += ",1000g2015aug_sas,1000g2015aug_afr,1000g2015aug_amr,1000g2015aug_eur "
             par += " -operation g,r,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f "
             par += " -nastring . -polish "
-            subprocess.check_call("cd %s && perl %s/table_annovar.pl %s.snpeff.vcf %s/humandb -buildver hg19 -out %s -remove %s -vcfinput " %(args.outdir,annovar,key,annovar,key,par),shell=True)
+            subprocess.check_call("cd %s && perl %s/table_annovar.pl %s.snpeff.vcf %s/humandb -buildver hg19 -out %s -remove %s -vcfinput " %(outdir,annovar,key,annovar,key,par),shell=True)
             #########################output final result
             infile=open("%s/%s.hg19_multianno.txt"%(outdir,key),"r")
             outfile=open("%s/%s.annovar.tsv"%(outdir,key),"w")
@@ -148,7 +148,7 @@ def run(dir,samplelist,vaf,outdir):
                     outfile.write("\n")
             infile.close()
             outfile.close()
-            subprocess.check_call("cd %s && rm -rf %s.hg19_multianno.txt %s.hg19_multianno.vcf %s.snpeff.vcf %s.snv.tmp.vcf %s.avinput snpEff_summary.html snpEff_genes.txt "%(args.outdir,key,key,key,key,key),shell=True)
+            subprocess.check_call("cd %s && rm -rf %s.hg19_multianno.txt %s.hg19_multianno.vcf %s.snpeff.vcf %s.snv.tmp.vcf %s.avinput snpEff_summary.html snpEff_genes.txt "%(outdir,key,key,key,key,key),shell=True)
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser("")
