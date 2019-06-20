@@ -32,4 +32,5 @@ core.CNV.run(args.analysis,args.samplelist,"%s/CNV"%(args.outdir))
 core.somatic.run(args.analysis,args.samplelist,0,"%s/SNV"%(args.outdir))
 ##########################TMB and MSI
 shutil.copy("%s/Results/*BiomarkerReport.txt","%s/TMB_MSI"%(args.outdir))
-##########################
+##########################run stat
+core.stat.run(args.samplelist,args.outdir)

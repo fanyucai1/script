@@ -1,3 +1,3 @@
 from . import CNV
-from . import plot
+from . import stat
 from . import somatic

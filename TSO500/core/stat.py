@@ -10,7 +10,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def run(dir,samplelist,outdir):
+def run(samplelist,outdir,dir):
     #####################################defined 2d dict
     def dict2d(dict, key_a, key_b, val):
         if key_a in dict:
@@ -100,4 +100,4 @@ if __name__=="__main__":
     parser.add_argument("-s", "--samplelist", required=True)
     parser.add_argument("-o", "--outdir", help="output directory", default=os.getcwd())
     args = parser.parse_args()
-    run(args.dir,args.samplelist,args.outdir)
+    run(args.samplelist,args.outdir,args.dir)
