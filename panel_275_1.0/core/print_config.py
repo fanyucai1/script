@@ -1,7 +1,7 @@
 import os
 import shutil
 import subprocess
-def tumor_only(p1,p2,sampelID,outdir,purity,sex):
+def tumor_only(p1,p2,sampelID,outdir,purity,sex,type):
     pe1=os.path.basename(p1)
     pe2=os.path.basename(p2)
     if not os.path.exists(outdir):
@@ -64,8 +64,12 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex):
                    "runCNV = True\n"
                   "sampleType =  Single\n"
                   "duplex = False\n"
-                  "refUmiFiles =/srv/qgen/data/base_line_tissue/%s1.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s2.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s3.sum.primer.umis.txt"
-                  % (purity,sampelID, pe1, pe2,sex,sex,sex))
+                   % (purity,sampelID, pe1, pe2))
+    if type=="cfDNA":
+        pass
+    else:
+        outfile.write("refUmiFiles =/srv/qgen/data/base_line_tissue/%s1.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s2.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s3.sum.primer.umis.txt\n"
+                      %(sex,sex,sex))
     outfile.close()
     cmd = "docker run -v /software/qiaseq-dna/data/:/srv/qgen/data/ -v %s:/project/ " \
           "qiaseq275:1.0 python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single %s" \
