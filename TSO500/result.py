@@ -21,9 +21,9 @@ if not os.path.exists(args.outdir):
 if not os.path.exists("%s/SNV"%(args.outdir)):
     os.mkdir("%s/SNV"%(args.outdir))
 if not os.path.exists("%s/CNV"%(args.outdir)):
-    os.mkdir("%s/CNV"%(args.outdir))
+    os.mkdir("%s/result/CNV"%(args.outdir))
 if not os.path.exists("%s/fusion"%(args.outdir)):
-    os.mkdir("%s/fusion"%(args.outdir))
+    os.mkdir("%s/result/fusion"%(args.outdir))
 if not os.path.exists("%s/TMB_MSI"%(args.outdir)):
     os.mkdir("%s/TMB_MSI" % (args.outdir))
 ##########################run CNV
@@ -33,4 +33,4 @@ core.somatic.run(args.analysis,args.samplelist,0,"%s/SNV"%(args.outdir))
 ##########################TMB and MSI
 shutil.copy("%s/Results/*BiomarkerReport.txt","%s/TMB_MSI"%(args.outdir))
 ##########################run stat
-core.stat.run(args.samplelist,args.outdir)
+core.stat.run(args.samplelist)

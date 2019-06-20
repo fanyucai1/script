@@ -98,6 +98,6 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser("Output TSO stat result.")
     parser.add_argument("-d", "--dir", help="result directory", default="/data/TSO500/")
     parser.add_argument("-s", "--samplelist", required=True)
-    parser.add_argument("-o", "--outdir", help="output directory", default=os.getcwd())
+    parser.add_argument("-o", "--outdir", help="output directory", default="/data/TSO500/")
     args = parser.parse_args()
     run(args.samplelist,args.outdir,args.dir)
