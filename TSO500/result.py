@@ -15,6 +15,7 @@ args=parser.parse_args()
 ###########################
 args.analysis=os.path.abspath(args.analysis)
 args.outdir=os.path.abspath(args.outdir)
+args.samplelist=os.path.abspath(args.samplelist)
 if not os.path.exists(args.outdir):
     os.mkdir(args.outdir)
 if not os.path.exists("%s/SNV"%(args.outdir)):
