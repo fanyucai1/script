@@ -54,4 +54,4 @@ for id in sample:
         outfile.close()
         if i==0:
             subprocess.check_call("rm -rf %s/%s.cnv.tsv" %(args.outdir,id),shell=True)
-            print("sample %s not find CNV"%(id)) 
+            print("sample %s not find CNV"%(id))
