@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 matplotlib.style.use('ggplot')
 import seaborn as sns
 
-df=pd.read_table("TMB_MSI.tsv",sep="\t",header=0)
+df=pd.read_csv("TMB_MSI.tsv",sep="\t",header=0)
 x=df['Total_TMB']
 y=df['Cancer']
 fig, axs = plt.subplots()
