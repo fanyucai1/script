@@ -32,6 +32,6 @@ if not os.path.exists("%s/TMB_MSI"%(args.outdir)):
 ##########################run somatic
 #core.somatic.run(args.analysis,args.samplelist,0,"%s/SNV"%(args.outdir))
 ##########################TMB and MSI
-subprocess.check_call("cp %s/Results/*BiomarkerReport.txt %s/TMB_MSI/"%(args.analysis,args.outdir))
+subprocess.check_call("cp %s/Results/*BiomarkerReport.txt %s/TMB_MSI/"%(args.analysis,args.outdir),shell=True)
 ##########################run stat
 core.stat.run(args.samplelist)
