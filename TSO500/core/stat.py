@@ -91,7 +91,7 @@ def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
     y = df['Cancer']
     plt.figure(figsize=(18, 10))
     sns.boxplot(x, y, data=df)
-    plt.savefig('%s/TMB.png', dpi=300)
+    plt.savefig('%s/TMB.png'%(outdir), dpi=300)
     #####################################################
 
 if __name__=="__main__":
