@@ -4,7 +4,6 @@ import os
 import argparse
 import subprocess
 import re
-import sys
 
 cmd="cd /software/TSO500/1.3.1/craft_1.0.0.49/resource/ && /software/dotnet/dotnet /software/TSO500/1.3.1/craft_1.0.0.49/Craft.dll " \
     "-baselineFile craft_baseline.txt -manifestFile craft_manifest.txt  -callGender true -genderThreshold 0.05 " \
