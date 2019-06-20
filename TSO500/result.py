@@ -13,6 +13,8 @@ parser.add_argument("-o","--outdir",help="output directory",required=True)
 args=parser.parse_args()
 
 ###########################
+args.analysis=os.path.abspath(args.analysis)
+args.outdir=os.path.abspath(args.outdir)
 if not os.path.exists(args.outdir):
     os.mkdir(args.outdir)
 if not os.path.exists("%s/SNV"%(args.outdir)):
