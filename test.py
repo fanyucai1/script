@@ -16,3 +16,6 @@ for i in range(len(dt)):
         print("%s\t%s" % (id, dd[i].string))
 if dbsnp!=[]:
     print("%s\tSNP" % (id))
+
+
+
