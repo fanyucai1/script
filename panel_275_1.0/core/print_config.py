@@ -67,7 +67,7 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex,type):
                    % (purity,sampelID, pe1, pe2))
     if type=="cfDNA":
         outfile.write(
-            "refUmiFiles =/srv/qgen/data/base_line_cfDNA/%s1.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s2.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s3.sum.primer.umis.txt,/srv/qgen/data/base_line_cfDNA/%s4.sum.primer.umis.txt\n"
+            "refUmiFiles =/srv/qgen/data/base_line_cfDNA/%s1.sum.primer.umis.txt,/srv/qgen/data/base_line_cfDNA/%s2.sum.primer.umis.txt,/srv/qgen/data/base_line_cfDNA/%s3.sum.primer.umis.txt,/srv/qgen/data/base_line_cfDNA/%s4.sum.primer.umis.txt\n"
             % (sex, sex, sex,sex))
     else:
         outfile.write("refUmiFiles =/srv/qgen/data/base_line_tissue/%s1.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s2.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s3.sum.primer.umis.txt\n"
