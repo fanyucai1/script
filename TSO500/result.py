@@ -12,7 +12,6 @@ parser.add_argument("-a","--analysis",help="analysis directory",required=True)
 parser.add_argument("-s","--samplelist",help="sample list",required=True)
 parser.add_argument("-o","--outdir",help="output directory",required=True)
 args=parser.parse_args()
-
 ###########################
 args.analysis=os.path.abspath(args.analysis)
 args.outdir=os.path.abspath(args.outdir)
