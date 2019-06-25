@@ -28,7 +28,7 @@ for line in infile:
         array=line.split("\t")
         pattern=re.compile(r'(\d+)')
         id=pattern.findall(array[2])
-        if not id[0] in dict:
+        if not array[2] in dict:
             numID.append(id[0])
 infile.close()
 def run(id):
