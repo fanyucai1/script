@@ -26,6 +26,7 @@ def run(vcf,genelist,vaf,outdir,prefix):
                 GT=info[0]
                 AD=info[1].split(",")
                 VF=info[2].split(",")
+                ALT=array[4].split(",")
                 Ref_Reads =AD[0]
                 if VF==[]:
                     Alt_Reads=AD[1]
@@ -37,7 +38,7 @@ def run(vcf,genelist,vaf,outdir,prefix):
                         Alt_Reads=AD[i]
                         Var=VF[i-1]
                         if float(Var)>=float(vaf):
-                            all.write("%s\t%s\t%s\t%s\t%s\t.\t.\tRef_Reads=%s;Alt_Reads=%s;GT=%s;Var=%s\n" % (array[0], array[1], array[2], array[3], array[4], Ref_Reads, Alt_Reads, GT, Var))
+                            all.write("%s\t%s\t%s\t%s\t%s\t.\t.\tRef_Reads=%s;Alt_Reads=%s;GT=%s;Var=%s\n" % (array[0], array[1], array[2], array[3], ALT[i-1], Ref_Reads, Alt_Reads, GT, Var))
     infile.close()
     all.close()
 if __name__=="__main__":
