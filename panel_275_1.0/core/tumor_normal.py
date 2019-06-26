@@ -26,6 +26,7 @@ def run(genelist,vaf,vcf,outdir,prefix):
                 AD=info[1].split(",")
                 VF=info[2].split(",")
                 Ref_Reads =AD[0]
+                ALT = array[4].split(",")
                 if VF==[]:
                     Alt_Reads=AD[1]
                     Var=info[2]
@@ -40,9 +41,9 @@ def run(genelist,vaf,vcf,outdir,prefix):
                         Var=VF[i-1]
                         if float(Var) >= float(vaf):
                             if a != []:  # germline
-                                germline.write("%s\t%s\t%s\t%s\t%s\t.\t.\tRef_Reads=%s;Alt_Reads=%s;GT=%s;Var=%s\n" % (array[0], array[1], array[2], array[3], array[4], Ref_Reads, Alt_Reads, GT, Var))
+                                germline.write("%s\t%s\t%s\t%s\t%s\t.\t.\tRef_Reads=%s;Alt_Reads=%s;GT=%s;Var=%s\n" % (array[0], array[1], array[2], array[3], ALT[i-1], Ref_Reads, Alt_Reads, GT, Var))
                             else:
-                                somatic.write("%s\t%s\t%s\t%s\t%s\t.\t.\tRef_Reads=%s;Alt_Reads=%s;GT=%s;Var=%s\n" % (array[0], array[1], array[2], array[3], array[4], Ref_Reads, Alt_Reads, GT, Var))
+                                somatic.write("%s\t%s\t%s\t%s\t%s\t.\t.\tRef_Reads=%s;Alt_Reads=%s;GT=%s;Var=%s\n" % (array[0], array[1], array[2], array[3], ALT[i-1], Ref_Reads, Alt_Reads, GT, Var))
     infile.close()
     somatic.close()
     germline.close()
