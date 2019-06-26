@@ -47,10 +47,11 @@ if c=="0" and d=="0":
     core.germline_somatic.run_split("%s.vaf.%s.vcf" % (out, vaf), args.outdir, args.prefix)
 else:
     core.tumor_normal.run("%s.smCounter.anno.vcf"%(out),args.genelist,vaf,args.outdir,args.prefix)
-"""
+
 ######################################################################anno vcf
 core.annovar275.anno("%s.germline.vcf"%(out),"%s"%(args.outdir),"%s.germline"%(args.prefix))
 core.annovar275.anno("%s.somatic.vcf"%(out),"%s"%(args.outdir),"%s.somatic"%(args.prefix))
+"""
 if c=="0" and d=="0":
     core.annovar275.anno("%s.unknow.vcf"%(out),"%s"%(args.outdir),"%s.unknow"%(args.prefix))
 if not os.path.exists("%s/result/"%(args.outdir)):
