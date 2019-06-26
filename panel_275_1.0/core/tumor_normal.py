@@ -17,7 +17,7 @@ def run(vcf,genelist,vaf,outdir,prefix):
         line=line.strip()
         if not line.startswith("#"):
             array = line.split("\t")
-            gene=array[7].split("\|")
+            gene=array[7].split("|")
             if gene == [] :
                 continue
             try:
