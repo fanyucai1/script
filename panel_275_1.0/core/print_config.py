@@ -82,13 +82,17 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex,typen,n1="0",n2="0"):
             shutil.copy(n1, outdir)
         if not os.path.exists("%s/%s" % (outdir, pe4)):
             shutil.copy(n2, outdir)
-        outfile.write("sampleType =tumor\n[normal]\n"
-                  "readFile1 = /project/%s\n"
-                  "readFile2 = /project/%s\n"
-                  "instrument = Other\n"
-                  "primerFile =/srv/qgen/example/DHS-3501Z.primer3.txt\n"
-                  "roiBedFile =/srv/qgen/example/DHS-3501Z.roi.bed\n"
-                  "platform = Illumina\nsampleType =normal\nduplex = False\n"%(pe3,pe4))
+        outfile.write(
+            "sampleType =tumor\n"
+            "[normal]\n"
+            "readFile1 = /project/%s\n"
+            "readFile2 = /project/%s\n"
+            "instrument = Other\n"
+            "primerFile =/srv/qgen/example/DHS-3501Z.primer3.txt\n"
+            "roiBedFile =/srv/qgen/example/DHS-3501Z.roi.bed\n"
+            "platform = Illumina\n"
+            "sampleType =normal\n"
+            "duplex = False\n"%(pe3,pe4))
     else:
         outfile.write("sampleType =Single\n")
     ###################################
