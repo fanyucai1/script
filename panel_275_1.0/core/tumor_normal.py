@@ -17,7 +17,8 @@ def run(genelist,vaf,vcf,outdir,prefix):
         line=line.strip()
         if not line.startswith("#"):
             p = re.compile(r'ANN=(\S+)')
-            gene=p.findall(line)
+            gene1=p.findall(line)
+            gene=gene1[0].split("\|")
             if gene[3] in dict:
                 array=line.split("\t")
                 pattern=re.compile(r'Germline_Risk')
