@@ -1,7 +1,7 @@
 import argparse
 import re
 
-def run(genelist,vaf,vcf,outdir,prefix):
+def run(vcf,genelist,vaf,outdir,prefix):
     dict={}
     infile = open(genelist, "r")
     for line in infile:
@@ -55,4 +55,4 @@ if __name__=="__main__":
     parser.add_argument("-o","--outdir",help="output directory",required=True)
     parser.add_argument("-p","--prefix",help="prefix output",required=True)
     args=parser.parse_args()
-    run(args.genelist,args.vaf,args.vcf,args.outdir,args.prefix)
+    run(args.vcf,args.genelist,args.vaf,args.outdir,args.prefix)
