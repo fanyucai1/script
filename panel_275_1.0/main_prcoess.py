@@ -64,11 +64,11 @@ core.filter_somatic.somatic(args.maf,"%s.unknow.annovar.tsv"%(out),"%s/result/SN
 ######################################################################MSI
 core.MSI.run_msi("%s.bam"%(out),"%s"%(args.outdir),"%s"%(args.prefix))
 if not os.path.exists("%s/result/MSI"%(args.outdir)):
-os.mkdir("%s/result/MSI"%(args.outdir))
+    os.mkdir("%s/result/MSI"%(args.outdir))
 shutil.copy("%s.msi.tsv"%(out),"%s/result/MSI/"%(args.outdir))
 ######################################################################run CNV and filter CNV gene list
 if not os.path.exists("%s/result/CNV"%(args.outdir)):
-os.mkdir("%s/result/CNV"%(args.outdir))
+    os.mkdir("%s/result/CNV"%(args.outdir))
 core.cnv.run("%s.copy-number.vcf"%(out),args.sex,args.genelist,"%s/result/CNV"%(args.outdir),args.prefix)
 ######################################################################sample quality statistics
 core.stat_qc.run(args.outdir,args.prefix)
