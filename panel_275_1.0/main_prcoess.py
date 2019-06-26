@@ -44,9 +44,10 @@ if c=="0" and d=="0":
     #####################################################################filter VAF and genelist
     core.prefilter.run("%s.smCounter.anno.vcf"%(out),args.genelist,vaf,args.outdir,args.prefix)
     #####################################################################split germline and somatic
-    core.germline_somatic.run_split("%s.vaf.%s.vcf" % (out, vaf), args.outdir, args.prefix)
+    #core.germline_somatic.run_split("%s.vaf.%s.vcf" % (out, vaf), args.outdir, args.prefix)
 else:
     core.tumor_normal.run("%s.smCounter.anno.vcf"%(out),args.genelist,vaf,args.outdir,args.prefix)
+"""
 ######################################################################anno vcf
 core.annovar275.anno("%s.germline.vcf"%(out),"%s"%(args.outdir),"%s.germline"%(args.prefix))
 core.annovar275.anno("%s.somatic.vcf"%(out),"%s"%(args.outdir),"%s.somatic"%(args.prefix))
@@ -77,3 +78,4 @@ core.stat_qc.run(args.outdir,args.prefix)
 ######################################################################
 end=time.time()
 print("Elapse time is %g seconds" %(end-start))
+"""
