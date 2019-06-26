@@ -40,10 +40,10 @@ def run(vcf,genelist,vaf,outdir,prefix):
     all.close()
 if __name__=="__main__":
     parser=argparse.ArgumentParser()
-    parser.add_argument("-g","--genelist",help="gene list",required=True)
+    parser.add_argument("--genelist",help="gene list",required=True)
     parser.add_argument("--vaf",help="VAF",required=True)
     parser.add_argument("--vcf",help="vcf",required=True)
-    parser.add_argument("-o","--outdir",help="output directory",required=True)
-    parser.add_argument("-p","--prefix",help="prefix output",required=True)
+    parser.add_argument("--outdir",help="output directory",required=True)
+    parser.add_argument("--prefix",help="prefix output",required=True)
     args=parser.parse_args()
     run(args.vcf,args.genelist,args.vaf,args.outdir,args.prefix)
