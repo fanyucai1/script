@@ -20,6 +20,7 @@ def run(vcf,genelist,vaf,outdir,prefix):
             gene=array[7].split("|")
             if gene == [] :
                 continue
+                print(gene)
             try:
                 print(gene[3])
             except:
