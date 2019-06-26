@@ -18,6 +18,11 @@ def run(vcf,genelist,vaf,outdir,prefix):
         if not line.startswith("#"):
             array = line.split("\t")
             gene=array[7].split("|")
+            if gene != []:
+                try:
+                    print(gene[3])
+                except:
+                    print(line)
             if gene!=[] and gene[3] in dict:
                 pattern=re.compile(r'Germline_Risk')
                 a=pattern.findall(array[6])
