@@ -18,7 +18,7 @@ def run(vcf,genelist,vaf,outdir,prefix):
         if not line.startswith("#"):
             array = line.split("\t")
             gene=array[7].split("|")
-            if gene==[]:
+            if len(gene)<4:
                 continue
             if gene[3] in dict:
                 pattern=re.compile(r'Germline_Risk')
