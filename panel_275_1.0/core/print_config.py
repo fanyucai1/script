@@ -73,7 +73,6 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex,typen,n1="0",n2="0"):
     else:
         outfile.write("refUmiFiles =/srv/qgen/data/base_line_tissue/%s1.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s2.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s3.sum.primer.umis.txt\n"
                       %(sex,sex,sex))
-    outfile.close()
     ####################################normal sample
     if n1 != "0" and n2 != "0":
         pe3 = os.path.basename(n1)
@@ -95,6 +94,7 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex,typen,n1="0",n2="0"):
             "duplex = False\n"%(pe3,pe4))
     else:
         outfile.write("sampleType =Single\n")
+    outfile.close()
     ###################################
     cmd = "docker run -v /software/qiaseq-dna/data/:/srv/qgen/data/ -v %s:/project/ " \
           "qiaseq275:1.0 python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single %s" \
