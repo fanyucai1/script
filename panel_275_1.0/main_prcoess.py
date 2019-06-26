@@ -18,7 +18,6 @@ parser.add_argument("-n2","--n2",help="normal 3 reads",default="0")
 parser.add_argument("-p","--prefix",help="prefix output",required=True)
 parser.add_argument("-o","--outdir",help="output directory",required=True)
 parser.add_argument("-g","--genelist",help="gene list",required=True)
-parser.add_argument("-v","--vaf",help="VAF threshold",choices=[0.02,0.005],required=True,type=float)
 parser.add_argument("-m","--maf",help="maf",choices=[0.01],default=0.01,type=float)
 parser.add_argument("-t","--type",help="sample type",choices=["tissue","ctDNA"],required=True)
 parser.add_argument("-s","--sex",help="sex",choices=["male","female"],required=True)
@@ -32,19 +31,22 @@ b=args.pe2
 c=args.n1
 d=args.n2
 purity=0
-if args.vaf==0.02:
+vaf=0
+if args.type=="tissue":
+    vaf=0.02
     purity=0.1
 else:
     purity=0.01
+    vaf = 0.005
 #####################################################################run docker
 core.print_config.tumor_only(a, b, args.prefix, args.outdir,purity,args.sex,args.type,c,d)
 if c=="0" and d=="0":
     #####################################################################filter VAF and genelist
-    core.prefilter.run("%s.smCounter.anno.vcf"%(out),args.genelist,args.vaf,args.outdir,args.prefix)
+    core.prefilter.run("%s.smCounter.anno.vcf"%(out),args.genelist,vaf,args.outdir,args.prefix)
     #####################################################################split germline and somatic
-    core.germline_somatic.run_split("%s.vaf.%s.vcf" % (out, args.vaf), args.outdir, args.prefix)
+    core.germline_somatic.run_split("%s.vaf.%s.vcf" % (out, vaf), args.outdir, args.prefix)
 else:
-    core.tumor_normal.run("%s.smCounter.anno.vcf"%(out),args.genelist,args.vaf,args.outdir,args.prefix)
+    core.tumor_normal.run("%s.smCounter.anno.vcf"%(out),args.genelist,vaf,args.outdir,args.prefix)
 ######################################################################anno vcf
 core.annovar275.anno("%s.germline.vcf"%(out),"%s"%(args.outdir),"%s.germline"%(args.prefix))
 core.annovar275.anno("%s.somatic.vcf"%(out),"%s"%(args.outdir),"%s.somatic"%(args.prefix))
