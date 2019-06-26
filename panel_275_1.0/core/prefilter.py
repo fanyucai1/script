@@ -17,8 +17,8 @@ def run(vcf,genelist,vaf,outdir,prefix):
     for line in infile:
         line=line.strip()
         if not line.startswith("#"):
-            p = re.compile(r'ANN=(\S+)')
-            gene=p.findall(line)
+            array = line.split("\t")
+            gene = array[7].split("|")
             if gene[3] in dict:
                 array=line.split("\t")
                 info=array[-1].split(":")
