@@ -30,13 +30,13 @@ def run(vcf,genelist,vaf,outdir,prefix):
                 if VF==[]:
                     Alt_Reads=AD[1]
                     Var=info[2]
-                    if float(Var) >= vaf:
+                    if float(Var) >= float(vaf):
                         all.write("%s\t%s\t%s\t%s\t%s\t.\t.\tRef_Reads=%s;Alt_Reads=%s;GT=%s;Var=%s\n"%(array[0],array[1],array[2],array[3],array[4],Ref_Reads,Alt_Reads,GT,Var))
                 else:
                     for i in range(1,len(AD)):
                         Alt_Reads=AD[i]
                         Var=VF[i-1]
-                        if float(Var)>=vaf:
+                        if float(Var)>=float(vaf):
                             all.write("%s\t%s\t%s\t%s\t%s\t.\t.\tRef_Reads=%s;Alt_Reads=%s;GT=%s;Var=%s\n" % (array[0], array[1], array[2], array[3], array[4], Ref_Reads, Alt_Reads, GT, Var))
     infile.close()
     all.close()
