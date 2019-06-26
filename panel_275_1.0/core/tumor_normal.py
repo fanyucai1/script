@@ -20,6 +20,10 @@ def run(vcf,genelist,vaf,outdir,prefix):
             gene=array[7].split("|")
             if gene == [] :
                 continue
+            try:
+                print(gene[3])
+            except:
+                print(line)
             if gene[3] in dict:
                 pattern=re.compile(r'Germline_Risk')
                 a=pattern.findall(array[6])
