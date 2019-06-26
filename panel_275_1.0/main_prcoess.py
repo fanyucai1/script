@@ -42,7 +42,7 @@ else:
 core.print_config.tumor_only(a, b, args.prefix, args.outdir,purity,args.sex,args.type,c,d)
 if c=="0" and d=="0":
     #####################################################################filter VAF and genelist
-    core.prefilter.run("%s.smCounter.anno.vcf"%(out),args.genelist,vaf,args.outdir,args.prefix)
+    #core.prefilter.run("%s.smCounter.anno.vcf"%(out),args.genelist,vaf,args.outdir,args.prefix)
     #####################################################################split germline and somatic
     core.germline_somatic.run_split("%s.vaf.%s.vcf" % (out, vaf), args.outdir, args.prefix)
 else:
