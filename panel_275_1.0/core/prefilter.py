@@ -19,7 +19,7 @@ def run(vcf,genelist,vaf,outdir,prefix):
         if not line.startswith("#"):
             array = line.split("\t")
             gene = array[7].split("|")
-            if gene[3] in dict:
+            if gene != [] and gene[3] in dict:
                 array=line.split("\t")
                 info=array[-1].split(":")
                 GT=info[0]
