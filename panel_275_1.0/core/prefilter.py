@@ -20,6 +20,7 @@ def run(vcf,genelist,vaf,outdir,prefix):
             array = line.split("\t")
             gene = array[7].split("|")
             if gene[3] in dict:
+                print(line)
                 array=line.split("\t")
                 info=array[-1].split(":")
                 GT=info[0]
