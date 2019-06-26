@@ -46,13 +46,13 @@ def anno(vcf,outdir,prefix):
                 name.append(array[i])
                 dict[array[i]] = i
         else:
-            p1 = re.compile(r'UMT=([0-9]+)')
-            p2 = re.compile(r'VMT=([0-9]+)')
-            p3 = re.compile(r'VMF=(\d+\.\d+)')
-            p4=re.compile(r'GT=(\d+\/\d+)')
-            UMT = p1.findall(line)
-            VMT = p2.findall(line)
-            VMF = p3.findall(line)
+            p1 = re.compile(r'Alt_Reads=([0-9]+)')
+            p2 = re.compile(r'Ref_Reads=([0-9]+)')
+            p3 = re.compile(r'Var=(\d+.\d+)')
+            p4=re.compile(r'GT=(\d+/\d+)')
+            Alt_Reads = p1.findall(line)
+            Ref_Reads = p2.findall(line)
+            Var = p3.findall(line)
             GT=p4.findall(line)
             ##########################format output knownCanonical transcript
             p = re.compile(r'transcript\|(\S+)\|protein_coding')
@@ -68,12 +68,12 @@ def anno(vcf,outdir,prefix):
                 if l == 0:
                     outfile.write("%s" % (array[dict[out_name[l]]]))
                 elif out_name[l]=="Var":
-                    tmp_num=float(VMF[0])*100
+                    tmp_num=float(Var[0])*100
                     outfile.write("\t%.2f" % (tmp_num))
                 elif out_name[l]=="Alt_Reads":
-                    outfile.write("\t%s" % (VMT[0]))
+                    outfile.write("\t%s" % (Alt_Reads[0]))
                 elif out_name[l] == "Ref_Reads":
-                    outfile.write("\t.")
+                    outfile.write("\t%s"%(Ref_Reads[0]))
                 elif out_name[l] == "AAChange.1":
                     outfile.write("\t%s" % (final_nm))
                 elif out_name[l] == "GT":

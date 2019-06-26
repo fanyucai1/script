@@ -7,3 +7,4 @@ from . import prefilter
 from . import MSI
 from . import cnv
 from . import stat_qc
+from . import tumor_normal
