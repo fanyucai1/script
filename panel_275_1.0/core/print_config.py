@@ -1,15 +1,17 @@
 import os
 import shutil
 import subprocess
-def tumor_only(p1,p2,sampelID,outdir,purity,sex,type):
-    pe1=os.path.basename(p1)
-    pe2=os.path.basename(p2)
+def tumor_only(p1,p2,sampelID,outdir,purity,sex,typen,n1="0",n2="0"):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
+    ##################################tumor sample
+    pe1 = os.path.basename(p1)
+    pe2 = os.path.basename(p2)
     if not os.path.exists("%s/%s" %(outdir,pe1)):
         shutil.copy(p1,outdir)
     if not os.path.exists("%s/%s" % (outdir, pe2)):
         shutil.copy(p2,outdir)
+    ##################################output parameter
     outfile = open("%s/run_sm_counter_v2.params.txt" % (outdir), "w")
     outfile.write("[general]\n"
                   "cutadaptDir = /opt/conda/bin/\n"
@@ -62,7 +64,6 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex,type):
                   "roiBedFile =/srv/qgen/example/DHS-3501Z.roi.bed\n"
                   "platform = Illumina\n"
                    "runCNV = True\n"
-                  "sampleType =  Single\n"
                   "duplex = False\n"
                    % (purity,sampelID, pe1, pe2))
     if type=="cfDNA":
@@ -73,6 +74,24 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex,type):
         outfile.write("refUmiFiles =/srv/qgen/data/base_line_tissue/%s1.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s2.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s3.sum.primer.umis.txt\n"
                       %(sex,sex,sex))
     outfile.close()
+    ####################################normal sample
+    if n1 != "0" and n2 != "0":
+        pe3 = os.path.basename(n1)
+        pe4 = os.path.basename(n1)
+        if not os.path.exists("%s/%s" % (outdir, pe3)):
+            shutil.copy(n1, outdir)
+        if not os.path.exists("%s/%s" % (outdir, pe4)):
+            shutil.copy(n2, outdir)
+        outfile.write("sampleType =tumor\n[normal]\n"
+                  "readFile1 = /project/%s\n"
+                  "readFile2 = /project/%s\n"
+                  "instrument = Other\n"
+                  "primerFile =/srv/qgen/example/DHS-3501Z.primer3.txt\n"
+                  "roiBedFile =/srv/qgen/example/DHS-3501Z.roi.bed\n"
+                  "platform = Illumina\nsampleType =normal\nduplex = False\n"%(pe3,pe4))
+    else:
+        outfile.write("sampleType =Single\n")
+    ###################################
     cmd = "docker run -v /software/qiaseq-dna/data/:/srv/qgen/data/ -v %s:/project/ " \
           "qiaseq275:1.0 python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single %s" \
           % (outdir, sampelID)

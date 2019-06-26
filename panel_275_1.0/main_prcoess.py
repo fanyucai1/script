@@ -13,6 +13,8 @@ import shutil
 parser=argparse.ArgumentParser("Run 275 panel analysis.")
 parser.add_argument("-p1","--pe1",help="tumor 5 reads",required=True)
 parser.add_argument("-p2","--pe2",help="tumor 3 reads",required=True)
+parser.add_argument("-n1","--n1",help="normal 5 reads",default="0")
+parser.add_argument("-n2","--n2",help="normal 3 reads",default="0")
 parser.add_argument("-p","--prefix",help="prefix output",required=True)
 parser.add_argument("-o","--outdir",help="output directory",required=True)
 parser.add_argument("-g","--genelist",help="gene list",required=True)
@@ -27,6 +29,8 @@ if not os.path.exists(args.outdir):
 out=args.outdir+"/"+args.prefix
 a=args.pe1
 b=args.pe2
+c=args.n1
+d=args.n2
 purity=0
 if args.vaf==0.02:
     purity=0.1
