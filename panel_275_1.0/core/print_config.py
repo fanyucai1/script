@@ -76,7 +76,7 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex,typen,n1="0",n2="0"):
     ####################################normal sample
     if n1 != "0" and n2 != "0":
         pe3 = os.path.basename(n1)
-        pe4 = os.path.basename(n1)
+        pe4 = os.path.basename(n2)
         if not os.path.exists("%s/%s" % (outdir, pe3)):
             shutil.copy(n1, outdir)
         if not os.path.exists("%s/%s" % (outdir, pe4)):
