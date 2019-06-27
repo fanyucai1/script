@@ -74,6 +74,7 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex,typen,n1="0",n2="0"):
         outfile.write("refUmiFiles =/srv/qgen/data/base_line_tissue/%s1.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s2.sum.primer.umis.txt,/srv/qgen/data/base_line_tissue/%s3.sum.primer.umis.txt\n"
                       %(sex,sex,sex))
     ####################################normal sample
+    cmd=""
     if n1 != "0" and n2 != "0":
         pe3 = os.path.basename(n1)
         pe4 = os.path.basename(n2)
@@ -92,13 +93,16 @@ def tumor_only(p1,p2,sampelID,outdir,purity,sex,typen,n1="0",n2="0"):
             "platform = Illumina\n"
             "sampleType =normal\n"
             "duplex = False\n"%(pe3,pe4))
+        cmd = "docker run -v /software/qiaseq-dna/data/:/srv/qgen/data/ -v %s:/project/ " \
+              "qiaseq275:1.0 python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 tumor-normal %s normal" \
+              % (outdir, sampelID)
     else:
+        cmd = "docker run -v /software/qiaseq-dna/data/:/srv/qgen/data/ -v %s:/project/ " \
+              "qiaseq275:1.0 python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single %s" \
+              % (outdir, sampelID)
         outfile.write("sampleType =Single\n")
     outfile.close()
     ###################################
-    cmd = "docker run -v /software/qiaseq-dna/data/:/srv/qgen/data/ -v %s:/project/ " \
-          "qiaseq275:1.0 python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single %s" \
-          % (outdir, sampelID)
     if not os.path.exists("%s/%s.smCounter.anno.vcf"%(outdir,sampelID)):
         subprocess.check_call(cmd,shell=True)
     else:

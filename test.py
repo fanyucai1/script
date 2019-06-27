@@ -5,7 +5,7 @@ id=input("please input COSMIC ID(e.g:COSM3677745):")
 pattern=re.compile(r'\d+')
 num=pattern.findall(id)
 url="https://cancer.sanger.ac.uk/cosmic/mutation/overview?genome=37&id=%s" %(num[0])
-res=requests.get(url,proxies={"https":"https://163.204.244.194:9999"})
+res=requests.get(url,proxies={"https":"https://60.13.42.211:9999"})
 ret = res.text
 soup=BeautifulSoup(ret,'html.parser')
 dbsnp=soup.find_all(text=re.compile("has been flagged as a SNP."))
