@@ -4,15 +4,8 @@
 import argparse
 import os
 import re
-def run(samplelist,indir="/data/Panel275/"):
-    infile=open(samplelist,"r")
-    sample={}
+def run(indir="/data/Panel275/"):
     MSI={}
-    for line in infile:
-        line=line.strip()
-        array=line.split()
-        sample[array[0]]=1
-    infile.close()
     for root,dirs,files in os.walk(indir):
         for dir in dirs:
             for file in files:
@@ -30,7 +23,8 @@ def run(samplelist,indir="/data/Panel275/"):
                             MSI[id[0]]=array[2]
                             print (id[0],"\t",array[2])
 
-
+if __name__=="__main__":
+    run(indir="/data/Panel275/")
 
 
 
