@@ -21,7 +21,9 @@ def run(indir="/data/Panel275/"):
                     array=line.split()
                     if num==2:
                         MSI[sample[0]]=array[2]
-                        print (sample[0],"\t",array[2])
+                infile.close()
+    for key in MSI:
+        print(key,"\t",MSI[key])
 
 if __name__=="__main__":
     run(indir="/data/Panel275/")
