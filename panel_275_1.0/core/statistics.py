@@ -13,6 +13,7 @@ def run(indir="/data/Panel275/"):
             if pattern.findall(file):
                 filename.append(file)
         for dir in dirs:
+            print(dir)
             for name in filename:
                 tmp=root+"/"+dir+"/"+name
                 if os.path.exists(tmp):
