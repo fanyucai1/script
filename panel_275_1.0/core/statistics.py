@@ -8,7 +8,9 @@ def run(indir="/data/Panel275/"):
     MSI={}
     for root,dirs,files in os.walk(indir):
         for file in files:
-            print (file)
+            pattern = re.compile(r'msi.tsv')
+            if pattern.findall(file):
+                print (file)
             for dir in dirs:
                 tmp=root+"/"+dir+"/"+file
                 pattern=re.compile(r'msi.tsv')
