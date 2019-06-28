@@ -7,8 +7,8 @@ import re
 def run(indir="/data/Panel275/"):
     MSI={}
     for root,dirs,files in os.walk(indir):
-        for dir in dirs:
-            for file in files:
+        for file in files:
+            for dir in dirs:
                 tmp=root+"/"+dir+"/"+file
                 if os.path.exists(tmp):
                     print(tmp)
