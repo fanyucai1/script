@@ -16,6 +16,7 @@ def run(indir="/data/Panel275/"):
             for name in filename:
                 tmp=root+"/"+dir+"/"+name
                 if os.path.exists(tmp):
+                    print(tmp)
                     infile=open(tmp,'r')
                     num=0
                     for line in infile:
