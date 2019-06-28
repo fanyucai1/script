@@ -6,18 +6,18 @@ import os
 import re
 def run(indir="/data/Panel275/"):
     MSI={}
+    sample=[]
     for root,dirs,files in os.walk(indir):
         filename=[]
         for file in files:
             pattern = re.compile(r'msi.tsv$')
             if pattern.findall(file):
                 filename.append(file)
-        for dir in dirs:
-            print(dir)
+                print(os.path.join(root, file))
             for name in filename:
-                tmp=root+"/"+dir+"/"+name
+                sample=name.split(".")
+                tmp=root+"/"+sample[0]+"/result/MSI/"+name
                 if os.path.exists(tmp):
-                    print(tmp)
                     infile=open(tmp,'r')
                     num=0
                     for line in infile:
