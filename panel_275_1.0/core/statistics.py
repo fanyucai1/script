@@ -7,14 +7,15 @@ import re
 def run(indir="/data/Panel275/"):
     MSI={}
     for root,dirs,files in os.walk(indir):
+        filename=[]
         for file in files:
-            pattern = re.compile(r'msi.tsv')
+            pattern = re.compile(r'msi.tsv$')
             if pattern.findall(file):
-                print (file)
-            for dir in dirs:
-                tmp=root+"/"+dir+"/"+file
-                pattern=re.compile(r'msi.tsv$')
-                if pattern.findall(tmp) and os.path.exists(tmp):
+                filename.append(file)
+        for dir in dirs:
+            for name in filename:
+                tmp=root+"/"+dir+"/"+name
+                if os.path.exists(tmp):
                     infile=open(tmp,'r')
                     num=0
                     for line in infile:
@@ -22,7 +23,7 @@ def run(indir="/data/Panel275/"):
                         line=line.strip()
                         array=line.split()
                         if num==2:
-                            id=file.split(".")
+                            id=name.split(".")
                             MSI[id[0]]=array[2]
                             print (id[0],"\t",array[2])
 
