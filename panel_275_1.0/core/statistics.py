@@ -10,7 +10,8 @@ def run(indir="/data/Panel275/"):
         for dir in dirs:
             for file in files:
                 tmp=root+"/"+dir+"/"+file
-                print(tmp)
+                if os.path.exists(tmp):
+                    print(tmp)
                 pattern=re.compile(r'msi.tsv')
                 if pattern.findall(tmp) and os.path.exists(tmp):
                     infile=open(tmp,'r')
