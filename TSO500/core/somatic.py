@@ -134,7 +134,7 @@ def run(dir,samplelist,vaf,outdir):
                             outfile.write("%s" % (array[dict[out_name[l]]]))
                         elif out_name[l]=="Var":
                             tmp_num = float(a[0]) * 100
-                            outfile.write("\t%.2f" % (tmp_num))
+                            outfile.write("\t%.2f" % (tmp_num)+"%")
                         elif out_name[l] == "AAChange.1":
                             outfile.write("\t%s" % (final_nm))
                         elif out_name[l] == "Ref_Reads":

@@ -69,7 +69,7 @@ def anno(vcf,outdir,prefix):
                     outfile.write("%s" % (array[dict[out_name[l]]]))
                 elif out_name[l]=="Var":
                     tmp_num=float(Var[0])*100
-                    outfile.write("\t%.2f" % (tmp_num))
+                    outfile.write("\t%.2f" % (tmp_num)+"%")
                 elif out_name[l]=="Alt_Reads":
                     outfile.write("\t%s" % (Alt_Reads[0]))
                 elif out_name[l] == "Ref_Reads":
