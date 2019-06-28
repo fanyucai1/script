@@ -18,9 +18,8 @@ def run(indir="/data/Panel275/"):
                 for line in infile:
                     num+=1
                     line=line.strip()
-                    array=line.split()
                     if num==2:
-                        MSI[sample[0]]=array[2]
+                        MSI[sample[0]]=line
                 infile.close()
     for key in MSI:
         print(key,"\t",MSI[key])
