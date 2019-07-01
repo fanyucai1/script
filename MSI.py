@@ -9,7 +9,7 @@ As follow suggest msi score cutoff 11% for tumor only data. (msi high: msi score
 Niu B, Ye K, Zhang Q, et al. MSIsensor: microsatellite instability detection using paired tumor-normal sequence data[J]. Bioinformatics, 2013, 30(7): 1015-1016.
 
 """
-msisensor="/data02/software/MSIsensor/msisensor/msisensor"
+msisensor="/software/MSIsensor/msisensor-0.5/msisensor"
 parser=argparse.ArgumentParser("This script will compute the MSI-score.")
 parser.add_argument("-n","--normal",type=str,help="normal bam file")
 parser.add_argument("-r","--ref",type="str",help="reference genome fasta",required=True)
