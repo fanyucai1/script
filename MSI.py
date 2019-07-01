@@ -12,12 +12,12 @@ Niu B, Ye K, Zhang Q, et al. MSIsensor: microsatellite instability detection usi
 msisensor="/software/MSIsensor/msisensor-0.5/msisensor"
 parser=argparse.ArgumentParser("This script will compute the MSI-score.")
 parser.add_argument("-n","--normal",type=str,help="normal bam file")
-parser.add_argument("-r","--ref",type="str",help="reference genome fasta",required=True)
+parser.add_argument("-r","--ref",type=str,help="reference genome fasta",required=True)
 parser.add_argument("-t","--tumor",type=str,help="tumor bam file",required=True)
 parser.add_argument("-o","--outdir",type=str,help="output directory",default=os.getcwd())
-parser.add_argument("-p","--prefix",type=str,help="prefix of output",defualt="MSI")
+parser.add_argument("-p","--prefix",type=str,help="prefix of output",default="MSI")
 parser.add_argument("-e","--bed",type=str,help="bed file,optional")
-parser.add_argument("-c","--coverage",type=str,help="coverage threshold for msi analysis, WXS: 20; WGS: 15",result=True)
+parser.add_argument("-c","--coverage",type=str,help="coverage threshold for msi analysis, WXS: 20; WGS: 15",required=True)
 parser.add_argument("-f","--fdr",type=str,help="FDR threshold for somatic sites detection, default=0.05",default=0.05)
 result=parser.parse_args()
 
