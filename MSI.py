@@ -26,7 +26,7 @@ result.tumor=os.path.abspath(result.tumor)
 if result.outdir:
     result.outdir = os.path.abspath(result.outdir)
     subprocess.check_call("mkdir -p %s" %(result.outdir),shell=True)
-subprocess.check_call("%s scan %s -o %s/microsatellites.list"%(msisensor,result.ref,result.outdir),shell=True)
+subprocess.check_call("%s scan -d %s -o %s/microsatellites.list"%(msisensor,result.ref,result.outdir),shell=True)
 par=""
 if result.normal:
     result.normal=os.path.abspath(result.normal)
