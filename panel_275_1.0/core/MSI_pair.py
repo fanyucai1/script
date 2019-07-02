@@ -11,7 +11,7 @@ def pairs(tumor, normal, bedfile, coverage, outdir, prefix, fdr=0.05):
     out = outdir + "/" + prefix
     subprocess.check_call("%s scan -d %s -o %s/microsatellites.list" % (msisensor, ref, outdir), shell=True)
     if bedfile!="0":
-        par = " -n %s -e %s -f %s -t %s -o %s.MSI -c %s " % (normal, bedfile, fdr, tumor, outdir, coverage)
+        par = " -n %s -e %s -f %s -t %s -o %s.MSI -c %s " % (normal, bedfile, fdr, tumor, out, coverage)
     else:
         par = " -n %s -f %s -t %s -o %s -c %s " % (normal, fdr, tumor, out, coverage)
     subprocess.check_call("%s msi -d %s/microsatellites.list %s " % (msisensor, outdir, par), shell=True)
