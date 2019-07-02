@@ -21,6 +21,7 @@ parser.add_argument("-g","--genelist",help="gene list",required=True)
 parser.add_argument("-m","--maf",help="maf",choices=[0.01],default=0.01,type=float)
 parser.add_argument("-t","--type",help="sample type",choices=["tissue","ctDNA"],required=True)
 parser.add_argument("-s","--sex",help="sex",choices=["male","female"],required=True)
+parser.add_argument("-b","--bed",help="bed file",default="/data/Panel275/bed/DHS-3501Z.roi.bed")
 args=parser.parse_args()
 start=time.time()
 if not os.path.exists(args.outdir):
@@ -64,13 +65,14 @@ if c=="0" and d=="0":
     core.filter_somatic.somatic(args.maf, "%s.unknow.annovar.tsv" % (out), "%s/result/SNV/" % (args.outdir),"%s.unknow" % (args.prefix))
 ######################################################################MSI
 if args.type=="tissue":
+    if not os.path.exists("%s/result/MSI" % (args.outdir)):
+        os.mkdir("%s/result/MSI" % (args.outdir))
     if c == "0" and d == "0":
-        core.MSI.run_msi("%s.bam"%(out),"%s"%(args.outdir),"%s"%(args.prefix))
-        if not os.path.exists("%s/result/MSI"%(args.outdir)):
-            os.mkdir("%s/result/MSI"%(args.outdir))
+        core.MSI_tumor_only.run_msi("%s.bam"%(out),"%s"%(args.outdir),"%s"%(args.prefix))
         shutil.copy("%s.msi.tsv"%(out),"%s/result/MSI/"%(args.outdir))
     else:
-
+        core.MSI_pair.pairs("%s.bam"%(out),"%s/normal.bam"%(args.outdir),args.outdir,args.prefix,args.bed,20,0.05)
+        shutil.copy("%s.MSI"%(out),"%s/result/MSI/"%(args.outdir) )
 ######################################################################run CNV and filter CNV gene list
 if not os.path.exists("%s/result/CNV"%(args.outdir)):
     os.mkdir("%s/result/CNV"%(args.outdir))
