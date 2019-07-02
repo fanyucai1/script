@@ -4,7 +4,7 @@ from . import germline_somatic
 from . import filter_germline
 from . import filter_somatic
 from . import prefilter
-from . import MSI
+from . import MSI_tumor_only
 from . import cnv
 from . import stat_qc
 from . import tumor_normal
