@@ -73,7 +73,7 @@ if args.type=="tissue":
         core.MSI_tumor_only.run_msi("%s.bam"%(out),"%s"%(args.outdir),"%s"%(args.prefix))
         shutil.copy("%s.msi.tsv"%(out),"%s/result/MSI/"%(args.outdir))
     else:
-        core.MSI_pair.pairs("%s.bam"%(out),"%s/normal.bam"%(args.outdir),args.outdir,args.prefix,args.bed,20,0.05)
+        core.MSI_pair.pairs("%s.bam"%(out),"%s/normal.bam"%(args.outdir),args.bed,20,args.outdir,args.prefix,0.05)
         shutil.copy("%s.MSI"%(out),"%s/result/MSI/"%(args.outdir) )
 ######################################################################run CNV and filter CNV gene list
 """
