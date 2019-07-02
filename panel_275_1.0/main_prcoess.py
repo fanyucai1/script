@@ -40,6 +40,7 @@ else:
     purity=0.01
     vaf = 0.005
 #####################################################################run docker
+"""
 core.print_config.tumor_only(a, b, args.prefix, args.outdir,purity,args.sex,args.type,c,d)
 if c=="0" and d=="0":
     #####################################################################filter VAF and genelist
@@ -63,6 +64,7 @@ if c=="0" and d=="0":
     core.annovar275.anno("%s.unknow.vcf"%(out),"%s"%(args.outdir),"%s.unknow"%(args.prefix))
     shutil.copy("%s.unknow.annovar.tsv" % (out), "%s/result/SNV/" % (args.outdir))
     core.filter_somatic.somatic(args.maf, "%s.unknow.annovar.tsv" % (out), "%s/result/SNV/" % (args.outdir),"%s.unknow" % (args.prefix))
+"""
 ######################################################################MSI
 if args.type=="tissue":
     if not os.path.exists("%s/result/MSI" % (args.outdir)):
@@ -74,6 +76,7 @@ if args.type=="tissue":
         core.MSI_pair.pairs("%s.bam"%(out),"%s/normal.bam"%(args.outdir),args.outdir,args.prefix,args.bed,20,0.05)
         shutil.copy("%s.MSI"%(out),"%s/result/MSI/"%(args.outdir) )
 ######################################################################run CNV and filter CNV gene list
+"""
 if not os.path.exists("%s/result/CNV"%(args.outdir)):
     os.mkdir("%s/result/CNV"%(args.outdir))
 core.cnv.run("%s.copy-number.vcf"%(out),args.sex,args.genelist,"%s/result/CNV"%(args.outdir),args.prefix)
@@ -82,3 +85,4 @@ core.stat_qc.run(args.outdir,args.prefix)
 ######################################################################
 end=time.time()
 print("Elapse time is %g seconds" %(end-start))
+"""
