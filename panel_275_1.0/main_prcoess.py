@@ -63,10 +63,14 @@ if c=="0" and d=="0":
     shutil.copy("%s.unknow.annovar.tsv" % (out), "%s/result/SNV/" % (args.outdir))
     core.filter_somatic.somatic(args.maf, "%s.unknow.annovar.tsv" % (out), "%s/result/SNV/" % (args.outdir),"%s.unknow" % (args.prefix))
 ######################################################################MSI
-core.MSI.run_msi("%s.bam"%(out),"%s"%(args.outdir),"%s"%(args.prefix))
-if not os.path.exists("%s/result/MSI"%(args.outdir)):
-    os.mkdir("%s/result/MSI"%(args.outdir))
-shutil.copy("%s.msi.tsv"%(out),"%s/result/MSI/"%(args.outdir))
+if args.type=="tissue":
+    if c == "0" and d == "0":
+        core.MSI.run_msi("%s.bam"%(out),"%s"%(args.outdir),"%s"%(args.prefix))
+        if not os.path.exists("%s/result/MSI"%(args.outdir)):
+            os.mkdir("%s/result/MSI"%(args.outdir))
+        shutil.copy("%s.msi.tsv"%(out),"%s/result/MSI/"%(args.outdir))
+    else:
+
 ######################################################################run CNV and filter CNV gene list
 if not os.path.exists("%s/result/CNV"%(args.outdir)):
     os.mkdir("%s/result/CNV"%(args.outdir))
