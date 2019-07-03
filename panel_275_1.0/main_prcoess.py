@@ -72,7 +72,7 @@ if args.type=="tissue":
         shutil.copy("%s.msi.tsv"%(out),"%s/result/MSI/"%(args.outdir))
     else:
         core.MSI_pair.pairs("%s.bam"%(out),"%s/normal.bam"%(args.outdir),args.bed,20,args.outdir,args.prefix,0.05)
-        shutil.copy("%s.MSI"%(out),"%s/result/MSI/"%(args.outdir) )
+        shutil.copy("%s.MSI"%(out),"%s/result/MSI/%s.msi.tsv"%(args.outdir,args.prefix) )
 ######################################################################run CNV and filter CNV gene list
 if not os.path.exists("%s/result/CNV"%(args.outdir)):
     os.mkdir("%s/result/CNV"%(args.outdir))
