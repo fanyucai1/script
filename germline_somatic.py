@@ -4,8 +4,12 @@
 import re
 import sys
 import os
+import requests
+from bs4 import BeautifulSoup
+import re
 variant="/data/Database/clinvar/variant_summary.txt"#ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/var_citations.txt
-clinvar="/data/Database/clinvar/hg19_clinvar.vcf"
+clinvar="/data/Database/clinvar/clinvar.vcf"
+cosmic=""
 def run_split(ivcf,outdir,prefix):
     ###############################################read summary file to get the relationship betwwen allele_id and OriginSimple
     infile=open(variant,"r")
