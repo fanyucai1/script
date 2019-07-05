@@ -18,5 +18,5 @@ for line in infile1:
 infile1.close()
 
 for key in dict:
-    if dict[key]==[]:
+    if len(dict[key])<1:
         print (key)
