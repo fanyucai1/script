@@ -18,4 +18,5 @@ for line in infile1:
 infile1.close()
 
 for key in dict:
-    print(dict[key])
+    if dict[key]==[]:
+        print(key)
