@@ -12,7 +12,7 @@ infile1=open(file1,"r")
 for line in infile1:
     line=line.strip()
     array=line.split("\t")
-    if array[8]=="reference standard":
+    if array[-1]=="reference standard":
         if array[2] in dict:
             dict[array[2]].append(array[5])
 infile1.close()
