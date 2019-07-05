@@ -7,7 +7,7 @@ for line in infile:
     line = line.strip()
     array = line.split("\t")
     dict[array[0]]=[]
-
+infile.close()
 infile1=open(file1,"r")
 for line in infile1:
     line=line.strip()
