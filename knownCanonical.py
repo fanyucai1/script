@@ -60,3 +60,7 @@ for line in infile2:
         print("PRINCIPAL:3", array[0])
         continue
 infile2.close()
+
+for key in dict:
+    if dict[key]==[]:
+        print(key,"not find known canonical transcript")
