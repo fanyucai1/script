@@ -17,6 +17,25 @@ for line in infile1:
             dict[array[2]].append(array[5])
 infile1.close()
 
-for key in dict:
-    if dict[key]==[]:
-        print(key)
+infile2=open(file2,"r")
+for line in infile2:
+    line = line.strip()
+    array = line.split("\t")
+    if array[0] in dict and dict[array[0]]==[] and array[-1]=="PRINCIPAL:1":
+        dict[array[0]].append(array[2])
+        continue
+for line in infile2:
+    line = line.strip()
+    array = line.split("\t")
+    if array[0] in dict and dict[array[0]]==[] and array[-1]=="PRINCIPAL:2":
+        dict[array[0]].append(array[2])
+        print("PRINCIPAL:2",array[0])
+        continue
+for line in infile2:
+    line = line.strip()
+    array = line.split("\t")
+    if array[0] in dict and dict[array[0]]==[] and array[-1]=="PRINCIPAL:3":
+        dict[array[0]].append(array[2])
+        print("PRINCIPAL:3", array[0])
+        continue
+infile2.close()
