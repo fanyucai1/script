@@ -1,6 +1,6 @@
 file1="/data/Database/knownCanonical/LRG_RefSeqGene"#ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/RefSeqGene/
 file2="/data/Database/knownCanonical/appris_data.principal.txt"#http://appris.bioinfo.cnio.es
-genelist=input("please input genelist")
+genelist="/data/Panel275/gene_list/gene_275.list"
 dict={}
 infile=open(genelist,"r")
 for line in infile:
