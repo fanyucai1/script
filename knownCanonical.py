@@ -8,6 +8,7 @@ for line in infile:
     array = line.split("\t")
     dict[array[0]]=[]
 infile.close()
+############################
 infile1=open(file1,"r")
 for line in infile1:
     line=line.strip()
@@ -16,12 +17,13 @@ for line in infile1:
         if array[2] in dict:
             dict[array[2]].append(array[5])
 infile1.close()
-
+##########################
 infile2=open(file2,"r")
 for line in infile2:
     line = line.strip()
     array = line.split("\t")
     if array[0] in dict and dict[array[0]]==[] and array[-1]=="PRINCIPAL:1":
+        print("PRINCIPAL:1", array[0])
         dict[array[0]].append(array[2])
         continue
 for line in infile2:
