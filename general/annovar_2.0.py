@@ -65,16 +65,17 @@ def run(vcf,prefix,outdir):
             ##########################format output knownCanonical transcript
             tmp = array[dict['AAChange.refGene']].split(",")
             final_nm = ""
-            for i in transcript[array[6]]:
-                if final_nm == "":
-                    for k in tmp:
-                        if final_nm=="" and re.search(i,k):
-                            final_nm = k
-                            continue
-                        else:
-                            pass
-                else:
-                    continue
+            if array[6] in transcript:
+                for i in transcript[array[6]]:
+                    if final_nm == "":
+                        for k in tmp:
+                            if final_nm=="" and re.search(i,k):
+                                final_nm = k
+                                continue
+                            else:
+                                pass
+                    else:
+                        continue
             if final_nm=="":
                 final_nm=tmp[0]
             for l in range(len(out_name)):
