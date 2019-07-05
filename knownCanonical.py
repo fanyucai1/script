@@ -18,25 +18,44 @@ for line in infile1:
             dict[array[2]].append(array[5])
 infile1.close()
 ##########################
+dict1={}
+for key in dict:
+    if dict[key]==[]:
+        dict1[key] = []
+##########################
 infile2=open(file2,"r")
 for line in infile2:
     line = line.strip()
     array = line.split("\t")
-    if array[0] in dict and dict[array[0]]==[] and array[-1]=="PRINCIPAL:1":
+    if array[0] in dict1 and array[-1]=="PRINCIPAL:1":
         print("PRINCIPAL:1", array[0])
         dict[array[0]].append(array[2])
         continue
+infile2.close()
+dict2={}
+for key in dict:
+    if dict[key]==[]:
+        dict2[key] = []
+############################
+infile2=open(file2,"r")
 for line in infile2:
     line = line.strip()
     array = line.split("\t")
-    if array[0] in dict and dict[array[0]]==[] and array[-1]=="PRINCIPAL:2":
+    if array[0] in dict2 and array[-1]=="PRINCIPAL:2":
         dict[array[0]].append(array[2])
         print("PRINCIPAL:2",array[0])
         continue
+infile2.close()
+dict3={}
+for key in dict:
+    if dict[key]==[]:
+        dict3[key] = []
+##############################
+infile2=open(file2,"r")
 for line in infile2:
     line = line.strip()
     array = line.split("\t")
-    if array[0] in dict and dict[array[0]]==[] and array[-1]=="PRINCIPAL:3":
+    if array[0] in dict3 and array[-1]=="PRINCIPAL:3":
         dict[array[0]].append(array[2])
         print("PRINCIPAL:3", array[0])
         continue
