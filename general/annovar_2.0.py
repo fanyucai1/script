@@ -23,6 +23,7 @@ def run(vcf,prefix,outdir):
     for line in infile:
         line=line.strip()
         array=line.split("\t")
+        transcript[array[0]]=[]
         for j in range(len(array)):
             if j!=0:
                 tmp=array[j].split(".")
