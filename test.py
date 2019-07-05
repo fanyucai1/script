@@ -17,28 +17,3 @@ for i in range(len(dt)):
 if dbsnp!=[]:
     print("%s\tSNP" % (id))
 
-"""
-        tmp=soup.find_all('abbr')#Inheritance Phenotype  mapping key
-        str=""
-        for i in tmp:
-            str+=","
-            str+=i.string
-        array=re.split(r'(\d+)',str)
-        for i in array:
-            p1=re.compile(r'[A-Za-z]')
-            p2=re.compile(r'(\d+)')
-            a=p1.findall(i.strip())
-            b=p2.findall(i.strip())
-            if i.strip(",")!="":
-                if a!=[]:
-                    key.append(i.strip(","))
-                if b != []:
-                    Inheritance.append(i.strip(","))
-        outfile = open("omim.tsv", "a+")
-        for i in range(len(key)):
-            outfile.write("%s\t%s\t%s\t%s\t%s\t%s\n"%(id,Location,Phenotype[i],Phenotype_MIM_number[i],Inheritance[i],key[i]))
-        outfile.close()
-    except:
-        pass
-"""
-
