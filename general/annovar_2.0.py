@@ -5,7 +5,7 @@ import argparse
 import os
 import subprocess
 import re
-Canonical_transcript_file="/123"
+Canonical_transcript_file="/data/Database/knownCanonical/clinvar_canonical_trans.txt"
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene',
           'ExonicFunc.refGene',	'AAChange.refGene',	'cytoBand',	'1000g2015aug_all',	'avsnp150',	'snp138',
           'CLNALLELEID','CLNDN','CLNDISDB',	'CLNREVSTAT','CLNSIG','cosmic88_coding','SIFT_score','SIFT_pred',
