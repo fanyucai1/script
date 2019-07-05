@@ -6,8 +6,7 @@ import argparse
 import subprocess
 import re
 
-snpeff="/software/SnpEff/4.3/snpEff/"
-java="/software/java/jdk1.8.0_202/bin/java"
+Canonical_transcript_file="/data/Database/knownCanonical/clinvar_canonical_trans.txt"
 annovar="/software/docker_tumor_base/Resource/Annovar/"
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene',
           'ExonicFunc.refGene',	'AAChange.refGene',	'cytoBand',	'1000g2015aug_all',	'avsnp150',	'snp138',
@@ -23,6 +22,18 @@ def run(dir,samplelist,vaf,outdir):
         line=line.strip()
         array=re.split('[\t,]',line)
         sample_ID.append(array[0])
+    infile.close()
+    #########################get Canonical transcript info
+    transcript = {}
+    infile = open(Canonical_transcript_file, "r")
+    for line in infile:
+        line = line.strip()
+        array = line.split("\t")
+        transcript[array[0]] = []
+        for j in range(len(array)):
+            if j != 0:
+                tmp = array[j].split(".")
+                transcript[array[0]].append(tmp[0])
     infile.close()
     ######################################get SNV information
     for key in sample_ID:
@@ -73,30 +84,12 @@ def run(dir,samplelist,vaf,outdir):
                         outfile.write("%s\t%s\t.\t%s\t%s\t.\t.\tGT=%s;AD=%s;Var=%s\n"%(array[0],array[1],array[3],array[4],info[0],info[2],info[4]))
             infile.close()
             outfile.close()
-            ############################anno snpeff
-            cmd="%s -Xmx40g -jar %s/snpEff.jar -v hg19 -canon -hgvs %s/%s.snv.tmp.vcf >%s/%s.snpeff.vcf" %(java,snpeff,outdir,key,outdir,key)
-            subprocess.check_call(cmd,shell=True)
-            ############################get knownCanonical transcript
-            nm = {}
-            file1 = open("%s/%s.snpeff.vcf" % (outdir,key), "r")
-            for line in file1:
-                if not line.startswith("#"):
-                    line = line.strip()
-                    p1 = re.compile(r'transcript\|(\S+)\|')
-                    a = p1.findall(line)
-                    array = line.split("\t")
-                    if a != []:
-                        b = a[0].split(".")
-                        end = int(array[1]) + len(array[3]) - 1
-                        nm[array[1]] = b[0]
-                        print(b[0])
-            file1.close()
             ##########################run annovar
             par = " -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,1000g2015aug_eas,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305,ljb26_all,intervar_20180118"
             par += ",1000g2015aug_sas,1000g2015aug_afr,1000g2015aug_amr,1000g2015aug_eur "
             par += " -operation g,r,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f "
             par += " -nastring . -polish "
-            subprocess.check_call("cd %s && perl %s/table_annovar.pl %s.snpeff.vcf %s/humandb -buildver hg19 -out %s -remove %s -vcfinput " %(outdir,annovar,key,annovar,key,par),shell=True)
+            subprocess.check_call("cd %s && perl %s/table_annovar.pl %s/%s.snv.tmp.vcf %s/humandb -buildver hg19 -out %s -remove %s -vcfinput " %(outdir,annovar,outdir,key,annovar,key,par),shell=True)
             #########################output final result
             infile=open("%s/%s.hg19_multianno.txt"%(outdir,key),"r")
             outfile=open("%s/%s.annovar.tsv"%(outdir,key),"w")
@@ -123,12 +116,22 @@ def run(dir,samplelist,vaf,outdir):
                         dict[array[i]] = i
                 else:
                     Reads=b[0].split(",")
-                    ##############################format output knownCanonical transcript
+                    ##########################format output knownCanonical transcript
                     tmp = array[dict['AAChange.refGene']].split(",")
-                    final_nm = tmp[0]
-                    for j in range(len(tmp)):
-                        if array[1] in nm and re.search(nm[array[1]],tmp[j]):
-                            final_nm = tmp[j]
+                    final_nm = ""
+                    if array[6] in transcript:
+                        for i in transcript[array[6]]:
+                            if final_nm == "":
+                                for k in tmp:
+                                    if final_nm == "" and re.search(i, k):
+                                        final_nm = k
+                                        continue
+                                    else:
+                                        pass
+                            else:
+                                continue
+                    if final_nm == "":
+                        final_nm = tmp[0]
                     for l in range(len(out_name)):
                         if l == 0:
                             outfile.write("%s" % (array[dict[out_name[l]]]))
