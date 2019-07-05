@@ -74,6 +74,20 @@ for line in infile2:
         print("PRINCIPAL:4", array[0])
         continue
 infile2.close()
+dict5={}
+for key in dict:
+    if dict[key]==[]:
+        dict5[key] = []
+############################################
+infile2=open(file2,"r")
+for line in infile2:
+    line = line.strip()
+    array = line.split("\t")
+    if array[0] in dict5 and array[-1]=="PRINCIPAL:5":
+        dict[array[0]].append(array[2])
+        print("PRINCIPAL:5", array[0])
+        continue
+infile2.close()
 for key in dict:
     if dict[key]==[]:
         print(key,"not find known canonical transcript")
