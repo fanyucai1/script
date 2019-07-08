@@ -45,7 +45,6 @@ Options:
 -minL           min length of quality control(default:75)
 -r              read length(default:150)
 -a              PE:TruSeq2-PE (as used in GAII machines) and TruSeq3-PE (as used by HiSeq and MiSeq machines)
--q              queue which you run(default:cu)
 
 Email:fanyucai1\@126.com
 2018.8.16
