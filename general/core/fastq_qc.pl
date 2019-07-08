@@ -64,11 +64,11 @@ for(my $i=0;$i<=$#pe1;$i++)
     $pe2[$i]=abs_path($pe2[$i]);
     if($pe1[0]=~/gz$/)
     {
-        print QC "java -jar -Xmx40g $trim PE -threads 10 $pe1[$i] $pe2[$i] $outdir/$prefix[$i]\_1.clean.fq.gz $outdir/$prefix[$i]\_1_un.fq.gz $outdir/$prefix[$i]\_2.clean.fq.gz $outdir/$prefix[$i]\_2_un.fq.gz CROP:$read ILLUMINACLIP:$seq:2:30:10:true LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:$len && ";
+        print QC "java -jar -Xmx40g $trim PE -threads 10 $pe1[$i] $pe2[$i] $outdir/$prefix[$i]\_1.clean.fq.gz $outdir/$prefix[$i]\_1_un.fq.gz $outdir/$prefix[$i]\_2.clean.fq.gz $outdir/$prefix[$i]\_2_un.fq.gz CROP:$read ILLUMINACLIP:$seq:2:30:10:1:true LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:$len && ";
     }
     else
     {
-        print QC "java -jar -Xmx40g $trim PE -threads 10 $pe1[$i] $pe2[$i] $outdir/$prefix[$i]\_1.clean.fq $outdir/$prefix[$i]\_1_un.fq.gz $outdir/$prefix[$i]\_2.clean.fq $outdir/$prefix[$i]\_2_un.fq.gz CROP:$read ILLUMINACLIP:$seq:2:30:10:true LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:$len && ";
+        print QC "java -jar -Xmx40g $trim PE -threads 10 $pe1[$i] $pe2[$i] $outdir/$prefix[$i]\_1.clean.fq $outdir/$prefix[$i]\_1_un.fq.gz $outdir/$prefix[$i]\_2.clean.fq $outdir/$prefix[$i]\_2_un.fq.gz CROP:$read ILLUMINACLIP:$seq:2:30:10:1:true LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:$len && ";
     }
     print QC "rm $outdir/$prefix[$i]\_1_un.fq.gz $outdir/$prefix[$i]\_2_un.fq.gz\n";
 }
