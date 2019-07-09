@@ -18,9 +18,6 @@ def anno(vcf,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
-    ##########################run snpeff
-    cmd = "%s -Xmx40g -jar %s/snpEff.jar -v hg19 -canon -hgvs %s >%s.snpeff.anno.vcf" % (java, snpsift, vcf, out)
-    subprocess.check_call(cmd, shell=True)
     ##########################run annovar
     par=" -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,1000g2015aug_eas,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305,ljb26_all,intervar_20180118 "
     par+=" -operation g,r,f,f,f,f,f,f,f,f,f,f,f,f "
@@ -46,23 +43,13 @@ def anno(vcf,outdir,prefix):
                 name.append(array[i])
                 dict[array[i]] = i
         else:
-            ##########################format output knownCanonical transcript
-            p = re.compile(r'transcript\|(\S+)\|protein_coding')
-            a = p.findall(line)
-            tmp = array[dict['AAChange.refGene']].split(",")
-            Canonical_transcript = tmp[0]
-            if a != []:
-                b = a[0].split(".")
-                for j in range(len(tmp)):
-                    if re.search(b[0], tmp[j]):
-                        Canonical_transcript = tmp[j]
             for l in range(len(out_name)):
                 if l == 0:
                     outfile.write("%s" % (array[dict[out_name[l]]]))
                 elif out_name[l]=="VAF" or out_name[l]=="Total_Depth" or out_name[l]=="Alt_Depth" or out_name[l]=="GT":
                     outfile.write("\t.")
                 elif out_name[l]=="Canonical_transcript":
-                    outfile.write("\t%s"%(Canonical_transcript))
+                    outfile.write("\t.")
                 else:
                     outfile.write("\t%s" % (array[dict[out_name[l]]]))
             outfile.write("\n")
