@@ -5,7 +5,7 @@ import os
 import subprocess
 import argparse
 
-GATK4="export PATH=/software/java/jdk1.8.0_202/bin/:\$PATH && /software/gatk/gatk-4.1.2.0/gatk"
+GATK4="export PATH=/software/java/jdk1.8.0_202/bin/:$PATH && /software/gatk/gatk-4.1.2.0/gatk"
 ref="/data/Database/hg19/ucsc.hg19.fasta"
 ad="/software/docker_tumor_base/Resource/GATK/af-only-gnomad.raw.sites.hg19.vcf.gz"
 """
