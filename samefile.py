@@ -1,8 +1,8 @@
 import sys
 
-vardict="/data/Project/fanyucai/test/SNV/201911.somatic.filter.annovar.somatic"
-varscan_indel="/data/Project/fanyucai/test/varscan_SNV/anno/201911.indel.filter.filter.annovar.somatic"
-varscan_snp="/data/Project/fanyucai/test/varscan_SNV/anno/201911.snp.filter.filter.annovar.somatic"
+vardict="/data/Project/fanyucai/test/SNV/201911.annovar.tsv"
+varscan_indel="/data/Project/fanyucai/test/varscan_SNV/anno/201911.indel.annovar.tsv"
+varscan_snp="/data/Project/fanyucai/test/varscan_SNV/anno/201911.snp.annovar.tsv"
 
 outfile=open("varscan_vardict.tsv","w")
 
