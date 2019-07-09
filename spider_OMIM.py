@@ -8,6 +8,14 @@ import os
 import time
 from multiprocessing import Process, Pool
 #######################################
+No={}
+if os.path.exists("no_omim.tsv"):
+    infile=open("no_omim.tsv",'r')
+    for line in infile:
+        line = line.strip()
+        array = line.split()
+        No[array[0]]=1
+#######################################
 dict={}
 if os.path.exists("omim.tsv"):
     infile=open("omim.tsv","r")
@@ -28,7 +36,8 @@ for line in infile:
         line=line.strip()
         array=line.split()
         if not array[0] in dict:
-            id.append(array[0])
+            if not array[0] in No:
+                id.append(array[0])
 infile.close()
 #######################################
 #############################在请求头中把User-Agent设置成浏览器中的User-Agent，来伪造浏览器访问
@@ -108,6 +117,9 @@ def run(omim_id):
                 "%s\t%s\t%s\t%s\t%s\t%s\n" % (omim_id,Location, Phenotype[i], Phenotype_MIM_number[i], Inheritance[i], key[i]))
         outfile.close()
     except:
+        outfile=open("no_omim.tsv","a+")
+        outfile.write("%s\n"%(omim_id))
+        outfile.close()
         print(omim_id)
 if __name__=="__main__":
     start = time.time()
