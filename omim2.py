@@ -115,5 +115,7 @@ def run(omim_id):
         print(omim_id)
 if __name__=="__main__":
     pool = Pool(processes=200)
-
+    start = time.time()
     pool.map(run, id)
+    end = time.time()
+    print("Elapse time is %g seconds" % (end - start))
