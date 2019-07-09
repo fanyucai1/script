@@ -114,5 +114,6 @@ def run(omim_id):
     except:
         print(omim_id)
 if __name__=="__main__":
-    pool = Pool(processes=100)
+    pool = Pool(processes=200)
+
     pool.map(run, id)

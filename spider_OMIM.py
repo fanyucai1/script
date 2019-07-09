@@ -109,8 +109,9 @@ def run(omim_id):
         outfile.close()
     except:
         print(omim_id)
-        outfile.write("%s\t_\t_\t_\t_\t_\n"%(omim_id))
-        outfile.close()
 if __name__=="__main__":
+    start = time.time()
     pool = Pool(processes=200)
     pool.map(run, id)
+    end = time.time()
+    print("Elapse time is %g seconds" % (end - start))
