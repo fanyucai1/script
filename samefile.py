@@ -17,6 +17,9 @@ for line in infile1:
         for j in range(len(tmp1)):
             tmp=array[0]+"_"+array[1]+"_"+array[2]+"_"+tmp1[j]+"_"+tmp2[j]
             dict[tmp] = line
+    else:
+        tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3] + "_" + array[4]
+        dict[tmp] = line
 infile1.close()
 
 infile2=open(varscan_indel,"r")
