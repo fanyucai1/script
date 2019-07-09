@@ -20,6 +20,7 @@ parser=argparse.ArgumentParser("This script will call SNV from tumor-normal.")
 parser.add_argument("-b","--bed",help="target bed file",type=str)
 parser.add_argument("-t","--tb",help="tumor bam file",type=str,required=True)
 parser.add_argument("-n","--nb",help="normal bam file",type=str,required=True)
+parser.add_argument("-v","--vaf",help="vaf",type=float,required=True)
 parser.add_argument("-o","--outdir",help="output directory",type=str,default=os.getcwd())
 parser.add_argument("-p","--prefix",help="prefix of output",default="out")
 args=parser.parse_args()
@@ -44,14 +45,14 @@ if __name__ == '__main__':
     p2.start()
     p1.join()
     p2.join()
-    subprocess.check_call("cd %s && %s -Xmx10g -jar %s somatic %s_normal.mpileup %s_tumor.mpileup %s --strand-filter 1 --output-vcf 1 --min-var-freq 0.001 --min-coverage 100"
-                      %(args.outdir,java,varscan,args.prefix,args.prefix,args.prefix),shell=True)
+    subprocess.check_call("cd %s && %s -Xmx10g -jar %s somatic %s_normal.mpileup %s_tumor.mpileup %s --strand-filter 1 --output-vcf 1 --min-var-freq %s --min-coverage 100"
+                      %(args.outdir,java,varscan,args.prefix,args.prefix,args.prefix,args.vaf),shell=True)
     #filter snp around indel
-    subprocess.check_call("cd %s && %s -Xmx10g -jar %s somaticFilter %s.snp.vcf --min-var-freq 0.001 --min-coverage 100 --indel-file %s.indel.vcf --output-file %s.filter.snp.vcf"
-                          %(args.outdir,java,varscan,args.prefix,args.prefix,args.prefix),shell=True)
+    subprocess.check_call("cd %s && %s -Xmx10g -jar %s somaticFilter %s.snp.vcf --min-coverage 100 --indel-file %s.indel.vcf --output-file %s.filter.snp.vcf --min-var-freq %s"
+                          %(args.outdir,java,varscan,args.prefix,args.prefix,args.prefix,args.vaf),shell=True)
     #separate a somatic output file by somatic_status (Germline, Somatic, LOH)
-    c="cd %s && %s -Xmx10g -jar %s processSomatic %s.filter.snp.vcf --min-tumor-freq 0.001" %(args.outdir,java,varscan,args.prefix)
-    d="cd %s && %s -Xmx10g -jar %s processSomatic %s.indel.vcf --min-tumor-freq 0.001" % (args.outdir, java, varscan, args.prefix)
+    c="cd %s && %s -Xmx10g -jar %s processSomatic %s.filter.snp.vcf --min-tumor-freq %s" %(args.outdir,java,varscan,args.prefix,args.vaf)
+    d="cd %s && %s -Xmx10g -jar %s processSomatic %s.indel.vcf --min-tumor-freq %s" % (args.outdir, java, varscan, args.prefix,args.vaf)
     p3=Process(target=shell_run,args=(c,))
     p4=Process(target=shell_run,args=(d,))
     p3.start()
