@@ -22,7 +22,7 @@ def anno(vcf,outdir,prefix):
     par=" -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,1000g2015aug_eas,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305,ljb26_all,intervar_20180118 "
     par+=" -operation g,r,f,f,f,f,f,f,f,f,f,f,f,f "
     par+=" -nastring . -polish "
-    subprocess.check_call("perl %s/table_annovar.pl %s.snpeff.anno.vcf %s/humandb -buildver hg19 -out %s -remove %s -vcfinput " %(annovar,out,annovar,out,par),shell=True)
+    subprocess.check_call("perl %s/table_annovar.pl %s %s/humandb -buildver hg19 -out %s -remove %s -vcfinput " %(annovar,vcf,annovar,out,par),shell=True)
     subprocess.check_call("rm -rf %s.hg19_multianno.vcf %s.avinput" %(out,out),shell=True)
     ###########################
     infile = open("%s.hg19_multianno.txt" % (out), "r")

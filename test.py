@@ -10,7 +10,7 @@ def run(omim_id):
                   'Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)',
                   'Mozilla/5.0 (Windows Phone 8.1; ARM; Trident/7.0; Touch; rv:11.0; IEMobile/11.0; NOKIA; Lumia 530) like Gecko (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)'
                   ]#https://www.bing.com/webmaster/help/which-crawlers-does-bing-use-8c184ec0
-    ip=["77.48.21.58:34432"]
+    ip=["109.110.73.106:60297"]
     url="https://omim.org/entry/%s"%(omim_id)
     proxy={"https":"https://"+random.choice(ip)}
     headers = {'User-Agent': random.choice(user_agents)}

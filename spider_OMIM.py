@@ -38,7 +38,8 @@ def run(omim_id):
                   'Mozilla/5.0 (Windows Phone 8.1; ARM; Trident/7.0; Touch; rv:11.0; IEMobile/11.0; NOKIA; Lumia 530) like Gecko (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)'
                   ]#https://www.bing.com/webmaster/help/which-crawlers-does-bing-use-8c184ec0
     ip=["198.27.67.35:3128","94.230.155.137:57701","107.190.148.202:31757","46.243.108.72:31773","94.230.159.145:46749","77.48.21.58:34432",
-        "77.48.23.78:36680","190.152.149.114:46124","186.10.84.226:59682","89.34.202.96:36745","200.122.209.78:43624","93.76.211.56:34217"]
+        "77.48.23.78:36680","190.152.149.114:46124","186.10.84.226:59682","89.34.202.96:36745","200.122.209.78:43624","93.76.211.56:34217",
+        "187.111.192.198:51236"]
     url="https://omim.org/entry/%s"%(omim_id)
     proxy={"https":"https://"+random.choice(ip)}
     headers = {'User-Agent': random.choice(user_agents)}
