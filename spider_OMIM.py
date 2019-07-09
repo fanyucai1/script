@@ -37,14 +37,13 @@ def run(omim_id):
                   'Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)',
                   'Mozilla/5.0 (Windows Phone 8.1; ARM; Trident/7.0; Touch; rv:11.0; IEMobile/11.0; NOKIA; Lumia 530) like Gecko (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)'
                   ]#https://www.bing.com/webmaster/help/which-crawlers-does-bing-use-8c184ec0
-    #ip=["165.22.186.43:8118"]
+    ip=["198.27.67.35:3128"]
     url="https://omim.org/entry/%s"%(omim_id)
-    #proxy={"https":"https://"+random.choice(ip)}
+    proxy={"https":"https://"+random.choice(ip)}
     headers = {'User-Agent': random.choice(user_agents)}
     s = requests.session()
     s.keep_alive = False
-    #res=requests.get(url,headers=headers,proxies=proxy)
-    res = requests.get(url, headers=headers)
+    res=requests.get(url,headers=headers,proxies=proxy)
     ret=res.text
     soup=BeautifulSoup(ret,'html.parser')
     outfile = open("omim.tsv", "a+")
@@ -113,4 +112,3 @@ def run(omim_id):
 if __name__=="__main__":
     for i in id:
        run(i)
-       time.sleep(3)

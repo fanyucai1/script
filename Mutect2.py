@@ -5,9 +5,9 @@ import os
 import subprocess
 import argparse
 
-GATK4="export PATH=/data02/software/java/jdk1.8.0_191/bin/:\$PATH && /data02/software/GATK/gatk-4.0.11.0/gatk"
-ref="/data02/database/hg19/ucsc.hg19.fasta"
-ad="/data02/software/GATK/af-only-gnomad.raw.sites.hg19.vcf.gz"
+GATK4="export PATH=/software/java/jdk1.8.0_202/bin/:\$PATH && /software/gatk/gatk-4.1.2.0/gatk"
+ref="/data/Database/hg19/ucsc.hg19.fasta"
+ad="/software/docker_tumor_base/Resource/GATK/af-only-gnomad.raw.sites.hg19.vcf.gz"
 """
 ###############CreateSomaticPanelOfNormals
 https://software.broadinstitute.org/gatk/documentation/tooldocs/4.0.0.0/org_broadinstitute_hellbender_tools_walkers_mutect_CreateSomaticPanelOfNormals.php
