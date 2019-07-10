@@ -8,24 +8,23 @@ def vardict(tumor,vcf,outdir,prefix):
     infile=open(vcf,"r")
     outfile=open("%s/%s.vcf"%(outdir,tumor),"w")
     outfile.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
-    name=-2
+    name=""
     for line in infile:
         line=line.strip()
         if line.startswith("#CHROM"):
             array=line.split("\t")
-            if array[-2]==tumor:
-                name=-2
-            else:
-                print("please input right tumor sample name!!!")
-                break
+            for i in range(len(array))
+                if array[i]==tumor:
+                    name=i
+                    continue
         if not line.startswith("#"):
             array = line.split("\t")
-            info=array[-2].split(":")
+            info=array[int(name)].split(":")
             GT=info[0]#GT
             p1=re.compile(r',')
-            a=re.findall(array[4])#ALT
-            b=re.findall(info[5])#AD
-            c=re.findall(info[6])#AF
+            a=p1.findall(array[4])#ALT
+            b=p1.findall(info[5])#AD
+            c=p1.findall(info[6])#AF
             Ref_Reads=b[0]
             if a!=[]:
                 for i in range(len(a)):
