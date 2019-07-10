@@ -1,10 +1,9 @@
 #Email:fanyucai1@126.com
 import os
 import re
-def vardict(tumor,vcf,outdir,prefix):
+def vardict(tumor,vcf,outdir):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
-    out=outdir+"/"+prefix
     infile=open(vcf,"r")
     outfile=open("%s/%s.vcf"%(outdir,tumor),"w")
     outfile.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
