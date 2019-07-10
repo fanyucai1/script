@@ -38,7 +38,7 @@ def vardict(tumor,vcf,outdir):
             Ref_Reads=b[0]
             if len(a)==1:
                 outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%s\n"
-                              % (array[0], array[1], array[2], array[3], array[4], GT, Ref_Reads, b[1], info[6]))
+                              % (array[0], array[1], array[2], array[3], array[4], GT, Ref_Reads, b[1], c[0]))
             else:
                 for i in range(len(a)):
                     ALT=a[i]
