@@ -5,11 +5,11 @@ import os
 import argparse
 import subprocess
 
-delly="/data02/software/delly/delly_v0.7.9_parallel_linux_x86_64bit"
-bcftools="/data02/software/bcftools/bcftools-1.9/bin"
-hg19_exclude="/data02/software/delly/human.hg19.excl.tsv"
-hg38_exclude="/data02/software/delly/human.hg38.excl.tsv"
-samtools="/data02/software/samtools/samtools-1.9/samtools"
+delly="/software/Delly/delly_v0.8.1_linux_x86_64bit"
+bcftools="/software/Bcftools/bcftools-1.4/"
+hg19_exclude="/software/Delly/delly-master/excludeTemplates/human.hg19.excl.tsv"
+hg38_exclude="/software/Delly/delly-master/excludeTemplates/human.hg38.excl.tsv"
+samtools="/software/samtools/samtools-1.9/bin/samtools"
 
 parser=argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter,
                                description="This script will use Delly to find SV."

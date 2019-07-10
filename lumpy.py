@@ -6,7 +6,7 @@ import argparse
 import subprocess
 from multiprocessing import Process
 
-speedseq="export PATH=/software/speedseq/speedseq/bin:\$PATH"
+speedseq="export PATH=/software/speedseq/speedseq/bin:$PATH"
 lumpy="/data02/software/LUMPY/lumpy-sv/bin/lumpyexpress"
 ref="/data02/database/hg19/ucsc.hg19.fasta"
 

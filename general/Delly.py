@@ -2,7 +2,7 @@ import os
 import argparse
 import subprocess
 delly="/software/Delly/delly_v0.8.1_linux_x86_64bit"
-hg19="/software/Delly/delly_v0.8.1_linux_x86_64bit/delly-master/excludeTemplates/human.hg19.excl.tsv"
+hg19="/software/Delly/delly-master/excludeTemplates/human.hg19.excl.tsv"
 ref="/data/Database/hg19/ucsc.hg19.fasta"
 bcftools="/software/Bcftools/bcftools-1.4/bcftools"
 def run(tumor,normal,prefix,outdir):
