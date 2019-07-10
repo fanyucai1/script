@@ -9,6 +9,7 @@ from multiprocessing import Process
 speedseq="export PATH=/software/speedseq/speedseq/bin:$PATH"
 lumpy="/software/lumpy/lumpy-sv/bin/lumpyexpress"
 ref="/data/Database/hg19/ucsc.hg19.fasta"
+svtyper="/software/python2/Python-v2.7.9/bin/svtyper"
 
 parser=argparse.ArgumentParser("Find SV using lumpy.")
 parser.add_argument("-td","--tdir",help="tumor speedseq align ouput directory)",default=os.getcwd())
@@ -43,12 +44,25 @@ if not os.path.exists("%s/%s.discordants.bam" %(args.tdir,args.tumor)):
     print("%s/%s.discordants.bam not exist" %(args.tdir,args.tumor))
     exit()
 
-def run_shell(cmd):
-    subprocess.check_call(cmd,shell=True)
 p1="%s/%s" %(args.tdir,args.tumor)
 p2="%s/%s" %(args.ndir,args.normal)
 subprocess.check_call("cd %s && %s -B %s.bam,%s.bam -S %s.splitters.bam,%s.splitters.bam -D %s.discordants.bam,%s.discordants.bam -o %s.%s.vcf"
                       %(args.outdir,lumpy,p1,p2,p1,p2,p1,p2,args.tumor,args.normal),shell=True)
 
+cmd='cd %s && %s -i %s.%s.vcf -B %s.bam,%s.bam >sv.gt.vcf'%(args.outdir,svtyper,args.tumor,args.normal,p1,p2)
+subprocess.check_call(cmd,shell=True)
 
-
+infile=open("%s/svtyper.vcf","r")
+outfile=open("%s/svtyper.filter.vcf","w")
+for line in infile:
+    line=line.strip()
+    if not line.startswith("#"):
+        array=line.split("\t")
+        n1=array[-1].split(":")
+        t1=array[-2].split(":")
+        if t1[0]!=n1[0]:
+            outfile.write("%s\n"%(line))
+    else:
+        outfile.write("%s\n" % (line))
+outfile.close()
+infile.close()
