@@ -36,13 +36,14 @@ def varscan_pair(args):
     vaf, tumor, normal, bed, prefix, outdir=args.vaf,args.tumor,args.normal,args.bed,args.prefix,args.outdir
     if not os.path.exists(outdir):
         os.mkdir(outdir)
+    out=outdir+"/"+prefix
     par=""
     if bed!="0":
         par = " -l %s " % (bed)
     def shell_run(cmd):
         subprocess.check_call("%s" % (cmd), shell=True)
-    a = "cd %s && %s mpileup -f %s %s %s >%s_normal.mpileup" % (outdir, samtools, ref, par, normal, prefix)
-    b = "cd %s && %s mpileup -f %s %s %s >%s_tumor.mpileup" % (outdir, samtools, ref, par, tumor, prefix)
+    a = "%s && samtools mpileup -f %s %s %s >%s_normal.mpileup" % (env, ref, par, normal, out)
+    b = "%s && samtools mpileup -f %s %s %s >%s_tumor.mpileup" % (env, ref, par, tumor, out)
     if __name__ == '__main__':
         p1 = Process(target=shell_run, args=(a,))
         p2 = Process(target=shell_run, args=(b,))
@@ -51,15 +52,15 @@ def varscan_pair(args):
         p1.join()
         p2.join()
         subprocess.check_call(
-            "cd %s && java -Xmx10g -jar %s somatic %s_normal.mpileup %s_tumor.mpileup %s --strand-filter 1 --output-vcf 1 --min-var-freq %s --min-coverage 50"
-            % (outdir, varscan, prefix, prefix, prefix, vaf), shell=True)
+            "%s && cd %s && java -Xmx10g -jar %s somatic %s_normal.mpileup %s_tumor.mpileup %s --strand-filter 1 --output-vcf 1 --min-var-freq %s --min-coverage 50"
+            % (env,outdir, varscan, prefix, prefix, prefix, vaf), shell=True)
         # filter snp around indel
         subprocess.check_call(
-            "cd %s && java -Xmx10g -jar %s somaticFilter %s.snp.vcf --min-coverage 50 --indel-file %s.indel.vcf --output-file %s.filter.snp.vcf --min-var-freq %s"
-            % (outdir, varscan, prefix, prefix, prefix,vaf), shell=True)
+            "%s && cd %s && java -Xmx10g -jar %s somaticFilter %s.snp.vcf --min-coverage 50 --indel-file %s.indel.vcf --output-file %s.filter.snp.vcf --min-var-freq %s"
+            % (env,outdir, varscan, prefix, prefix, prefix,vaf), shell=True)
         # separate a somatic output file by somatic_status (Germline, Somatic, LOH)
-        c = "cd %s && java -Xmx10g -jar %s processSomatic %s.filter.snp.vcf --min-tumor-freq %s" % (outdir, varscan, prefix, vaf)
-        d = "cd %s && java -Xmx10g -jar %s processSomatic %s.indel.vcf --min-tumor-freq %s" % (outdir, varscan, prefix, vaf)
+        c = "%s && cd %s && java -Xmx10g -jar %s processSomatic %s.filter.snp.vcf --min-tumor-freq %s" % (env,outdir, varscan, prefix, vaf)
+        d = "%s && cd %s && java -Xmx10g -jar %s processSomatic %s.indel.vcf --min-tumor-freq %s" % (env,outdir, varscan, prefix, vaf)
         p3 = Process(target=shell_run, args=(c,))
         p4 = Process(target=shell_run, args=(d,))
         p3.start()
