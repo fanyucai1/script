@@ -18,6 +18,7 @@ def run(tumor,vcf,outdir):
                 if array[i]==tumor:
                     name=i
                     continue
+        print(name)
         if not line.startswith("#"):
             array = line.split("\t")
             info=array[int(name)].split(":")
