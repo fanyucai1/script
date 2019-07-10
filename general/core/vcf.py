@@ -1,7 +1,7 @@
 #Email:fanyucai1@126.com
 import os
 import re
-def vardict(tumor,vcf,outdir):
+def run(tumor,vcf,outdir):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     infile=open(vcf,"r")
