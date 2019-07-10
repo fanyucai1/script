@@ -3,8 +3,6 @@
 import subprocess
 import argparse
 
-
-
 def run(genefuse,list,ref,pe1,pe2,prefix,outdir):
     cmd="cd %s && %s -r %s -f %s -1 %s -2 %s -h %s.html >%s.result" \
         %(outdir,genefuse,ref,list,pe1,pe2,prefix,prefix)
