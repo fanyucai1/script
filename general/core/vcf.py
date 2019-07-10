@@ -10,6 +10,7 @@ def run(tumor,vcf,outdir):
     outfile=open("%s/%s.vcf"%(outdir,tumor),"w")
     outfile.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
     name=""
+    num=0
     for line in infile:
         line=line.strip()
         if line.startswith("#CHROM"):
@@ -17,14 +18,23 @@ def run(tumor,vcf,outdir):
             for i in range(len(array)):
                 if array[i]==tumor:
                     name=i
+                if array[i]=="FORMAT":
+                    num=i
                     continue
         if not line.startswith("#"):
             array = line.split("\t")
-            info=array[int(name)].split(":")
-            GT=info[0]#GT
-            a=array[4].split(",")#ALT
-            b=info[5].split(",")#AD
-            c=info[6].split(",")#AF
+            tmp=array[num].split(":")
+            info = array[int(name)].split(":")
+            GT,a,b,c="",array[4].split(","),[],[]
+            for k in range(len(tmp)):
+                if tmp[k]=="GT":
+                    GT = info[k]  # GT
+                elif tmp[k]=="AD":
+                    b = info[k].split(",")  # AD
+                elif tmp[k] == "AF":
+                    c = info[k].split(",")  # AF
+                else:
+                    pass
             Ref_Reads=b[0]
             if len(a)==1:
                 outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%s\n"
