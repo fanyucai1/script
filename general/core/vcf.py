@@ -18,7 +18,6 @@ def run(tumor,vcf,outdir):
                 if array[i]==tumor:
                     name=i
                     continue
-        print(name)
         if not line.startswith("#"):
             array = line.split("\t")
             info=array[int(name)].split(":")
@@ -28,7 +27,8 @@ def run(tumor,vcf,outdir):
             b=p1.findall(info[5])#AD
             c=p1.findall(info[6])#AF
             Ref_Reads=b[0]
-            if a!=[]:
+            print(a)
+            if len(a)>1:
                 for i in range(len(a)):
                     ALT=a[i]
                     Alt_Reads=b[i+1]
