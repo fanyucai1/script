@@ -110,6 +110,6 @@ if __name__=="__main__":
     b.add_argument("-v", "--vcf", help="vcf file", required=True)
     b.add_argument("-o", "--outdir", help="output directory", required=True)
     b.add_argument("-t", "--tumor", help="tumor sample name in vcf", required=True)
-    b.set_defaults(func=varscan)
+    b.set_defaults(func=vardict)
     args=parser.parse_args()
     args.func(args)
