@@ -26,10 +26,10 @@ def run(tumor,vcf,outdir):
             a=p1.findall(array[4])#ALT
             b=p1.findall(info[5])#AD
             c=p1.findall(info[6])#AF
+            Ref_Reads=b[0]
             print(Ref_Reads)
             print(b[1])
             print(GT)
-            Ref_Reads=b[0]
             print(a)
             if a==[]:
                 outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%s\n"
