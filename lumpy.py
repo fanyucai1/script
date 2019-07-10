@@ -7,8 +7,8 @@ import subprocess
 from multiprocessing import Process
 
 speedseq="export PATH=/software/speedseq/speedseq/bin:$PATH"
-lumpy="/data02/software/LUMPY/lumpy-sv/bin/lumpyexpress"
-ref="/data02/database/hg19/ucsc.hg19.fasta"
+lumpy="/software/lumpy/lumpy-sv/bin/lumpyexpress"
+ref="/data/Database/hg19/ucsc.hg19.fasta"
 
 parser=argparse.ArgumentParser("Find SV using lumpy.")
 parser.add_argument("-td","--tdir",help="tumor speedseq align ouput directory)",default=os.getcwd())
