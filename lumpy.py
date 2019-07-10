@@ -46,10 +46,10 @@ if not os.path.exists("%s/%s.discordants.bam" %(args.tdir,args.tumor)):
 
 p1="%s/%s" %(args.tdir,args.tumor)
 p2="%s/%s" %(args.ndir,args.normal)
-#subprocess.check_call("cd %s && %s -B %s.bam,%s.bam -S %s.splitters.bam,%s.splitters.bam -D %s.discordants.bam,%s.discordants.bam -o %s.%s.vcf"%(args.outdir,lumpy,p1,p2,p1,p2,p1,p2,args.tumor,args.normal),shell=True)
+subprocess.check_call("cd %s && %s -B %s.bam,%s.bam -S %s.splitters.bam,%s.splitters.bam -D %s.discordants.bam,%s.discordants.bam -o %s.%s.vcf"%(args.outdir,lumpy,p1,p2,p1,p2,p1,p2,args.tumor,args.normal),shell=True)
 
 cmd='cd %s && %s -i %s.%s.vcf -B %s.bam,%s.bam >sv.gt.vcf'%(args.outdir,svtyper,args.tumor,args.normal,p1,p2)
-#subprocess.check_call(cmd,shell=True)
+subprocess.check_call(cmd,shell=True)
 
 infile=open("%s/svtyper.vcf"%(args.outdir),"r")
 outfile=open("%s/svtyper.filter.vcf"%(args.outdir),"w")
