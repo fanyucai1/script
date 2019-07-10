@@ -44,6 +44,6 @@ if __name__=="__main__":
     parser=argparse.ArgumentParser("Format vcf compile vardict and varscan.")
     parser.add_argument("-v","--vcf",help="vcf file",required=True)
     parser.add_argument("-o","--outdir",help="output directory",required=True)
-    parser.add_argument("-t","-tumor",help="tumor sample name in vcf",required=True)
+    parser.add_argument("-t","--tumor",help="tumor sample name in vcf",required=True)
     args=parser.parse_args()
     run(args.tumor,args.vcf,args.outdir)
