@@ -36,7 +36,7 @@ def run(tumor,vcf,outdir):
                                   % (array[0], array[1], array[2], array[3], ALT,GT,Ref_Reads,Alt_Reads,Var))
             else:
                 outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%s\n"
-                              %(array[0],array[1],array[2],array[3],array[4],GT,Ref_Reads,b[1],c[0]))
+                              %(array[0],array[1],array[2],array[3],array[4],GT,Ref_Reads,b[1],info[6]))
     infile.close()
     outfile.close()
 
