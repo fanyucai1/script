@@ -1,6 +1,8 @@
 #Email:fanyucai1@126.com
+#2019.7.10
 import os
 import re
+import argparse
 def run(tumor,vcf,outdir):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
@@ -12,7 +14,7 @@ def run(tumor,vcf,outdir):
         line=line.strip()
         if line.startswith("#CHROM"):
             array=line.split("\t")
-            for i in range(len(array))
+            for i in range(len(array)):
                 if array[i]==tumor:
                     name=i
                     continue
@@ -37,3 +39,11 @@ def run(tumor,vcf,outdir):
                               %(array[0],array[1],array[2],array[3],array[4],GT,Ref_Reads,b[1],c[0]))
     infile.close()
     outfile.close()
+
+if __name__=="__main__":
+    parser=argparse.ArgumentParser("Format vcf compile vardict and varscan.")
+    parser.add_argument("-v","--vcf",help="vcf file",required=True)
+    parser.add_argument("-o","--outdir",help="output directory",required=True)
+    parser.add_argument("-t","-tumor",help="tumor sample name in vcf",required=True)
+    args=parser.parse_args()
+    run(args.tumor,args.vcf,args.outdir)
