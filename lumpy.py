@@ -51,8 +51,8 @@ p2="%s/%s" %(args.ndir,args.normal)
 cmd='cd %s && %s -i %s.%s.vcf -B %s.bam,%s.bam >sv.gt.vcf'%(args.outdir,svtyper,args.tumor,args.normal,p1,p2)
 #subprocess.check_call(cmd,shell=True)
 
-infile=open("%s/svtyper.vcf","r")
-outfile=open("%s/svtyper.filter.vcf","w")
+infile=open("%s/svtyper.vcf"%(args.outdir),"r")
+outfile=open("%s/svtyper.filter.vcf"%(args.outdir),"w")
 for line in infile:
     line=line.strip()
     if not line.startswith("#"):
