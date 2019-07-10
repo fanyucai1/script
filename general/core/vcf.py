@@ -31,7 +31,7 @@ def run(tumor,vcf,outdir):
                     GT = info[k]  # GT
                 elif tmp[k]=="AD":
                     b = info[k].split(",")  # AD
-                elif tmp[k] == "AF":
+                elif tmp[k] == "AF" or tmp[k] == "FREQ":
                     c = info[k].split(",")  # AF
                 else:
                     pass
