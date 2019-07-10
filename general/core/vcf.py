@@ -28,16 +28,16 @@ def run(tumor,vcf,outdir):
             c=p1.findall(info[6])#AF
             Ref_Reads=b[0]
             print(a)
-            if len(a)>1:
+            if a==[]:
+                outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%s\n"
+                              % (array[0], array[1], array[2], array[3], array[4], GT, Ref_Reads, b[1], info[6]))
+            else:
                 for i in range(len(a)):
                     ALT=a[i]
                     Alt_Reads=b[i+1]
                     Var=c[i]
                     outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%s\n"
                                   % (array[0], array[1], array[2], array[3], ALT,GT,Ref_Reads,Alt_Reads,Var))
-            else:
-                outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%s\n"
-                              %(array[0],array[1],array[2],array[3],array[4],GT,Ref_Reads,b[1],info[6]))
     infile.close()
     outfile.close()
 
