@@ -27,10 +27,8 @@ def run(tumor,vcf,outdir):
             b=p1.findall(info[5])#AD
             c=p1.findall(info[6])#AF
             Ref_Reads=b[0]
-            print(Ref_Reads)
-            print(b[1])
-            print(GT)
-            print(a)
+            print(info)
+
             if a==[]:
                 outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%s\n"
                               % (array[0], array[1], array[2], array[3], array[4], GT, Ref_Reads, b[1], info[6]))
