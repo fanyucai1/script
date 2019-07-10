@@ -26,6 +26,9 @@ def run(tumor,vcf,outdir):
             a=p1.findall(array[4])#ALT
             b=p1.findall(info[5])#AD
             c=p1.findall(info[6])#AF
+            print(Ref_Reads)
+            print(b[1])
+            print(GT)
             Ref_Reads=b[0]
             print(a)
             if a==[]:
