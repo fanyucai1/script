@@ -38,15 +38,18 @@ def vardict(args):
                     pass
             Ref_Reads=b[0]
             if len(a)==1:
-                outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%s\n"
-                              % (array[0], array[1], array[2], array[3], array[4], GT, Ref_Reads, b[1], c[0]))
+                Var=float(c[0])*100
+                outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%.2f"
+                              % (array[0], array[1], array[2], array[3], array[4], GT, Ref_Reads, b[1],Var))
+                outfile.write("%\n")
             else:
                 for i in range(len(a)):
                     ALT=a[i]
                     Alt_Reads=b[i+1]
-                    Var=c[i]
-                    outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%s\n"
+                    Var=float(c[i])*100
+                    outfile.write("%s\t%s\t%s\t%s\t%s\t.\t.\tGT=%s;Ref_Reads=%s;Alt_Reads=%s;Var=%.2f"
                                   % (array[0], array[1], array[2], array[3], ALT,GT,Ref_Reads,Alt_Reads,Var))
+                    outfile.write("%\n")
     infile.close()
     outfile.close()
 
