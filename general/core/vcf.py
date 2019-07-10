@@ -2,7 +2,8 @@
 #2019.7.10
 import os
 import argparse
-def vardict(tumor,vcf,outdir):
+
+def vardict(args):
     tumor, vcf, outdir = args.tumor, args.vcf, args.outdir
     if not os.path.exists(outdir):
         os.mkdir(outdir)
