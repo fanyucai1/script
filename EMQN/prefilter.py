@@ -37,18 +37,19 @@ def run(anno_vcf,low_vcf,outdir,prefix):
         else:
             Total_reads,Ref_Reads,Alt_Reads,Var="","","",""
             for i in range(len(array)):
-                if dict[array[i]]=="CHROM":
-                    outfile.write("%s"%(array[i]))
-                elif dict[array[i]]=="UMT":
-                    Total_reads=array[i]
-                elif dict[array[i]]=="VMT":
-                    Alt_Reads=array[i]
-                elif dict[array[i]] == "VMF":
-                    Var=array[i]
-                else:
-                    outfile.write("\t%s" % (array[i]))
-                Ref_Reads=int(Total_reads)-int(Alt_Reads)
-                outfile.write("\tRef_Reads=%s;Alt_Reads=%s;GT=.;Var=%s\n"%(Ref_Reads,Alt_Reads,Var))
+                if array[i] in dict:
+                    if dict[array[i]]=="CHROM":
+                        outfile.write("%s"%(array[i]))
+                    elif dict[array[i]]=="UMT":
+                        Total_reads=array[i]
+                    elif dict[array[i]]=="VMT":
+                        Alt_Reads=array[i]
+                    elif dict[array[i]] == "VMF":
+                        Var=array[i]
+                    else:
+                        outfile.write("\t%s" % (array[i]))
+                    Ref_Reads=int(Total_reads)-int(Alt_Reads)
+                    outfile.write("\tRef_Reads=%s;Alt_Reads=%s;GT=.;Var=%s\n"%(Ref_Reads,Alt_Reads,Var))
             outfile.write()
 
 if __name__=="__main__":
