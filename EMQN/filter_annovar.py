@@ -45,8 +45,6 @@ def somatic(maf,annovar,outdir,prefix):
                 name.append(array[i])
                 dict[array[i]] = i
         else:
-            if array[8]=="synonymous SNV" or array[5]=="intronic" or array[5]=="intergenic" or array[5].startswith("UTR"):
-                continue
             freq = 0
             freq_counts = 0
             counts = 0
@@ -61,10 +59,10 @@ def somatic(maf,annovar,outdir,prefix):
             if array[dict['CLNSIG']].startswith("Pathogenic") or array[dict['CLNSIG']].startswith(
                     "Likely_pathogenic") or array[dict['CLNSIG']].startswith("drug_response"):
                 result = "true"
-            if array[dict['InterVar_automated']].startswith("Pathogenic") or array[
+            elif array[dict['InterVar_automated']].startswith("Pathogenic") or array[
                 dict['InterVar_automated']].startswith("Likely pathogenic"):
                 result = "true"
-            if array[dict['cosmic88_coding']].startswith("ID="):
+            elif array[dict['cosmic88_coding']].startswith("ID="):
                 pattern = re.compile(r'ID=(\S+);')
                 a = pattern.findall(array[dict['cosmic88_coding']])
                 cosmic = a[0].split(",")
@@ -72,8 +70,10 @@ def somatic(maf,annovar,outdir,prefix):
                     counts += int(cnt[i])
                 if counts >=50:
                     result = "true"
-            if freq_counts>=1:
-                continue
+            elif freq_counts>=1 or array[8]=="synonymous SNV" or array[5]=="intronic" or array[5]=="intergenic" or array[5].startswith("UTR"):
+                    continue
+            else:
+                result = "true"
             if result == "true":
                 for l in range(len(out_name)):
                     if l == 0:
