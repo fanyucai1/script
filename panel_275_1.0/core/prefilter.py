@@ -29,7 +29,7 @@ def run(vcf,genelist,vaf,outdir,prefix):
                 VF=info[2].split(",")
                 ALT=array[4].split(",")
                 Ref_Reads =AD[0]
-                if VF==[]:
+                if len(VF)==1:
                     Alt_Reads=AD[1]
                     Var=info[2]
                     if float(Var) >= float(vaf):
