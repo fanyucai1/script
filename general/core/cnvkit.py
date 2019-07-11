@@ -7,7 +7,7 @@ def run(tumor,normal,bed,outdir,anno,access,python3,cnvkit,ref):
     cmd="%s %s batch %s --normal %s --targets %s --fasta %s --output-reference my_reference.cnn --output-dir %s --annotate %s --access %s" %(python3,cnvkit,tumor,normal,bed,ref,outdir,anno,access)
     subprocess.check_call(cmd,shell=True)
 
- if __name__=="__main__":
+if __name__=="__main__":
     parser=argparse.ArgumentParser("cnvkit run cnv.")
     parser.add_argument("-tumor",help="tumor bam",required=True)
     parser.add_argument("-normal",help="normal bam",required=True)
