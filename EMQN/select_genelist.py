@@ -11,7 +11,7 @@ def run(genelist,annovarfile,outdir,prefix):
     infile.close()
 
     infile=open(annovarfile,"r")
-    outfile=open("%s/%s.annovar.tsv"%(outdir,prefix),"w")
+    outfile=open("%s/%s.sub.annovar.tsv"%(outdir,prefix),"w")
     for line in infile:
         if line.startswith("Chr"):
             outfile.write("%s\n"%(line))
