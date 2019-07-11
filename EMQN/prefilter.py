@@ -47,7 +47,7 @@ def run(anno_vcf,low_vcf,outdir,prefix):
                     else:
                         outfile.write("\t%s" % (array[i]))
             Ref_Reads=int(Total_reads)-int(Alt_Reads)
-            outfile.write("\tRef_Reads=%s;Alt_Reads=%s;GT=.;Var=%s\n"%(Ref_Reads,Alt_Reads,Var))
+            outfile.write("\tRef_Reads=%s;Alt_Reads=%s;GT=./.;Var=%s\n"%(Ref_Reads,Alt_Reads,Var))
     outfile.close()
     infile2.close()
 
