@@ -42,7 +42,7 @@ def run(anno_vcf,low_vcf,outdir,prefix):
                 elif dict[array[i]]=="UMT":
                     Total_reads=array[i]
                 elif dict[array[i]]=="VMT":
-                    ALT_Reads=array[i]
+                    Alt_Reads=array[i]
                 elif dict[array[i]] == "VMF":
                     Var=array[i]
                 else:
