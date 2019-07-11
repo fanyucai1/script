@@ -50,7 +50,8 @@ def run(anno_vcf,low_vcf,outdir,prefix):
                         outfile.write("\t%s" % (array[i]))
                     Ref_Reads=int(Total_reads)-int(Alt_Reads)
                     outfile.write("\tRef_Reads=%s;Alt_Reads=%s;GT=.;Var=%s\n"%(Ref_Reads,Alt_Reads,Var))
-            outfile.write()
+    outfile.close()
+    infile2.close()
 
 if __name__=="__main__":
     if len(sys.argv)!=5:
