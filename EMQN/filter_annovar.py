@@ -11,7 +11,7 @@ out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDet
           'Ref_Reads',	'Alt_Reads','Var']
 cosmic_vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.hg19.vcf"
 maf=0.01
-def somatic(maf,annovar,outdir,prefix):
+def run(maf,annovar,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
@@ -86,8 +86,8 @@ def somatic(maf,annovar,outdir,prefix):
 
 if __name__=="__main__":
     if len(sys.argv)!=5:
-        print("Usage:\npython3 filter_somatic.py maf annovarfile outdir prefix")
+        print("Usage:\npython3 %s maf annovarfile outdir prefix"%(sys.argv[0]))
         print("Copyright:fanyucai")
         print("Version:1.0")
-        sys.exit(-1)
-    somatic(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4])
+    else:
+        run(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4])
