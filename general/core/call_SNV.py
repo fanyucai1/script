@@ -17,6 +17,8 @@ def vardict_pair(args):
     vaf, tname, tbam, nbam, bed, nname, outdir=args.vaf,args.tumor,args.tb,args.nb,args.bed,args.normal,args.prefix
     cmd="%s && VarDict -q 20 -Q 10 -G %s -f %s -N %s -b \"%s|%s\" -z -c 1 -S 2 -E 3 -g 4 %s |testsomatic.R |var2vcf_paired.pl -N \"%s|%s\" -f %s >%s/%s.vardict.vcf" \
         %(env,ref,vaf,tname,tbam,nbam,bed,tname,nname,vaf,outdir,tname)
+    if not os.path.exists(outdir):
+        os.mkdir(outdir)
     subprocess.check_call(cmd,shell=True)
     infile = open("%s/%s.vardict.vcf" % (outdir, tname), "r")
     outfile = open("%s/%s.vardict.somatic.vcf" % (outdir, tname), "w")
@@ -71,6 +73,8 @@ def varscan_pair(args):
 def MuTect2(args):
     gatk,tumor,normal,outdir,prefix,name=args.gatk,args.tumor,args.normal,args.outdir,args.prefix,args.sample
     cmd="%s && %s Mutect2 -R %s -I %s -I %s -normal %s -O %s/%s.somatic.vcf.gz --germline-resource %s" %(env,gatk,ref,tumor,normal,name,outdir,prefix,germline_resource)
+    if os.path.exists(outdir):
+        os.mkdir(outdir)
     subprocess.check_call(cmd,shell=True)
 ##########################################################################
 parser = argparse.ArgumentParser("Call SNV from tumor-normal use vardict and varscan.")
