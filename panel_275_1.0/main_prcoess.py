@@ -53,8 +53,8 @@ if not os.path.exists("%s/result/"%(args.outdir)):
     os.mkdir("%s/result/"%(args.outdir))
 if not os.path.exists("%s/result/SNV"%(args.outdir)):
     os.mkdir("%s/result/SNV"%(args.outdir))
-core.annovar275.anno("%s.germline.vcf"%(out),"%s"%(args.outdir),"%s.germline"%(args.prefix))
-core.annovar275.anno("%s.somatic.vcf"%(out),"%s"%(args.outdir),"%s.somatic"%(args.prefix))
+core.annovar275.run("%s.germline.vcf"%(out),"%s"%(args.outdir),"%s.germline"%(args.prefix))
+core.annovar275.run("%s.somatic.vcf"%(out),"%s"%(args.outdir),"%s.somatic"%(args.prefix))
 shutil.copy("%s.germline.annovar.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 shutil.copy("%s.somatic.annovar.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 core.filter_somatic.somatic(args.maf,"%s.somatic.annovar.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s.somatic"%(args.prefix))
