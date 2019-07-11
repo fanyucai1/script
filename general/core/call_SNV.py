@@ -14,7 +14,7 @@ class Myconf(configparser.ConfigParser):
 
 
 def vardict_pair(args):
-    vaf, tname, tbam, nbam, bed, nname, outdir=args.vaf,args.tumor,args.tb,args.nb,args.bed,args.normal,args.prefix
+    vaf, tname, tbam, nbam, bed, nname, outdir=args.vaf,args.tumor,args.tb,args.nb,args.bed,args.normal,args.outdir
     cmd="%s && VarDict -q 20 -Q 10 -G %s -f %s -N %s -b \"%s|%s\" -z -c 1 -S 2 -E 3 -g 4 %s |testsomatic.R |var2vcf_paired.pl -N \"%s|%s\" -f %s >%s/%s.vardict.vcf" \
         %(env,ref,vaf,tname,tbam,nbam,bed,tname,nname,vaf,outdir,tname)
     if not os.path.exists(outdir):
