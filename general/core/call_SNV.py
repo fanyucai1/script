@@ -77,7 +77,7 @@ def MuTect2(args):
         os.mkdir(outdir)
     subprocess.check_call(cmd,shell=True)
 ##########################################################################
-parser = argparse.ArgumentParser("Call SNV from tumor-normal use vardict and varscan.")
+parser = argparse.ArgumentParser("Call SNV from tumor-normal use MuTect2,vardict and varscan.")
 parser.add_argument("-c","--config",required=True,help="config file")
 subparsers = parser.add_subparsers(dest='SNV')
 parser_a = subparsers.add_parser("vardict",help="vardict call SNV")
