@@ -87,6 +87,7 @@ parser_a.add_argument("-n", "--nb", help="normal bam file", type=str, required=T
 parser_a.add_argument("-v", "--vaf", help="vaf", type=float, required=True)
 parser_a.add_argument("-tumor", help="tumor name", required=True)
 parser_a.add_argument("-normal", help="normal name", required=True)
+parser_a.add_argument("-o", "--outdir", help="output directory", required=True)
 parser_a.set_defaults(func=vardict_pair)
 
 parser_b = subparsers.add_parser("varscan", help="varscan call SNV")
