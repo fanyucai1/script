@@ -63,7 +63,7 @@ def run(vcf,prefix,outdir):
             Var = p3.findall(line)
             GT = p4.findall(line)
             if GT==[]:
-                GT[0]="./."
+                GT.append("./.")
             ##########################format output knownCanonical transcript
             tmp = array[dict['AAChange.refGene']].split(",")
             final_nm = ""
