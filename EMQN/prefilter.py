@@ -53,7 +53,9 @@ def run(anno_vcf,low_vcf,outdir,prefix):
 
 if __name__=="__main__":
     if len(sys.argv)!=5:
-        print("python3 %s *.smCounter.cut.vcf *.smCounter.lowQ.txt outdir prefix")
+        print("python3 %s *.smCounter.cut.vcf *.smCounter.lowQ.txt outdir prefix"%(sys.argv[0]))
+        print("Email:fanyucai1@126.com")
+        print("2019.7.11")
     else:
         anno_vcf=sys.argv[1]
         low_vcf=sys.argv[2]
