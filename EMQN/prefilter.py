@@ -1,6 +1,6 @@
 import argparse
 import re
-
+import sys
 def run(anno_vcf,low_vcf,outdir,prefix):
     infile1=open(anno_vcf,"r")
     infile2=open(low_vcf,"r")
@@ -50,3 +50,13 @@ def run(anno_vcf,low_vcf,outdir,prefix):
                 Ref_Reads=int(Total_reads)-int(Alt_Reads)
                 outfile.write("\tRef_Reads=%s;Alt_Reads=%s;GT=.;Var=%s\n"%(Ref_Reads,Alt_Reads,Var))
             outfile.write()
+
+if __name__=="__main__":
+    if len(sys.argv)!=5:
+        print("python3 %s *.smCounter.cut.vcf *.smCounter.lowQ.txt outdir prefix")
+    else:
+        anno_vcf=sys.argv[1]
+        low_vcf=sys.argv[2]
+        outdir=sys.argv[3]
+        prefix=sys.argv[4]
+        run(anno_vcf,low_vcf,outdir,prefix)
