@@ -1,5 +1,3 @@
-import argparse
-import re
 import sys
 def run(anno_vcf,low_vcf,outdir,prefix):
     infile1=open(anno_vcf,"r")
