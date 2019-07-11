@@ -27,7 +27,7 @@ def run(genelist,annovarfile,outdir,prefix):
 
 if __name__=="__main__":
     if len(sys.argv)!=5:
-        print("python3 %s genelist annovarfile outdir prefix")
+        print("python3 %s genelist annovarfile outdir prefix"%(sys.argv[0]))
         print("\nEmail:fanyucai1@126.com")
         print("2019.7.11")
     else:
