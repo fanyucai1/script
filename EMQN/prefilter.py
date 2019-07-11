@@ -33,18 +33,18 @@ def run(anno_vcf,low_vcf,outdir,prefix):
         if line.startswith("READ_SET"):
             for i in range(len(array)):
                 if array[i] in('CHROM', 'POS','ID','REF','ALT','QUAL','FILTER','UMT','VMT','VMF'):
-                    dict[array[i]]=array[i]
+                    dict[i]=array[i]
         else:
             Total_reads,Ref_Reads,Alt_Reads,Var="","","",""
             for i in range(len(array)):
-                if array[i] in dict:
-                    if dict[array[i]]=="CHROM":
+                if i in dict:
+                    if dict[i]=="CHROM":
                         outfile.write("%s"%(array[i]))
-                    elif dict[array[i]]=="UMT":
+                    elif dict[i]=="UMT":
                         Total_reads=array[i]
-                    elif dict[array[i]]=="VMT":
+                    elif dict[i]=="VMT":
                         Alt_Reads=array[i]
-                    elif dict[array[i]] == "VMF":
+                    elif dict[i] == "VMF":
                         Var=array[i]
                     else:
                         outfile.write("\t%s" % (array[i]))
