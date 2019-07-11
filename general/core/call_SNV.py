@@ -70,7 +70,7 @@ def varscan_pair(args):
     p4.join()
 def MuTect2(args):
     gatk,tumor,normal,outdir,prefix,name=args.gatk,args.tumor,args.normal,args.outdir,args.prefix,args.sample
-    cmd="%s && %s Mutect2 -R %s -I %s -I %s -normal %s -O %s/%s.somatic.vcf.gz" %(env,gatk,ref,tumor,normal,name,outdir,prefix)
+    cmd="%s && %s Mutect2 -R %s -I %s -I %s -normal %s -O %s/%s.somatic.vcf.gz --germline-resource %s" %(env,gatk,ref,tumor,normal,name,outdir,prefix,germline_resource)
     subprocess.check_call(cmd,shell=True)
 ##########################################################################
 parser = argparse.ArgumentParser("Call SNV from tumor-normal use vardict and varscan.")
@@ -114,6 +114,7 @@ samtools=config['software']['samtools']
 ref=config['database']['ref']
 varscan=config['software']['varscan']
 gatk=config['software']['gatk']
+germline_resource=config['germline-resource']['vcf']
 env="export PATH=%s:%s:%s:%s:$PATH" %(java,R,perl,VarDict)
 ##############################################
 args.func(args)
