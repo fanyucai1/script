@@ -71,7 +71,7 @@ def varscan_pair(args):
     p3.join()
     p4.join()
 def MuTect2(args):
-    gatk,tumor,normal,outdir,prefix,name=args.gatk,args.tumor,args.normal,args.outdir,args.prefix,args.sample
+    tumor,normal,outdir,prefix,name=args.tumor,args.normal,args.outdir,args.prefix,args.sample
     cmd="%s && %s Mutect2 -R %s -I %s -I %s -normal %s -O %s/%s.somatic.vcf.gz --germline-resource %s" %(env,gatk,ref,tumor,normal,name,outdir,prefix,germline_resource)
     if os.path.exists(outdir):
         os.mkdir(outdir)
