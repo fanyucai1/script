@@ -68,7 +68,10 @@ def varscan_pair(args):
     p4.start()
     p3.join()
     p4.join()
-
+def MuTect2(args):
+    gatk,tumor,normal,outdir,prefix,name=args.gatk,args.tumor,args.normal,args.outdir,args.prefix,args.sample
+    cmd="%s && %s Mutect2 -R %s -I %s -I %s -normal %s -O %s/%s.somatic.vcf.gz" %(env,gatk,ref,tumor,normal,name,outdir,prefix)
+    subprocess.check_call(cmd,shell=True)
 ##########################################################################
 parser = argparse.ArgumentParser("Call SNV from tumor-normal use vardict and varscan.")
 parser.add_argument("-c","--config",required=True,help="config file")
@@ -91,6 +94,14 @@ parser_b.add_argument("-o", "--outdir", help="output directory", required=True)
 parser_b.add_argument("-p", "--prefix", help="prefix of output", required=True)
 parser_b.set_defaults(func=varscan_pair)
 
+parser_c = subparsers.add_parser("MuTect2", help="MuTect2 call SNV")
+parser_c.add_argument("-t","--tumor",required=True,help="tumor bam")
+parser_c.add_argument("-n","--normal",required=True,help="normal bam")
+parser_c.add_argument("-s","--sample",required=True,help="normal sample name")
+parser_c.add_argument("-o", "--outdir", help="output directory", required=True)
+parser_c.add_argument("-p", "--prefix", help="prefix of output", required=True)
+parser_c.set_defaults(func=MuTect2)
+
 args = parser.parse_args()
 ##############################################
 config = Myconf()
@@ -102,6 +113,7 @@ VarDict=config['software']['VarDict']
 samtools=config['software']['samtools']
 ref=config['database']['ref']
 varscan=config['software']['varscan']
+gatk=config['software']['gatk']
 env="export PATH=%s:%s:%s:%s:$PATH" %(java,R,perl,VarDict)
 ##############################################
 args.func(args)
