@@ -4,7 +4,7 @@ import re
 def run(anno_vcf,low_vcf,outdir,prefix):
     infile1=open(anno_vcf,"r")
     infile2=open(low_vcf,"r")
-    outfile=open("%s/%s.final.vcf","w")
+    outfile=open("%s/%s.final.vcf"%(outdir,prefix),"w")
     outfile.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
     for line in infile1:
         line=line.strip()
@@ -33,7 +33,7 @@ def run(anno_vcf,low_vcf,outdir,prefix):
         if line.startswith("READ_SET"):
             for i in range(len(array)):
                 if array[i] in('CHROM', 'POS','ID','REF','ALT','QUAL','FILTER','UMT','VMT','VMF'):
-                    dict[array[i]]=i
+                    dict[array[i]]=array[i]
         else:
             Total_reads,Ref_Reads,Alt_Reads,Var="","","",""
             for i in range(len(array)):
@@ -49,4 +49,4 @@ def run(anno_vcf,low_vcf,outdir,prefix):
                     outfile.write("\t%s" % (array[i]))
                 Ref_Reads=int(Total_reads)-int(Alt_Reads)
                 outfile.write("\tRef_Reads=%s;Alt_Reads=%s;GT=.;Var=%s\n"%(Ref_Reads,Alt_Reads,Var))
-            outfile.write()        
+            outfile.write()
