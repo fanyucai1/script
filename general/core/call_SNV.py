@@ -6,6 +6,7 @@ import argparse
 import os
 from multiprocessing import Process
 import configparser
+import glob
 class Myconf(configparser.ConfigParser):
     def __init__(self, defaults=None):
         configparser.ConfigParser.__init__(self, defaults=defaults)
@@ -14,7 +15,13 @@ class Myconf(configparser.ConfigParser):
 
 
 def vardict_pair(args):
-    vaf, tname, tbam, nbam, bed, nname, outdir=args.vaf,args.tumor,args.tb,args.nb,args.bed,args.normal,args.outdir
+    bed = args.bed
+    tbam = args.tbam
+    nbam = args.nbam
+    vaf = args.vaf
+    tname = args.tumor
+    nname = args.normal
+    outdir = args.outdir
     cmd="%s && VarDict -q 20 -Q 10 -G %s -f %s -N %s -b \"%s|%s\" -z -c 1 -S 2 -E 3 -g 4 %s |testsomatic.R |var2vcf_paired.pl -N \"%s|%s\" -f %s >%s/%s.vardict.vcf" \
         %(env,ref,vaf,tname,tbam,nbam,bed,tname,nname,vaf,outdir,tname)
     if not os.path.exists(outdir):
@@ -37,7 +44,12 @@ def vardict_pair(args):
     outfile.close()
 
 def varscan_pair(args):
-    vaf, tumor, normal, bed, prefix, outdir=args.vaf,args.tumor,args.normal,args.bed,args.prefix,args.outdir
+    bed = args.bed
+    tumor = args.tbam
+    normal = args.nbam
+    vaf = args.vaf
+    prefix=args.tumor+"_"+args.normal
+    outdir = args.outdir
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
@@ -70,42 +82,29 @@ def varscan_pair(args):
     p4.start()
     p3.join()
     p4.join()
-def MuTect2(args):
-    tumor,normal,outdir,prefix,name=args.tumor,args.normal,args.outdir,args.prefix,args.sample
-    cmd="%s && %s Mutect2 -R %s -I %s -I %s -normal %s -O %s/%s.somatic.vcf.gz --germline-resource %s" %(env,gatk,ref,tumor,normal,name,outdir,prefix,germline_resource)
-    if not os.path.exists(outdir):
-        os.mkdir(outdir)
-    subprocess.check_call(cmd,shell=True)
 ##########################################################################
 parser = argparse.ArgumentParser("Call SNV from tumor-normal use MuTect2,vardict and varscan.")
 parser.add_argument("-c","--config",required=True,help="config file")
 subparsers = parser.add_subparsers(dest='SNV')
 parser_a = subparsers.add_parser("vardict",help="vardict call SNV")
-parser_a.add_argument("-b", "--bed", help="target bed file", default="0", type=str,required=True)
-parser_a.add_argument("-t", "--tb", help="tumor bam file", type=str, required=True)
-parser_a.add_argument("-n", "--nb", help="normal bam file", type=str, required=True)
-parser_a.add_argument("-v", "--vaf", help="vaf", type=float, required=True)
+parser_a.add_argument("--bed", help="target bed file", default="0", type=str)
+parser_a.add_argument("--tbam", help="tumor bam file", type=str, required=True)
+parser_a.add_argument("--nbam", help="normal bam file", type=str, required=True)
+parser_a.add_argument("--vaf", help="vaf", type=float, required=True)
 parser_a.add_argument("-tumor", help="tumor name", required=True)
 parser_a.add_argument("-normal", help="normal name", required=True)
-parser_a.add_argument("-o", "--outdir", help="output directory", required=True)
+parser_a.add_argument("--outdir", help="output directory", required=True)
 parser_a.set_defaults(func=vardict_pair)
 
 parser_b = subparsers.add_parser("varscan", help="varscan call SNV")
-parser_b.add_argument("-b", "--bed", help="target bed file", default="0",type=str,required=True)
-parser_b.add_argument("-t", "--tumor", help="tumor bam file", type=str, required=True)
-parser_b.add_argument("-n", "--normal", help="normal bam file", type=str, required=True)
-parser_b.add_argument("-v", "--vaf", help="vaf", type=float, required=True)
-parser_b.add_argument("-o", "--outdir", help="output directory", required=True)
-parser_b.add_argument("-p", "--prefix", help="prefix of output", required=True)
+parser_b.add_argument("--bed", help="target bed file", default="0", type=str)
+parser_b.add_argument("--tbam", help="tumor bam file", type=str, required=True)
+parser_b.add_argument("--nbam", help="normal bam file", type=str, required=True)
+parser_b.add_argument("--vaf", help="vaf", type=float, required=True)
+parser_b.add_argument("-tumor", help="tumor name", required=True)
+parser_b.add_argument("-normal", help="normal name", required=True)
+parser_b.add_argument("--outdir", help="output directory", required=True)
 parser_b.set_defaults(func=varscan_pair)
-
-parser_c = subparsers.add_parser("MuTect2", help="MuTect2 call SNV")
-parser_c.add_argument("-t","--tumor",required=True,help="tumor bam")
-parser_c.add_argument("-n","--normal",required=True,help="normal bam")
-parser_c.add_argument("-s","--sample",required=True,help="normal sample name")
-parser_c.add_argument("-o", "--outdir", help="output directory", required=True)
-parser_c.add_argument("-p", "--prefix", help="prefix of output", required=True)
-parser_c.set_defaults(func=MuTect2)
 
 args = parser.parse_args()
 ##############################################
@@ -118,8 +117,6 @@ VarDict=config['software']['VarDict']
 samtools=config['software']['samtools']
 ref=config['database']['ref']
 varscan=config['software']['varscan']
-gatk=config['software']['gatk']
-germline_resource=config['germline-resource']['vcf']
 env="export PATH=%s:%s:%s:%s:$PATH" %(java,R,perl,VarDict)
 ##############################################
 args.func(args)
