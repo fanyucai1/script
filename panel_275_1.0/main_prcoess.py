@@ -60,7 +60,7 @@ shutil.copy("%s.somatic.annovar.tsv"%(out), "%s/result/SNV/"%(args.outdir))
 core.filter_somatic.somatic(args.maf,"%s.somatic.annovar.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s.somatic"%(args.prefix))
 core.filter_germline.germline(args.maf,"%s.germline.annovar.tsv"%(out),"%s/result/SNV/"%(args.outdir),"%s.germline"%(args.prefix))
 if c=="0" and d=="0":
-    core.annovar275.anno("%s.unknow.vcf"%(out),"%s"%(args.outdir),"%s.unknow"%(args.prefix))
+    core.annovar275.run("%s.unknow.vcf"%(out),"%s"%(args.outdir),"%s.unknow"%(args.prefix))
     shutil.copy("%s.unknow.annovar.tsv" % (out), "%s/result/SNV/" % (args.outdir))
     core.filter_somatic.somatic(args.maf, "%s.unknow.annovar.tsv" % (out), "%s/result/SNV/" % (args.outdir),"%s.unknow" % (args.prefix))
 ######################################################################MSI
