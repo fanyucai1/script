@@ -6,14 +6,12 @@ import argparse
 import os
 from multiprocessing import Process
 import configparser
-import glob
 class Myconf(configparser.ConfigParser):
     def __init__(self, defaults=None):
         configparser.ConfigParser.__init__(self, defaults=defaults)
     def optionxform(self, optionstr):
         return optionstr
-
-
+###############################################
 def vardict_pair(args):
     bed = args.bed
     tbam = args.tbam
@@ -42,7 +40,7 @@ def vardict_pair(args):
                 outfile.write("%s\n" % (line))
     infile.close()
     outfile.close()
-
+###############################################
 def varscan_pair(args):
     bed = args.bed
     tumor = args.tbam
@@ -90,7 +88,7 @@ parser_a = subparsers.add_parser("vardict",help="vardict call SNV")
 parser_a.add_argument("--bed", help="target bed file", default="0", type=str)
 parser_a.add_argument("--tbam", help="tumor bam file", type=str, required=True)
 parser_a.add_argument("--nbam", help="normal bam file", type=str, required=True)
-parser_a.add_argument("--vaf", help="vaf", type=float, required=True)
+parser_a.add_argument("--vaf", help="vaf", type=float, required=True,choices=[0.01,0.02,0.05,0.001])
 parser_a.add_argument("-tumor", help="tumor name", required=True)
 parser_a.add_argument("-normal", help="normal name", required=True)
 parser_a.add_argument("--outdir", help="output directory", required=True)
@@ -100,7 +98,7 @@ parser_b = subparsers.add_parser("varscan", help="varscan call SNV")
 parser_b.add_argument("--bed", help="target bed file", default="0", type=str)
 parser_b.add_argument("--tbam", help="tumor bam file", type=str, required=True)
 parser_b.add_argument("--nbam", help="normal bam file", type=str, required=True)
-parser_b.add_argument("--vaf", help="vaf", type=float, required=True)
+parser_b.add_argument("--vaf", help="vaf", type=float, required=True,choices=[0.01,0.02,0.05,0.001])
 parser_b.add_argument("-tumor", help="tumor name", required=True)
 parser_b.add_argument("-normal", help="normal name", required=True)
 parser_b.add_argument("--outdir", help="output directory", required=True)
