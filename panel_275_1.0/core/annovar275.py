@@ -13,7 +13,7 @@ out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDet
           '1000g2015aug_sas','1000g2015aug_afr','1000g2015aug_amr','1000g2015aug_eur','InterVar_automated','GT','AAChange.1',
           'Ref_Reads',	'Alt_Reads','Var']
 annovar="/software/docker_tumor_base/Resource/Annovar/"
-def run(vcf,prefix,outdir):
+def run(vcf,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
