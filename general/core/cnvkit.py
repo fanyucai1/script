@@ -16,7 +16,6 @@ def run(tumor,normal,bed,outdir,anno,access,python3,cnvkit,ref):
         if not line.startswith("chromosome"):
             line=line.strip()
             array=line.split("\t")
-            type=""
             copy = 2 ** float(array[4]) * 2
             if float(array[4])>=0.585:
                 type="gain"
