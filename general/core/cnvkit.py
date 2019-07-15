@@ -17,7 +17,7 @@ def run(tumor,normal,bed,outdir,anno,access,python3,cnvkit,ref):
             line=line.strip()
             array=line.split("\t")
             copy = 2 ** float(array[4]) * 2
-            if float(array[4])>=0.585:
+            if float(array[4])>=0.585:#https://cnvkit.readthedocs.io/en/stable/calling.html
                 type="gain"
                 tmp = array[0] + "\t" + array[1] + "\t" + array[2] + "\t" + array[3] + "\t" + array[4] + "\t" + type + "\t" + str(copy)
                 outfile.write("%s\n" % (tmp))
