@@ -20,7 +20,7 @@ def vardict_pair(args):
     tname = args.tumor
     nname = args.normal
     outdir = args.outdir
-    cmd="%s && VarDict -q 20 -Q 10 -G %s -f %s -N %s -b \"%s|%s\" -z -c 1 -S 2 -E 3 -g 4 %s |testsomatic.R |var2vcf_paired.pl -N \"%s|%s\" -f %s >%s/%s.vardict.vcf" \
+    cmd="%s && VarDict -O 20 -r 3 -q 20 -Q 10 -G %s -f %s -N %s -b \"%s|%s\" -z -c 1 -S 2 -E 3 -g 4 %s |testsomatic.R |var2vcf_paired.pl -N \"%s|%s\" -f %s >%s/%s.vardict.vcf" \
         %(env,ref,vaf,tname,tbam,nbam,bed,tname,nname,vaf,outdir,tname)
     if not os.path.exists(outdir):
         os.mkdir(outdir)
