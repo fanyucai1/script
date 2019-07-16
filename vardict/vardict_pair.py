@@ -8,7 +8,7 @@ def tumor_normal(vaf,tumor_name,min_reads,tumor_bam,normal_bam,bed,normal_name,o
         %(env,ref,vaf,tumor_name,min_reads,tumor_bam,normal_bam,bed,tumor_name,normal_name,vaf,outdir,tumor_name)
     subprocess.check_call(cmd,shell=True)
 if __name__=="__main__":
-    if len(sys.argv<9):
+    if len(sys.argv)<9:
         print("perl %s tumor_bam normal_bam tumor_name normal_name min_reads bed vaf outdir" %(sys.argv[0]))
         print("\n\nEmail:fanyucai1@126.com")
         print("2019.7.16")
