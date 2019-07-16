@@ -1,38 +1,23 @@
 import subprocess
-import re
-import sys
-
+import argparse
 env="export PATH=/software/java/jdk1.8.0_202/bin:/software/R/R-v3.5.2/bin/:"
 env+="/software/vardict/1.5.7/VarDictJava-1.5.7/bin:/software/perl/perl-v5.28.1/bin/:$PATH"
-ref="/data/Database/hg19/ucsc.hg19.fasta"
 
-def tumor_normal(vaf,tname,tbam,nbam,bed,nname,outdir):
-    cmd="%s && VarDict -q 20 -Q 10 -G %s -f %s -N %s -b \"%s|%s\" -z -c 1 -S 2 -E 3 -g 4 %s |testsomatic.R |var2vcf_paired.pl -N \"%s|%s\" -f %s >%s/%s.vardict.vcf" \
-        %(env,ref,vaf,tname,tbam,nbam,bed,tname,nname,vaf,outdir,tname)
+def tumor_normal(args):
+    cmd="%s && VarDict -q 20 -Q 20 -G %s -f %s -N %s -r 5 -b \"%s|%s\" -z -c 1 -S 2 -E 3 -g 4 %s |testsomatic.R |var2vcf_paired.pl -M -N \"%s|%s\" -f %s >%s/%s.vardict.vcf" \
+        %(env,args.ref,args.vaf,args.tn,args.tb,args.nb,args.bed,args.tm,args.nn,args.vaf,args.outdir,args.tn)
     subprocess.check_call(cmd,shell=True)
-    infile = open("%s/%s.vardict.vcf" % (outdir, tname), "r")
-    outfile = open("%s/%s.vardict.somatic.vcf" % (outdir, tname), "w")
-    for line in infile:
-        line = line.strip()
-        if line.startswith("#"):
-            outfile.write("%s\n" % (line))
-        else:
-            p1 = re.compile(r'LikelySomatic')
-            p2 = re.compile(r'StrongSomatic')
-            p3=re.compile(r'VD=(\d+)')
-            a = p1.findall(line)
-            b = p2.findall(line)
-            c3=p3.findall(line)
-            if a != [] or b != []:
-                outfile.write("%s\n" % (line))
-    infile.close()
-    outfile.close()
-
 if __name__=="__main__":
-    if  len(sys.argv)!=8:
-        print("Usgae:")
-        print("python3 vardict_pair.py vaf tname tbam nbam bed nname outdir\n")
-        print("Copyright:fanyucai")
-        print("Version:1.0")
-        sys.exit(-1)
-    tumor_normal(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5],sys.argv[6],sys.argv[7])
+    parser=argparse.ArgumentParser("Vardict call CNV.")
+    parser.add_argument("-r","--reads",help="The minimum # of variant reads, default 5",required=True,default=5,type=int)
+    parser.add_argument("-tb","--tb",help="tumor bam file",required=True)
+    parser.add_argument("-nb","--nb",help="normal bam file",required=True)
+    parser.add_argument("-v","--vaf",help="The threshold for allele frequenc",choices=[0.01,0.001,0.02,0.05,0.005],required=True,type=float)
+    parser.add_argument("-tn","--tn",required=True,help="tumor sample name")
+    parser.add_argument("-nn", "--nn", required=True, help="normal sample name")
+    parser.add_argument("-o","--outdir",required=True,help="output directory")
+    parser.add_argument("-b","--bed",required=True,help="bed file")
+    parser.add_argument("-r","--ref",help="reference fasta",default="/data/Database/hg19/ucsc.hg19.fasta")
+    parser.set_defaults(func=tumor_normal)
+    args=parser.parse_args()
+    args.func()
