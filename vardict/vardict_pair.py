@@ -21,7 +21,7 @@ if __name__=="__main__":
         bed=sys.argv[6]
         vaf=sys.argv[7]
         outdir=sys.argv[8]
-        if len(sys.argv==11):
+        if len(sys.argv)==1:
             ref=sys.argv[9]
             env=sys.argv[10]
         tumor_normal(vaf, tumor_name, min_reads, tumor_bam, normal_bam, bed, normal_name, outdir, ref=hg19,env=software)
