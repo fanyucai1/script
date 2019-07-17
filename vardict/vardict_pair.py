@@ -25,8 +25,7 @@ def tumor_normal(vaf,tumor_name,min_reads,tumor_bam,normal_bam,bed,normal_name,o
             a=p1.findall(line)
             b=p2.findall(line)
             if a!=[] and b!=[]:
-                if array[4]!="<DEL>" and  array[4]!="<DUP>" and  array[4]!="<INV>" and array[4]!= "<INS>":
-                    outfile.write("%s\n" % (line))
+                outfile.write("%s\n" % (line))
     outfile.close()
     infile.close()
 
