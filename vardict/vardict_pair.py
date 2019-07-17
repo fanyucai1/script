@@ -12,6 +12,7 @@ def tumor_normal(vaf,tumor_name,min_reads,tumor_bam,normal_bam,bed,normal_name,o
     outfile=open("%s/%s.somatic.vcf"%(outdir,tumor_name),"w")
     for line in infile:
         line=line.strip()
+        array=line.split("\t")
         if line.startswith("#"):
             outfile.write("%s\n"%(line))
         else:
@@ -20,7 +21,8 @@ def tumor_normal(vaf,tumor_name,min_reads,tumor_bam,normal_bam,bed,normal_name,o
             a=p1.findall(line)
             b=p2.findall(line)
             if a!=[] and b!=[]:
-                outfile.write("%s\n" % (line))
+                if array[4]!="<DEL>" and  array[4]!="<DUP>" and  array[4]!="<INV>" and array[4]!= "<INS>":
+                    outfile.write("%s\n" % (line))
     outfile.close()
     infile.close()
 
