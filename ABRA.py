@@ -20,7 +20,7 @@ parser.add_argument("-b","--bam",help="normal bam file",required=True)
 parser.add_argument("-p","--prefix",help="prefix of output",required=True)
 parser.add_argument("-o","--out",help="output directory",default=os.getcwd())
 parser.add_argument("-v","--vcf",help="VCF containing known (or suspected) variant sites.",default=0)
-parser.add_argument("-b","--bed",help="target bed region",default=0)
+parser.add_argument("-bed","--bed",help="target bed region",default=0)
 
 args=parser.parse_args()
 args.bam=os.path.abspath(args.bam)
