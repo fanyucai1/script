@@ -15,6 +15,8 @@ out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDet
           '1000g2015aug_sas','1000g2015aug_afr','1000g2015aug_amr','1000g2015aug_eur','InterVar_automated','GT','AAChange.1',
           'Ref_Reads',	'Alt_Reads','Var']
 def run(dir,samplelist,vaf,outdir):
+    if not os.path.exists(outdir):
+        os.mkdir(outdir)
     #####################################get sample ID
     sample_ID=[]
     infile = open(samplelist, "r")
