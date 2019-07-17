@@ -5,7 +5,7 @@ software="export PATH=/software/java/jdk1.8.0_202/bin:/software/R/R-v3.5.2/bin/:
 software+="/software/vardict/VarDict-1.6.0/bin:/software/perl/perl-v5.28.1/bin/:$PATH"
 hg19="/data/Database/hg19/ucsc.hg19.fasta"
 def tumor_normal(vaf,tumor_name,min_reads,tumor_bam,normal_bam,bed,normal_name,outdir,ref=hg19,env=software):
-    cmd="%s && VarDict -th 20 -q 20 -Q 20 -G %s -f %s -N %s -r %s -b \"%s|%s\" -z -c 1 -S 2 -E 3 -g 4 %s |testsomatic.R |var2vcf_paired.pl -d 50 -M -N \"%s|%s\" -f %s >%s/%s.vardict.vcf" \
+    cmd="%s && VarDict -th 20 -q 20 -Q 20 -G %s -f %s -N %s -r %s -b \"%s|%s\" -z -c 1 -S 2 -E 3 -g 4 %s |testsomatic.R |var2vcf_paired.pl -d 100 -M -N \"%s|%s\" -f %s >%s/%s.vardict.vcf" \
         %(env,ref,vaf,tumor_name,min_reads,tumor_bam,normal_bam,bed,tumor_name,normal_name,vaf,outdir,tumor_name)
     subprocess.check_call(cmd,shell=True)
     infile=open("%s/%s.vardict.vcf"%(outdir,tumor_name),"r")
