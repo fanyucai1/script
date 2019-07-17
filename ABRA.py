@@ -20,7 +20,7 @@ parser.add_argument("-n","--nbam",help="normal bam file",required=True)
 parser.add_argument("-t","--tbam",help="tumal bam file",required=True)
 parser.add_argument("-o","--out",help="output directory",default=os.getcwd())
 parser.add_argument("-v","--vcf",help="VCF containing known (or suspected) variant sites.",default=0)
-parser.add_argument("-b","--bed",help="target bed region")
+parser.add_argument("-b","--bed",help="target bed region",default=0)
 
 args=parser.parse_args()
 args.nbam=os.path.abspath(args.nbam)
@@ -29,9 +29,8 @@ if not os.path.exists(args.out):
     os.mkdir(args.out)
     args.out=os.path.abspath(args.out)
 par=" --kmer 43 "
-if os.path.exists(args.bed):
-    par+=" --targets "
-    par+=os.path.abspath(args.bed)
+if args.bed!=0:
+    par+=" --targets %s"%(args.bed)
 if args.vcf !=0:
     par+=" --in-vcf %s "%(args.vcf)
 cmd="cd %s && %s -Xmx20G -jar %s --in %s,%s --out %s.abra.bam,%s.abra.bam --ref %s --threads 20 %s --tmpdir ./ >abra.log" \
