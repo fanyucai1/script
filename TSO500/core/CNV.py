@@ -9,6 +9,8 @@ cmd="cd /software/TSO500/1.3.1/craft_1.0.0.49/resource/ && /software/dotnet/dotn
     "-baselineFile craft_baseline.txt -manifestFile craft_manifest.txt  -callGender true -genderThreshold 0.05 " \
     "-genomeFolder /software/TSO500/1.3.1/resources/genomes/hg19_hardPAR -geneThresholdFile CnvGeneThresholds.csv"
 def run(analysis,samplelist,outdir):
+    if not os.path.exists(outdir):
+        os.mkdir(outdir)
     bam_dir=analysis+"/Logs_Intermediates/IndelRealignment/"
     out_dir=analysis+"/Logs_Intermediates/CNV/"
     for(root, dirs, files) in os.walk(bam_dir):
