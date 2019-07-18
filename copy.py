@@ -7,7 +7,7 @@ dir=sys.argv[2]
 outdir=sys.argv[3]
 
 infile=open(samplelist,'r')
-sampleID=[]
+sampleID={}
 for line in infile:
     line=line.strip()
     array=line.split("\t")
