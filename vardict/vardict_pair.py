@@ -9,7 +9,7 @@ Strom S P. Current practices and guidelines for clinical next-generation sequenc
 Mayrhofer M, De Laere B, Whitington T, et al. Cell-free DNA profiling of metastatic prostate cancer reveals microsatellite instability, structural rearrangements and clonal hematopoiesis[J]. Genome medicine, 2018, 10(1): 85.
 """
 def tumor_normal(vaf,tumor_name,min_reads,tumor_bam,normal_bam,bed,normal_name,outdir,ref=hg19,env=software):
-    cmd="%s && VarDict -U -th 10 -q 20 -Q 20 -G %s -f %s -N %s -r %s -b \"%s|%s\" -z -c 1 -S 2 -E 3 -g 4 %s |testsomatic.R |var2vcf_paired.pl -d 100 -m 4.25 -M -N \"%s|%s\" -f %s >%s/%s.vardict.vcf" \
+    cmd="%s && VarDict -U -th 10 -q 20 -Q 20 -G %s -f %s -N %s -r %s -b \"%s|%s\" -z -c 1 -S 2 -E 3 -g 4 %s |testsomatic.R |var2vcf_paired.pl -d 50 -m 4.25 -M -N \"%s|%s\" -f %s >%s/%s.vardict.vcf" \
         %(env,ref,vaf,tumor_name,min_reads,tumor_bam,normal_bam,bed,tumor_name,normal_name,vaf,outdir,tumor_name)
     subprocess.check_call(cmd,shell=True)
     infile=open("%s/%s.vardict.vcf"%(outdir,tumor_name),"r")
