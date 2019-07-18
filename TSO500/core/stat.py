@@ -69,7 +69,7 @@ def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
         else:
             for i in range(len(array)):
                 if name[i]=="Batch":
-                    Batch[array[0]]=array[3]
+                    Batch[array[0]]=array[i]
                 dict2d(dict2,array[0],name[i],array[i])
     infile.close()
     ###################################################output result
