@@ -1,7 +1,7 @@
 import sys
 import os
 import re
-
+import subprocess
 samplelist=sys.argv[1]
 dir=sys.argv[2]
 outdir=sys.argv[3]
@@ -21,4 +21,4 @@ for (root,dirs,files) in os.walk(dir):
         if a!=[]:
             cmd+=" %s "%(file)
 cmd+=" fanyucai@192.168.1.118:%s "%(outdir)
-print(cmd)
+subprocess.check_call(cmd,shell=True)
