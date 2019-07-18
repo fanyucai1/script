@@ -108,7 +108,7 @@ def run(dir,samplelist,vaf,outdir):
                 name = []
                 p1=re.compile(r'Var=([0-9.]+)')
                 p2=re.compile(r'AD=([0-9.,]+)')
-                p3=re.compile(r'GT=(\d./.\d)')
+                p3=re.compile(r'GT=([\d.]/[.\d])')
                 a=p1.findall(line)
                 b=p2.findall(line)
                 c=p3.findall(line)
