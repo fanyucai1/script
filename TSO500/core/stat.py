@@ -68,7 +68,8 @@ def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
                 name.append(array[i])
         else:
             for i in range(len(array)):
-                Batch[array[0]]=array[3]
+                if name[i]=="Batch":
+                    Batch[array[0]]=array[3]
                 dict2d(dict2,array[0],name[i],array[i])
     infile.close()
     ###################################################output result
@@ -77,15 +78,12 @@ def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
                   "Number_of_Passing_Eligible_Variants"
                   "\tNumber_of_Passing_Eligible_Nonsynonymous_Variants\t"
                   "Usable_MSI_Sites\tTotal_Microsatellite_Sites_Unstable\tPercent_Unstable_Site\n")
-
-    for i in sample_ID:
+    for i in Batch:
         if i not in dict2:
             pass
         else:
-            outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"
-                          %(Batch[i],i,dict2[i]["Cancer"],dict[i]["Total_TMB"],dict[i]["Nonsynonymous_TMB"],dict[i]["Coding_Region_Size_in_Megabases"],
-                            dict[i]["Number_of_Passing_Eligible_Variants"],dict[i]["Number_of_Passing_Eligible_Nonsynonymous_Variants"],
-                            dict[i]["Usable_MSI_Sites"],dict[i]["Total_Microsatellite_Sites_Unstable"],dict[i]["Percent_Unstable_Site"]))
+            if i in sample_ID:
+                outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %(Batch[i],i,dict2[i]["Cancer"],dict[i]["Total_TMB"],dict[i]["Nonsynonymous_TMB"],dict[i]["Coding_Region_Size_in_Megabases"],dict[i]["Number_of_Passing_Eligible_Variants"],dict[i]["Number_of_Passing_Eligible_Nonsynonymous_Variants"],dict[i]["Usable_MSI_Sites"],dict[i]["Total_Microsatellite_Sites_Unstable"],dict[i]["Percent_Unstable_Site"]))
     outfile.close()
     ###############################################################
     df = pd.read_csv("%s/TMB_MSI.tsv"%(outdir), sep="\t", header=0)
@@ -103,3 +101,4 @@ if __name__=="__main__":
     parser.add_argument("-o", "--outdir", help="output directory", default="/data/TSO500/")
     args = parser.parse_args()
     run(args.samplelist,args.outdir,args.dir)
+
