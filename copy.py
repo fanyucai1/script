@@ -19,6 +19,6 @@ for (root,dirs,files) in os.walk(dir):
         p=re.compile(r'SmallVariants.genome.vcf$')
         a=p.findall(file)
         if a!=[]:
-            cmd+=" %s "%(a[0])
+            cmd+=" %s "%(file)
 cmd+=" fanyucai@192.168.1.118:%s "%(outdir)
 print(cmd)
