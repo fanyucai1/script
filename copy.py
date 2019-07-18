@@ -22,5 +22,5 @@ for (root,dirs,files) in os.walk(dir):
         b=p2.findall(file)
         if a!=[] or b!=[]:
             cmd+=" %s "%(file)
-cmd+=" fanyucai@192.168.1.118:%s "%(outdir)
+cmd+=" fanyucai@192.168.1.206:%s "%(outdir)
 subprocess.check_call('echo %s >run.sh'%(cmd),shell=True)
