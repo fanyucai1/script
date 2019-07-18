@@ -17,7 +17,7 @@ for (root,dirs,files) in os.walk(dir):
     for name in files:
         file=os.path.join(root, name)
         p1=re.compile(r'SmallVariants.genome.vcf$')
-        p2=re.compile(r'BJ19\S+smCounter.cut.vcf')
+        p2=re.compile(r'smCounter.cut.vcf$')
         a=p1.findall(file)
         b=p2.findall(file)
         if a!=[] or b!=[]:
