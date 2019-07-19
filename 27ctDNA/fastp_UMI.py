@@ -11,7 +11,7 @@ picard="/software/picard/picard.jar"
 def run(pe1,pe2,readlength,outdir,prefix):
     out=outdir+"/"+prefix
     cmd='%s --in1 %s --in2 %s -w 10 -U --umi_loc=per_read --umi_len 3 --umi_skip 2 --out1 %s.clean.1.fq --out2 %s.clean.2.fq -l %s -j %s.json -h %s.html'\
-        %(fastp,pe1,pe2,out,out,readlength,out,out)
+        %(fastp,pe1,pe2,out,out,readlength-10,out,out)
     subprocess.check_call(cmd,shell=True)
     json_file = os.path.abspath("%s.json" % (out))
     outfile = open("%s.csv" % (out), "w")
