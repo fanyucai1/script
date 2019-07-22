@@ -32,7 +32,7 @@ def run(pe1,pe2,readlength,outdir,prefix):
     subprocess.check_call(
         "cd %s && %s && speedseq align -t 20 -o %s -R \"@RG\\tID:%s\\tSM:%s\\tLB:lib:\\tPL:Illumina\" %s %s.clean.1.fq %s.clean.2.fq"
         % (outdir, speedseq, prefix, prefix, prefix, ref, prefix, prefix), shell=True)
-    cmd = "%s -Xmx100G -jar %s MarkDuplicates I=%s.bam O=%s.umi.dup.bam BARCODE_TAG=RX M=%s.marked_dup_metrics.txt" % (java, picard, out, out, out)
+    cmd = "%s -Xmx100G -jar %s MarkDuplicates I=%s.bam O=%s.umi.dup.bam BARCODE_TAG=RX M=%s.marked_dup_metrics.txt REMOVE_DUPLICATES=true" % (java, picard, out, out, out)
     subprocess.check_call(cmd, shell=True)
 
 if __name__=="__main__":
