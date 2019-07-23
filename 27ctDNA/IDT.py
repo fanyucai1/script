@@ -26,6 +26,7 @@ if not os.path.exists(args.outdir):
 
 out=args.outdir+"/"+args.prefix
 len=args.read-5
+
 ##########fastq2bam#####################
 
 cmd="%s -Xmx50g -jar %s FastqToSam F1=%s F2=%s O=%s.unmapped.bam SM=%s RG=%s LB=%s PL=illumina" %(java,picard,args.pe1,args.pe2,out,args.prefix,args.prefix,args.prefix)
@@ -50,6 +51,9 @@ subprocess.check_call(cmd,shell=True)
 ########GroupReadsByUmi####################
 
 cmd="%s -Xmx50g -jar %s GroupReadsByUmi -i %s.merge.bam  -o %s.group.bam -s Paired -m 20" \
+    %(java,fgbio,out,out)
+subprocess.check_call(cmd,shell=True)
+cmd="%s -Xmx50g -jar %s  CollectDuplexSeqMetrics -i %s.group.bam -o %s.umi.stat -u true  -a 3  -b 3" \
     %(java,fgbio,out,out)
 subprocess.check_call(cmd,shell=True)
 
@@ -83,7 +87,7 @@ subprocess.check_call(cmd,shell=True)
 
 #############vardict##########################################################################
 
-cmd="%s && VarDict  -U -th 10 -q 20 -Q 20 -G %s -f %s -N %s -b %s.consensus.mapped.clipped.bam -z -c 1 -S 2 -E 3 -g 4 %s | teststrandbias.R | var2vcf_valid.pl -d 50 -N %s -E -f %s >%s.vardict.vcf" \
+cmd="%s && VarDict -U -th 10 -q 20 -Q 20 -G %s -f %s -N %s -b %s.consensus.filter.clipped.bam -z -c 1 -S 2 -E 3 -g 4 %s | teststrandbias.R | var2vcf_valid.pl -d 50 -N %s -E -f %s >%s.vardict.vcf" \
         %(env,ref,args.vaf,args.prefix,out,args.bed,args.prefix,args.vaf,out)
 subprocess.check_call(cmd,shell=True)
 
