@@ -6,8 +6,8 @@ env+="/software/vardict/1.5.7/VarDictJava-1.5.7/bin:/software/perl/perl-v5.28.1/
 ref="/data/Database/hg19/ucsc.hg19.fasta"
 
 def tumor_only(vaf,bamfile,bedfile,prefix,outdir):
-    cmd="%s && VarDict  -U -th 10 -q 20 -Q 20 -G %s -f %s -N %s -b %s -z -c 1 -S 2 -E 3 -g 4 %s | teststrandbias.R | var2vcf_valid.pl -d 50 -m 4.25 -N %s -E -f 0 >%s/%s.vardict.vcf" \
-        %(env,ref,vaf,prefix,bamfile,bedfile,prefix,outdir,prefix)
+    cmd="%s && VarDict -U -th 10 -q 20 -Q 20 -G %s -f %s -N %s -b %s -z -c 1 -S 2 -E 3 -g 4 %s | teststrandbias.R | var2vcf_valid.pl -d 50 -m 4.25 -N %s -E -f %s >%s/%s.vardict.vcf" \
+        %(env,ref,vaf,prefix,bamfile,bedfile,prefix,vaf,outdir,prefix)
     subprocess.check_call(cmd,shell=True)
 if __name__=="__main__":
     if len(sys.argv)!=6:
