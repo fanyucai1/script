@@ -7,7 +7,7 @@ def run_msi(bamfile,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
-    cmd="%s msi -t %s -o %s.msi.tsv -M %s" %(MSIsensor,bamfile,out,models)
+    cmd="%s msi -t %s -o %s.msi.tsv -M %s -d %s/1030c0aa35ca5c263daeae866ad18632" %(MSIsensor,bamfile,out,models,models)
     subprocess.check_call(cmd,shell=True)
 
 if __name__=="__main__":
