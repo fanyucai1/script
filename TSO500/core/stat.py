@@ -68,7 +68,7 @@ def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
                 name.append(array[i])
         else:
             for i in range(len(array)):
-                if name[i]=="Batch":
+                if name[i]=="Batch" and array[1]!="D":
                     Batch[array[0]]=array[i]
                 dict2d(dict2,array[0],name[i],array[i])
     infile.close()
@@ -92,7 +92,8 @@ def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
     plt.figure(figsize=(18, 10))
     sns.boxplot(x, y, data=df)
     plt.savefig('%s/TMB.png'%(outdir), dpi=300)
-    #####################################################
+
+    ################################################################
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser("Output TSO stat result.")
