@@ -17,7 +17,7 @@ def run(bed,bam,outdir,prefix):
 
 if __name__=="__main__":
     if (len(sys.argv)!=5):
-        print("\nUsage:python3 %s bedfile bamfile outdir prefix")
+        print("\nUsage:python3 %s bedfile bamfile outdir prefix"%(sys.argv[0]))
         print("\nEmail:fanyucai1@126.com")
     else:
         bed=sys.argv[1]
