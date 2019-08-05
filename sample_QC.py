@@ -3,6 +3,7 @@ import sys
 import subprocess
 picard="/software/picard/picard.jar"
 ref="/data/Database/hg19/ucsc.hg19.fasta"
+gatk3="/software/gatk/3.7/GenomeAnalysisTK.jar"
 def run(target_bed,probe_bed,bam,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
@@ -16,7 +17,10 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
     cmd="java -Xmx40g -jar %s CollectHsMetrics I=%s O=%s.hs_metrics.txt R=%s TARGET_INTERVALS=%s/target.interval_list" \
         " BAIT_INTERVALS=%s/probe.interval_list COVMAX=null SAMPLE_SIZE=null "%(picard,bam,out,ref,outdir,outdir)
     subprocess.check_call(cmd,shell=True)
-
+    ####Assess sequence coverage by a wide array of metrics, partitioned by sample, read group, or library#############
+    cmd="java -Xmx40g -jar %s -T DepthOfCoverage --minBaseQuality 20 --minMappingQuality 20 -R %s -I %s -nt 8 -o %s -ct 50 -L %s"\
+        %(gatk3,ref,bam,out,target_bed)
+    subprocess.check_call(cmd,shell=True)
 if __name__=="__main__":
     if (len(sys.argv)!=6):
         print("\nUsage:python3 %s bedfile bamfile outdir prefix"%(sys.argv[0]))
