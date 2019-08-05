@@ -21,9 +21,11 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
     cmd="java -Xmx40g -jar %s -T DepthOfCoverage --minBaseQuality 20 --minMappingQuality 20 -R %s -I %s -nt 8 -o %s -ct 50 -L %s"\
         %(gatk3,ref,bam,out,target_bed)
     subprocess.check_call(cmd,shell=True)
+
+
 if __name__=="__main__":
     if (len(sys.argv)!=6):
-        print("\nUsage:python3 %s bedfile bamfile outdir prefix"%(sys.argv[0]))
+        print("\nUsage:python3 %s target_bed probe_bed bamfile outdir prefix"%(sys.argv[0]))
         print("\nEmail:fanyucai1@126.com")
     else:
         target_bed=sys.argv[1]
