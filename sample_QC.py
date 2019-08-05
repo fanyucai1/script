@@ -18,7 +18,7 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
         " BAIT_INTERVALS=%s/probe.interval_list COVMAX=1000000 "%(picard,bam,out,ref,outdir,outdir)
     subprocess.check_call(cmd,shell=True)
     ####Assess sequence coverage by a wide array of metrics, partitioned by sample, read group, or library#############
-    cmd="java -Xmx40g -jar %s -T DepthOfCoverage --minBaseQuality 20 --minMappingQuality 20 -R %s -I %s -nt 8 -o %s -ct 50 -L %s/target.interval_list"\
+    cmd="java -Xmx40g -jar %s -T DepthOfCoverage --fix_misencoded_quality_scores --minBaseQuality 20 --minMappingQuality 20 -R %s -I %s -nt 8 -o %s -ct 50 -L %s/target.interval_list"\
         %(gatk3,ref,bam,out,outdir)
     subprocess.check_call(cmd,shell=True)
 
