@@ -27,10 +27,9 @@ print(tumor)
 for key in tumor:
     dict={}
     name = re.compile(r'(\S+)TF')
-    tt=name.findall(key)
-    print(tt[0])
+    c1 = name.findall(key)
     for key1 in normal:
-        c = name.findall(key1)
+        c = name.findall(c1[0])
         if c!=[]:
             print("tumor %s and normal %s are pair"%(key,key1))
             outfile=open("%s/%s_%s.annovar.tsv"%(outdir,key,key1),"w")
