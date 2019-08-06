@@ -57,7 +57,7 @@ for key in tumor:
                                 outfile_n.write("%s\n" % (line))
                                 overlap.write("%s\n" % (line))
                             else:
-                                if not line in dict:
+                                if not line in dict_n:
                                     outfile_t.write("%s\n" % (line))
                                 else:
                                     overlap.write("%s\n" % (line))
