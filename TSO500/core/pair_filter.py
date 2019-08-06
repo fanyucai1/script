@@ -23,7 +23,6 @@ for line in infile:
         if b!=[]:
             normal.append(array[0])
 infile.close()
-print(tumor)
 for key in tumor:
     dict_t={}
     dict_n={}
