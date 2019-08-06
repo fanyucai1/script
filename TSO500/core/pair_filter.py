@@ -23,6 +23,8 @@ for line in infile:
         if b!=[]:
             normal.append(array[0])
 infile.close()
+print(tumor)
+print(normal)
 for key in tumor:
     dict={}
     name = re.compile(r'(\S+[T][F])')
