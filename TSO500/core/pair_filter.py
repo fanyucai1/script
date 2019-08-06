@@ -1,7 +1,7 @@
 import os
 import sys
 import re
-dir="/data/TSO500"
+root_dir="/data/TSO500"
 list="/data/TSO500/samplelist.csv"
 
 outdir=os.getcwd()
@@ -31,7 +31,7 @@ for key in tumor:
         if c!=[]:
             print("tumor %s and normal %s are pair"%(key,key1))
             outfile=open("%s/%s_%s.annovar.tsv"%(outdir,key,key1),"w")
-            for (root,dirs,files) in os.walk(dir):
+            for (root,dirs,files) in os.walk(root_dir):
                 for dir in dirs:
                     n_path = root + "/" + dir + "/SNV/"+key1+".annovar.tsv"
                     if os.path.exists(n_path):
