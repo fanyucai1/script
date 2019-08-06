@@ -27,7 +27,7 @@ print(tumor)
 print(normal)
 for key in tumor:
     dict={}
-    name = re.compile(r'(\S+[T][F])')
+    name = re.compile(r'(\S+)[T][F]')
     for key1 in normal:
         c = name.findall(key1)
         if c!=[]:
