@@ -14,8 +14,8 @@ for line in infile:
     line=line.strip()
     array=line.split(",")
     if num!=1:
-        t=re.compile(r'(\S+[TF])')
-        n=re.compile(r'(\S+[NF])')
+        t=re.compile(r'(\S+[T][F])')
+        n=re.compile(r'(\S+[N][F])')
         a=t.findall(array[0])
         b=n.findall(array[0])
         if a!=[]:
@@ -25,7 +25,7 @@ for line in infile:
 infile.close()
 for key in tumor:
     dict={}
-    name = re.compile(r'(\S+[TF])')
+    name = re.compile(r'(\S+[T][F])')
     for key1 in normal:
         c = name.findall(key1)
         if c!=[]:
