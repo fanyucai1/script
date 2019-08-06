@@ -39,14 +39,13 @@ def run(analysis,samplelist,outdir):
                     line = line.strip()
                     array = line.split()
                     if array[4]=="<DUP>" or array[4]=="<DEL>":
-                        if array[6]=="PASS":
-                            i+=1
-                            p1=re.compile(r'END=(\d+)')
-                            p2=re.compile(r'ANT=(\S+)')
-                            a=p1.findall(line)
-                            b=p2.findall(line)
-                            tmp = array[0] + "\t" + array[1] +"\t"+a[0]+"\t"+array[3]+"\t"+array[4]+"\t"+b[0]
-                            outfile.write("%s\n"%(tmp))
+                        i+=1
+                        p1=re.compile(r'END=(\d+)')
+                        p2=re.compile(r'ANT=(\S+)')
+                        a=p1.findall(line)
+                        b=p2.findall(line)
+                        tmp = array[0] + "\t" + array[1] +"\t"+a[0]+"\t"+array[3]+"\t"+array[4]+"\t"+b[0]
+                        outfile.write("%s\n"%(tmp))
             outfile.close()
             if i==0:
                 subprocess.check_call("rm -rf %s/%s.cnv.tsv" %(outdir,id),shell=True)

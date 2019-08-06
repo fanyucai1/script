@@ -4,6 +4,7 @@ import re
 MSIsensor = "export LD_LIBRARY_PATH=/software/gcc/gcc-v6.5.0/lib64/:LD_LIBRARY_PATH && /software/MSIsensor/msisensor-ML/msisensor"
 models = "/software/MSIsensor/msisensor-ML/models_hg19_275genes"
 def run(indir):
+    ##################################################tumor only analysis
     outfile=open("%s/MSI/total.tsv"%(indir),"w")
     outfile.write("SampleID\tTotal_Number_of_Sites\tNumber_of_Somatic_Sites\t%\n")
     for (root,dirs,files) in os.walk(indir):
@@ -24,6 +25,10 @@ def run(indir):
                         outfile.write("%s\t%s"%(b[0],line))
                 infile.close()
     outfile.close()
+    ##################################################pairs analysis
+    outfile = open("%s/MSI/total.tsv" % (indir), "w")
+    outfile.write("SampleID\tTotal_Number_of_Sites\tNumber_of_Somatic_Sites\t%\n")
+
 
 if __name__=="__main__":
     run("/data/Panel275/")
