@@ -12,7 +12,7 @@ tumor=[]
 for line in infile:
     num+=1
     line=line.strip()
-    array=line.split("\t")
+    array=line.split(",")
     if num!=1:
         t=re.compile(r'(\S+[TF])')
         n=re.compile(r'(\S+[NF])')
