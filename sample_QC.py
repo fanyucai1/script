@@ -40,6 +40,7 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
                         dict['PCT_TARGET_BASES_100X']=array[i]
                     if name[i] == "PCT_TARGET_BASES_100X":
 
+
 if __name__=="__main__":
     if (len(sys.argv)!=6):
         print("\nUsage:python3 %s target_bed probe_bed bamfile outdir prefix"%(sys.argv[0]))
