@@ -75,7 +75,7 @@ def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
                     rate[array[0]]=array[i]
                 dict2d(dict2,array[0],name[i],array[i])
     infile.close()
-    ###################################################output result
+    #############################################################output result
     outfile=open("%s/TMB_MSI.tsv"%(outdir),"w")
     outfile.write("Batch\trate\tSample_ID\tCancer\tTotal_TMB\tNonsynonymous_TMB\tCoding_Region_Size_in_Megabases\t"
                   "Number_of_Passing_Eligible_Variants"
@@ -95,7 +95,6 @@ def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
     plt.figure(figsize=(18, 10))
     sns.boxplot(x, y, data=df)
     plt.savefig('%s/TMB.png'%(outdir), dpi=300)
-
     ################################################################
 
 if __name__=="__main__":
