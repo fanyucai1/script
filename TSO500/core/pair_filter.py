@@ -25,13 +25,16 @@ for line in infile:
 infile.close()
 print(tumor)
 for key in tumor:
-    dict={}
+    dict_t={}
+    dict_n={}
     name = re.compile(r'(\S+)TF')
     sampleID = name.findall(key)
     for key1 in normal:
         if re.search(sampleID[0],key1):
             print("tumor %s and normal %s are pair"%(key,key1))
-            outfile=open("%s/%s_%s.annovar.tsv"%(outdir,key,key1),"w")
+            outfile_t=open("%s/%s_%s.annovar.tsv"%(outdir,key,key1),"w")
+            outfile_n=open("%s/%s_%s.annovar.tsv"%(outdir,key1,key),"w")
+            overlap=open("%s/%s_overlap_%s.annovar.tsv"%(outdir,key1,key),"w")
             for (root,dirs,files) in os.walk(root_dir):
                 for dir in dirs:
                     n_path = root + "/" + dir + "/SNV/"+key1+".annovar.tsv"
@@ -39,9 +42,8 @@ for key in tumor:
                         infile=open(n_path,"r")
                         for line in infile:
                             line=line.strip()
-                            dict[line]=1
+                            dict_n[line]=1
                         infile.close()
-                        continue
                 for dir in dirs:
                     t_path = root + "/" + dir + "/SNV/" + key + ".annovar.tsv"
                     if os.path.exists(t_path):
@@ -50,7 +52,20 @@ for key in tumor:
                         for line in infile:
                             num+=1
                             line=line.strip()
-                            if num==1 or not line in dict:
-                                outfile.write("%s\n" % (line))
-                        continue
-            outfile.close()
+                            dict_t[line]=1
+                            if num == 1:
+                                outfile_t.write("%s\n" % (line))
+                                outfile_n.write("%s\n" % (line))
+                                overlap.write("%s\n" % (line))
+                            else:
+                                if not line in dict:
+                                    outfile_t.write("%s\n" % (line))
+                                else:
+                                    overlap.write("%s\n" % (line))
+            for line in dict_n:
+                if not line in dict_t:
+                    outfile_n.write("%s\n" % (line))
+
+            outfile_t.close()
+            overlap.close()
+            outfile_n.close()
