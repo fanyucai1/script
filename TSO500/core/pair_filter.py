@@ -33,7 +33,7 @@ for key in tumor:
             print("tumor %s and normal %s are pair"%(key,key1))
             outfile_t=open("%s/%s.unique.annovar.tsv"%(outdir,key),"w")
             outfile_n=open("%s/%s.unqiue.annovar.tsv"%(outdir,key1),"w")
-            overlap=open("%s/%s_vs_%s.annovar.tsv"%(outdir,key,key1),"w")
+            overlap=open("%s/%s_common_%s.annovar.tsv"%(outdir,key,key1),"w")
             for (root,dirs,files) in os.walk(root_dir):
                 for dir in dirs:
                     n_path = root + "/" + dir + "/SNV/"+key1+".annovar.tsv"
