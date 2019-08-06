@@ -18,10 +18,27 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
         " BAIT_INTERVALS=%s/probe.interval_list COVMAX=1000000 "%(picard,bam,out,ref,outdir,outdir)
     subprocess.check_call(cmd,shell=True)
     ####Assess sequence coverage by a wide array of metrics, partitioned by sample, read group, or library#############
-    cmd="java -Xmx40g -jar %s -T DepthOfCoverage --fix_misencoded_quality_scores -allowPotentiallyMisencodedQuals --minBaseQuality 20 --minMappingQuality 20 -R %s -I %s -o %s -ct 50 -L %s/target.interval_list"\
+    cmd="java -Xmx40g -jar %s -T DepthOfCoverage -allowPotentiallyMisencodedQuals --minBaseQuality 20 --minMappingQuality 20 -R %s -I %s -o %s -ct 50 -L %s/target.interval_list"\
         %(gatk3,ref,bam,out,outdir)
     subprocess.check_call(cmd,shell=True)
-
+    ############################################
+    infile=open("%s.hs_metrics.txt"%(out),"r")
+    outfile=open("%s.sample.qc.tsv","w")
+    num=0
+    name=[]
+    dict={}
+    for line in infile:
+        if not line.startswith("#"):
+            array=line.split("\t")
+            if array[0]=="BAIT_SET":
+                for i in range(len(array)):
+                    name.append(array[i])
+                num+=1
+            if num==1 and len(array)==len(name):
+                for i in range(len(array)):
+                    if name[i]=="PCT_TARGET_BASES_100X":
+                        dict['PCT_TARGET_BASES_100X']=array[i]
+                    if name[i] == "PCT_TARGET_BASES_100X":
 
 if __name__=="__main__":
     if (len(sys.argv)!=6):

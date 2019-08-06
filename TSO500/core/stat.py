@@ -59,6 +59,7 @@ def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
     num=0
     name=[]
     Batch={}
+    rate={}
     for line in infile:
         line=line.strip()
         array=line.split(",")
@@ -68,13 +69,15 @@ def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
                 name.append(array[i])
         else:
             for i in range(len(array)):
-                if name[i]=="Batch" and array[1]!="D":
+                if name[i]=="Batch":
                     Batch[array[0]]=array[i]
+                if name[i]=="rate":
+                    rate[array[0]]=array[i]
                 dict2d(dict2,array[0],name[i],array[i])
     infile.close()
     ###################################################output result
     outfile=open("%s/TMB_MSI.tsv"%(outdir),"w")
-    outfile.write("Batch\tSample_ID\tCancer\tTotal_TMB\tNonsynonymous_TMB\tCoding_Region_Size_in_Megabases\t"
+    outfile.write("Batch\trate\tSample_ID\tCancer\tTotal_TMB\tNonsynonymous_TMB\tCoding_Region_Size_in_Megabases\t"
                   "Number_of_Passing_Eligible_Variants"
                   "\tNumber_of_Passing_Eligible_Nonsynonymous_Variants\t"
                   "Usable_MSI_Sites\tTotal_Microsatellite_Sites_Unstable\tPercent_Unstable_Site\n")
@@ -83,7 +86,7 @@ def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
             pass
         else:
             if i in sample_ID:
-                outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %(Batch[i],i,dict2[i]["Cancer"],dict[i]["Total_TMB"],dict[i]["Nonsynonymous_TMB"],dict[i]["Coding_Region_Size_in_Megabases"],dict[i]["Number_of_Passing_Eligible_Variants"],dict[i]["Number_of_Passing_Eligible_Nonsynonymous_Variants"],dict[i]["Usable_MSI_Sites"],dict[i]["Total_Microsatellite_Sites_Unstable"],dict[i]["Percent_Unstable_Site"]))
+                outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %(Batch[i],rate[i],i,dict2[i]["Cancer"],dict[i]["Total_TMB"],dict[i]["Nonsynonymous_TMB"],dict[i]["Coding_Region_Size_in_Megabases"],dict[i]["Number_of_Passing_Eligible_Variants"],dict[i]["Number_of_Passing_Eligible_Nonsynonymous_Variants"],dict[i]["Usable_MSI_Sites"],dict[i]["Total_Microsatellite_Sites_Unstable"],dict[i]["Percent_Unstable_Site"]))
     outfile.close()
     ###############################################################
     df = pd.read_csv("%s/TMB_MSI.tsv"%(outdir), sep="\t", header=0)
