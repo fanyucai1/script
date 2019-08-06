@@ -4,7 +4,7 @@ import re
 root_dir="/data/TSO500"
 list="/data/TSO500/samplelist.csv"
 
-outdir=os.getcwd()
+outdir="/data/TSO500/tumor_normal_pair"
 infile=open(list,"r")
 num=0
 normal=[]
