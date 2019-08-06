@@ -31,9 +31,9 @@ for key in tumor:
     for key1 in normal:
         if re.search(sampleID[0],key1):
             print("tumor %s and normal %s are pair"%(key,key1))
-            outfile_t=open("%s/%s_%s.annovar.tsv"%(outdir,key,key1),"w")
-            outfile_n=open("%s/%s_%s.annovar.tsv"%(outdir,key1,key),"w")
-            overlap=open("%s/%s_overlap_%s.annovar.tsv"%(outdir,key1,key),"w")
+            outfile_t=open("%s/%s.unique.annovar.tsv"%(outdir,key),"w")
+            outfile_n=open("%s/%s.unqiue.annovar.tsv"%(outdir,key1),"w")
+            overlap=open("%s/%s_vs_%s.annovar.tsv"%(outdir,key,key1),"w")
             for (root,dirs,files) in os.walk(root_dir):
                 for dir in dirs:
                     n_path = root + "/" + dir + "/SNV/"+key1+".annovar.tsv"
