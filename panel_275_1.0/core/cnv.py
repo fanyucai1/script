@@ -20,7 +20,7 @@ def run(vcf,sex,genelist,outdir,prefix):
         line = line.strip()
         if not line.startswith("#"):
             array = line.split("\t")
-            if array[4] != ".":
+            if array[4] != "." and float(array[5])>50:
                 a = pattern.findall(line)
                 b = end.findall(line)
                 CNV[array[0]] = a[0]

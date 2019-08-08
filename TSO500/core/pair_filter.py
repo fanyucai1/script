@@ -23,6 +23,8 @@ for line in infile:
         if b!=[]:
             normal.append(array[0])
 infile.close()
+out_total=open("%s/tumor_vs_normal.tsv","w")
+out_total.write("Tumor\tNormal\tTumor_unique\tOverlap\tNormal_unique\n")
 for key in tumor:
     dict_t={}
     dict_n={}
@@ -74,4 +76,4 @@ for key in tumor:
             outfile_t.close()
             overlap.close()
             outfile_n.close()
-            print("%s\t%s\t%s\t%s\t%s" % (key, key1,t_unique,n_unique,common))
+            out_total.write("%s\t%s\t%s\t%s\t%s\n" % (key, key1,t_unique,common,n_unique))
