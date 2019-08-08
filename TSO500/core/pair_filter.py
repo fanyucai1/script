@@ -2,7 +2,7 @@ import os
 import sys
 import re
 root_dir="/data/TSO500"
-list="/data/TSO500/samplelist.csv"
+list="/data/TSO500/samplelist_tmp.csv"
 
 outdir="/data/TSO500/tumor_normal_pair"
 infile=open(list,"r")
