@@ -41,7 +41,9 @@ for key in tumor:
                         infile=open(n_path,"r")
                         for line in infile:
                             line=line.strip()
-                            dict_n[line]=1
+                            array=line.split("\t")
+                            tmp=array[0]+"_"+array[1]+"_"+array[2]+"_"+array[3]+"_"+array[4]
+                            dict_n[tmp]=line
                         infile.close()
                 for dir in dirs:
                     t_path = root + "/" + dir + "/SNV/" + key + ".annovar.tsv"
@@ -51,21 +53,23 @@ for key in tumor:
                         for line in infile:
                             num+=1
                             line=line.strip()
-                            dict_t[line]=1
+                            array=line.split("\t")
+                            tmp=array[0]+"_"+array[1]+"_"+array[2]+"_"+array[3]+"_"+array[4]
+                            dict_t[tmp]=line
                             if num == 1:
                                 outfile_t.write("%s\n" % (line))
                                 outfile_n.write("%s\n" % (line))
                                 overlap.write("%s\n" % (line))
                             else:
-                                if not line in dict_n:
+                                if not tmp in dict_n:
                                     t_unique+=1
                                     outfile_t.write("%s\n" % (line))
                                 else:
                                     common+=1
                                     overlap.write("%s\n" % (line))
-            for line in dict_n:
-                if not line in dict_t:
-                    outfile_n.write("%s\n" % (line))
+            for tmp1 in dict_n:
+                if not tmp1 in dict_t:
+                    outfile_n.write("%s\n" % (dict_t[tmp1]))
                     n_unique+=1
             outfile_t.close()
             overlap.close()
