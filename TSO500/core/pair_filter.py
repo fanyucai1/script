@@ -13,7 +13,7 @@ for line in infile:
     num+=1
     line=line.strip()
     array=line.split(",")
-    if num!=1:
+    if num!=1 and array[-2]=="DNA":
         t=re.compile(r'(\S+TF)')
         n=re.compile(r'(\S+NF)')
         a=t.findall(array[0])
@@ -28,9 +28,9 @@ for key in tumor:
     dict_n={}
     name = re.compile(r'(\S+)TF')
     sampleID = name.findall(key)
+    t_unique,n_unique,common=0,0,0
     for key1 in normal:
         if re.search(sampleID[0],key1):
-            print("tumor %s and normal %s are pair"%(key,key1))
             outfile_t=open("%s/%s.unique.annovar.tsv"%(outdir,key),"w")
             outfile_n=open("%s/%s.unqiue.annovar.tsv"%(outdir,key1),"w")
             overlap=open("%s/%s_common_%s.annovar.tsv"%(outdir,key,key1),"w")
@@ -58,13 +58,16 @@ for key in tumor:
                                 overlap.write("%s\n" % (line))
                             else:
                                 if not line in dict_n:
+                                    t_unique+=1
                                     outfile_t.write("%s\n" % (line))
                                 else:
+                                    common+=1
                                     overlap.write("%s\n" % (line))
             for line in dict_n:
                 if not line in dict_t:
                     outfile_n.write("%s\n" % (line))
-
+                    n_unique+=1
             outfile_t.close()
             overlap.close()
             outfile_n.close()
+            print("%s\t%s\t%s\t%s\t%s" % (key, key1,t_unique,n_unique,common))
