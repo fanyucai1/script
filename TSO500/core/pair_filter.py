@@ -69,7 +69,7 @@ for key in tumor:
                                     overlap.write("%s\n" % (line))
             for tmp1 in dict_n:
                 if not tmp1 in dict_t:
-                    outfile_n.write("%s\n" % (dict_t[tmp1]))
+                    outfile_n.write("%s\n" % (dict_n[tmp1]))
                     n_unique+=1
             outfile_t.close()
             overlap.close()
