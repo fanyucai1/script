@@ -50,9 +50,10 @@ def somatic(maf,annovar,outdir,prefix):
             freq_counts = 0
             counts = 0
             result = ""
+            dot=0
             for i in database:
                 if array[dict[i]] == ".":
-                    pass
+                    dot+=1
                 elif array[dict[i]] != "." and float(array[dict[i]]) <= float(maf):
                     freq += 1
                 else:
@@ -66,6 +67,8 @@ def somatic(maf,annovar,outdir,prefix):
                     result = "true"
                 if freq >= 1:  # at least 1<MAF
                     result = "true"
+                if dot==len(database):
+                    result="true"
             if array[dict['cosmic88_coding']].startswith("ID="):
                 pattern = re.compile(r'ID=(\S+);')
                 a = pattern.findall(array[dict['cosmic88_coding']])
