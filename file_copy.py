@@ -19,4 +19,4 @@ if __name__ == '__main__':
         indir=sys.argv[1]
         keywords=sys.argv[2]
         outdir=sys.argv[3]
-        run(indir, keywords, outdir)
+        copy(indir, keywords, outdir)
