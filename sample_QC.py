@@ -26,7 +26,7 @@ def run(target_bed,probe_bed,bam,depth,outdir,prefix):
     ################Count On-Target Reads##########
     cmd = os.popen("%s intersect -bed -u -abam %s -b %s | wc -l"%(bedtools,bam,target_bed))
     reads = cmd.read()
-    reads = dict.strip()
+    reads = reads.strip()
     outfile.write("Counts-On-Target_Reads\t%s\n"%(reads))
     ################InsertSize####################
     cmd="java -Xmx40g -jar %s CollectInsertSizeMetrics I=%s O=%s.insert_size_metrics.txt H=%s.insert_size_histogram.pdf"%(picard,bam,out,out)
