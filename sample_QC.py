@@ -9,8 +9,6 @@ def run(target_bed,probe_bed,bam,depth,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
-    dict = {}
-    outputname=[]
     outfile = open("%s.sample.qc.tsv", "w")
     ####BedToIntervalList (Picard)#############
     cmd="java -jar %s BedToIntervalList I=%s O=%s/target.interval_list SD=%s" %(picard,target_bed,outdir,bam)
@@ -27,9 +25,9 @@ def run(target_bed,probe_bed,bam,depth,outdir,prefix):
     subprocess.check_call(cmd,shell=True)
     ################Count On-Target Reads##########
     cmd = os.popen("%s intersect -bed -u -abam %s -b %s | wc -l"%(bedtools,bam,target_bed))
-    dict['On-Target_Reads'] = cmd.read()
-    dict['On-Target_Reads'] = dict.strip()
-    outfile.write("Counts-On-Target_Reads\t%s\n"%(dict['On-Target_Reads']))
+    reads = cmd.read()
+    reads = dict.strip()
+    outfile.write("Counts-On-Target_Reads\t%s\n"%(reads))
     ################InsertSize####################
     cmd="java -Xmx40g -jar %s CollectInsertSizeMetrics I=%s O=%s.insert_size_metrics.txt H=%s.insert_size_histogram.pdf"%(picard,bam,out,out)
     subprocess.check_call(cmd,shell=True)
