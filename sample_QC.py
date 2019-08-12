@@ -41,6 +41,7 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
             if array[0]=="BAIT_SET":
                 for i in range(len(array)):
                     name.append(array[i])
+                num += 1
             else:
                 if num==1 and len(array)==len(name):
                     for i in range(len(array)):
