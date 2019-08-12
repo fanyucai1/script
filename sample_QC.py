@@ -5,7 +5,7 @@ picard="/software/picard/picard.jar"
 ref="/data/Database/hg19/ucsc.hg19.fasta"
 gatk3="/software/gatk/3.7/GenomeAnalysisTK.jar"
 bedtools="/software/bedtools/bedtools2/bin/bedtools"
-def run(target_bed,probe_bed,bam,depth,outdir,prefix):
+def run(target_bed,probe_bed,bam,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
@@ -105,3 +105,4 @@ if __name__=="__main__":
         outdir=sys.argv[4]
         prefix=sys.argv[5]
         run(target_bed,probe_bed,bam,outdir,prefix)
+
