@@ -9,7 +9,7 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
-    outfile = open("%s.sample.qc.tsv", "w")
+    outfile = open("%s.sample.qc.tsv"%(out), "w")
     ####BedToIntervalList (Picard)#############
     cmd="java -jar %s BedToIntervalList I=%s O=%s/target.interval_list SD=%s" %(picard,target_bed,outdir,bam)
     subprocess.check_call(cmd,shell=True)
@@ -41,15 +41,15 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
             if array[0]=="BAIT_SET":
                 for i in range(len(array)):
                     name.append(array[i])
-                num+=1
-            if num==1 and len(array)==len(name):
-                for i in range(len(array)):
-                    if name[i] == "FOLD_80_BASE_PENALTY":
-                        outfile.write("FOLD_80_BASE_PENALTY\t%s\n"%(array[i]))
-                    if name[i] == "MEAN_TARGET_COVERAGE":
-                        outfile.write("mean_depth\t%s\n" % (array[i]))
-                    if name[i] == "MEDIAN_TARGET_COVERAGE":
-                        outfile.write("median_depth\t%s\n" % (array[i]))
+            else:
+                if num==1 and len(array)==len(name):
+                    for i in range(len(array)):
+                        if name[i] == "FOLD_80_BASE_PENALTY":
+                            outfile.write("FOLD_80_BASE_PENALTY\t%s\n"%(array[i]))
+                        if name[i] == "MEAN_TARGET_COVERAGE":
+                            outfile.write("mean_depth\t%s\n" % (array[i]))
+                        if name[i] == "MEDIAN_TARGET_COVERAGE":
+                            outfile.write("median_depth\t%s\n" % (array[i]))
     infile.close()
     infile=open("%s.insert_size_metrics.txt"%(out),"r")
     num=0
@@ -62,8 +62,9 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
                 for i in range(len(array)):
                     name.append(array[i])
                 num+=1
-            if num==1 and len(array)==len(name):
-                outfile.write("insert_size\t%s\n" % (array[0]))
+            else:
+                if num==1 and len(array)==len(name):
+                    outfile.write("insert_size\t%s\n" % (array[0]))
     infile.close()
     infile = open("%s.sample_summary" % (out), "r")
     num = 0
