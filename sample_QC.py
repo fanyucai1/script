@@ -29,7 +29,7 @@ def run(target_bed,probe_bed,bam,depth,outdir,prefix):
     cmd = os.popen("%s intersect -bed -u -abam %s -b %s | wc -l"%(bedtools,bam,target_bed))
     dict['On-Target_Reads'] = cmd.read()
     dict['On-Target_Reads'] = dict.strip()
-    outputname.append("counts-On-Target_Reads")
+    outfile.write("Counts-On-Target_Reads\t%s\n"%(dict['On-Target_Reads']))
     ################InsertSize####################
     cmd="java -Xmx40g -jar %s CollectInsertSizeMetrics I=%s O=%s.insert_size_metrics.txt H=%s.insert_size_histogram.pdf"%(picard,bam,out,out)
     subprocess.check_call(cmd,shell=True)
@@ -47,14 +47,11 @@ def run(target_bed,probe_bed,bam,depth,outdir,prefix):
             if num==1 and len(array)==len(name):
                 for i in range(len(array)):
                     if name[i] == "FOLD_80_BASE_PENALTY":
-                        dict['FOLD_80_BASE_PENALTY'] = array[i]
-                        outputname.append("FOLD_80_BASE_PENALTY")
+                        outfile.write("FOLD_80_BASE_PENALTY\t%s\n"%(array[i]))
                     if name[i] == "MEAN_TARGET_COVERAGE":
-                        dict['MEAN_TARGET_COVERAGE'] = array[i]
-                        outputname.append("mean_depth")
+                        outfile.write("mean_depth\t%s\n" % (array[i]))
                     if name[i] == "MEDIAN_TARGET_COVERAGE":
-                        dict['MEDIAN_TARGET_COVERAGE'] = array[i]
-                        outputname.append("median_depth")
+                        outfile.write("median_depth\t%s\n" % (array[i]))
     infile.close()
     infile=open("%s.insert_size_metrics.txt"%(out),"r")
     num=0
@@ -68,8 +65,7 @@ def run(target_bed,probe_bed,bam,depth,outdir,prefix):
                     name.append(array[i])
                 num+=1
             if num==1 and len(array)==len(name):
-                dict['MEDIAN_INSERT_SIZE'] = array[0]
-                outputname.append("insert_size")
+                outfile.write("insert_size\t%s\n" % (array[0]))
     infile.close()
     infile = open("%s.sample_summary" % (out), "r")
     num = 0
@@ -84,36 +80,18 @@ def run(target_bed,probe_bed,bam,depth,outdir,prefix):
         if num==2:
             for i in range(len(array)):
                 if name[i]=="%_bases_above_50":
-                    dict["%_bases_above_50"]=array[i]
-                    outputname.append("%_bases_above_50")
+                    outfile.write("%%_bases_above_50\t%s\n" % (array[i]))
                 if name[i] == "%_bases_above_100":
-                    dict["%_bases_above_100"] = array[i]
-                    outputname.append("%_bases_above_100")
+                    outfile.write("%%_bases_above_100\t%s\n" % (array[i]))
                 if name[i]=="%_bases_above_250":
-                    dict["%_bases_above_250"] = array[i]
-                    outputname.append("%_bases_above_250")
+                    outfile.write("%%_bases_above_250\t%s\n" % (array[i]))
                 if name[i] == "%_bases_above_500":
-                    dict["%_bases_above_500"] = array[i]
-                    outputname.append("%_bases_above_500")
+                    outfile.write("%%_bases_above_500\t%s\n" % (array[i]))
                 if name[i] == "%_bases_above_1000":
-                    dict["%_bases_above_1000"] = array[i]
-                    outputname.append("%_bases_above_1000")
+                    outfile.write("%%_bases_above_1000\t%s\n" % (array[i]))
                 if name[i] == "%_bases_above_10000":
-                    dict["%_bases_above_10000"] = array[i]
-                    outputname.append("%_bases_above_10000")
+                    outfile.write("%%_bases_above_10000\t%s\n" % (array[i]))
     infile.close()
-    for i in range(len(outputname)):
-        if i==0:
-            outfile.write("%s"%(outputname[i]))
-        else:
-            outfile.write("\t%s" % (outputname[i]))
-    outfile.write("\n")
-    for i in range(len(outputname)):
-        if i == 0:
-            outfile.write("%s" % (dict[outputname[i]]))
-        else:
-            outfile.write("\t%s" % (dict[outputname[i]]))
-    outfile.write("\n")
     outfile.close()
 
 
