@@ -81,23 +81,23 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
         if num==2:
             for i in range(len(array)):
                 if name[i]=="%_bases_above_1":
-                    outfile.write("%%_bases_above_1\t%s\n" % (array[i]))
+                    outfile.write("%%_bases_above_1X\t%s\n" % (array[i]))
                 if name[i]=="%_bases_above_5":
-                    outfile.write("%%_bases_above_5\t%s\n" % (array[i]))
+                    outfile.write("%%_bases_above_5X\t%s\n" % (array[i]))
                 if name[i]=="%_bases_above_10":
-                    outfile.write("%%_bases_above_10\t%s\n" % (array[i]))
+                    outfile.write("%%_bases_above_10X\t%s\n" % (array[i]))
                 if name[i]=="%_bases_above_50":
-                    outfile.write("%%_bases_above_50\t%s\n" % (array[i]))
+                    outfile.write("%%_bases_above_50X\t%s\n" % (array[i]))
                 if name[i] == "%_bases_above_100":
-                    outfile.write("%%_bases_above_100\t%s\n" % (array[i]))
+                    outfile.write("%%_bases_above_100X\t%s\n" % (array[i]))
                 if name[i]=="%_bases_above_250":
-                    outfile.write("%%_bases_above_250\t%s\n" % (array[i]))
+                    outfile.write("%%_bases_above_250X\t%s\n" % (array[i]))
                 if name[i] == "%_bases_above_500":
-                    outfile.write("%%_bases_above_500\t%s\n" % (array[i]))
+                    outfile.write("%%_bases_above_500X\t%s\n" % (array[i]))
                 if name[i] == "%_bases_above_1000":
                     outfile.write("%%_bases_above_1000\t%s\n" % (array[i]))
                 if name[i] == "%_bases_above_10000":
-                    outfile.write("%%_bases_above_10000\t%s\n" % (array[i]))
+                    outfile.write("%%_bases_above_10000X\t%s\n" % (array[i]))
     infile.close()
     outfile.close()
 
