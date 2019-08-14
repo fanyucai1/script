@@ -15,10 +15,10 @@ def run(vcf,outdir,prefix):
     out=outdir+"/"+prefix
     site={}
     infile=open(vcf,"r")
-    outfile1=open("%s.somatic.vcf","w")
-    outfile2 = open("%s.germline.vcf", "w")
-    outfile3 = open("%s.snp.vcf", "w")
-    outfile4 = open("%s.unknow.vcf", "w")
+    outfile1=open("%s.somatic.vcf"%(out),"w")
+    outfile2 = open("%s.germline.vcf"%(out), "w")
+    outfile3 = open("%s.snp.vcf"%(out), "w")
+    outfile4 = open("%s.unknow.vcf"%(out), "w")
     for line in infile:
         if not line.startswith("#"):
             line = line.strip()
