@@ -20,12 +20,11 @@ def run(vcf,outdir,prefix):
     outfile3 = open("%s.snp.vcf"%(out), "w")
     outfile4 = open("%s.unknow.vcf"%(out), "w")
     for line in infile:
+        line = line.strip()
+        array = line.split("\t")
         if not line.startswith("#"):
-            line = line.strip()
-            array = line.split("\t")
-            pattern=re.compile(r'(\d+)')
+            pattern=re.compile(r'chr(\S+)')
             chr=pattern.findall(array[0])
-            print(chr)
             tmp=chr[0]+"_"+array[1]+"_"+array[3]+"_"+array[4]
             site[tmp]=line
         else:
@@ -46,7 +45,7 @@ def run(vcf,outdir,prefix):
             a=p1.findall(array[7])
             b=p2.findall(array[7])
             tmp=array[0]+"_"+array[1]+"_"+array[3]+"_"+array[4]
-            if b[0] >= 50 and tmp in site:
+            if float(b[0]) >= 50 and tmp in site:
                 outfile1.write("%s\n" % (site[tmp]))
                 del site[tmp]
             elif a!=[] and tmp in site:
