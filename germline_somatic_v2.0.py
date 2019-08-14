@@ -25,6 +25,7 @@ def run(vcf,outdir,prefix):
             array = line.split("\t")
             pattern=re.compile(r'(\d+)')
             chr=pattern.findall(array[0])
+            print(chr)
             tmp=chr[0]+"_"+array[1]+"_"+array[3]+"_"+array[4]
             site[tmp]=line
         else:
