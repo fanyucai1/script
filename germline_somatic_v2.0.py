@@ -18,6 +18,7 @@ def run(vcf,samplename,outdir,prefix):
     outfile1=open("%s.somatic.vcf"%(out),"w")
     outfile2 = open("%s.germline.vcf"%(out), "w")
     outfile3 = open("%s.snp.vcf"%(out), "w")
+    outfile4 = open("%s.other.vcf" % (out), "w")
     sample_num=0
     AF=0
     for line in infile:
@@ -125,7 +126,9 @@ def run(vcf,samplename,outdir,prefix):
         for k in range(len(info1)):
             if info1[k]=="AF" or info1[k]=="VF" or info1[k]=="VAF":
                 pos=k
-        if float(info[pos])>=0.3:
+        if re.search(",",info[pos]):
+            outfile4.write("%s\n" % (site[key]))
+        elif float(info[pos])>=0.3:
             outfile2.write("%s\n"%(site[key]))
         else:
             outfile1.write("%s\n" % (site[key]))
