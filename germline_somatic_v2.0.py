@@ -80,7 +80,6 @@ def run(vcf,samplename,outdir,prefix):
             if array[id_num] in cosmic_id and cosmic_id[array[id_num]] in site:
                 if array[status]=="Confirmed somatic variant":
                     outfile1.write("%s\n"%(site[cosmic_id[array[id_num]]]))
-                    print(site[cosmic_id[array[id_num]]])
                     del site[cosmic_id[array[id_num]]]
                 else:
                     pass
