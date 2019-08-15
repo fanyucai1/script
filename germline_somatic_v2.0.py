@@ -124,7 +124,7 @@ def run(vcf,samplename,outdir,prefix):
         info=array[sample_num].split(":")
         info1=array[AF].split(":")
         for k in range(len(info1)):
-            if info1[k]=="AF":
+            if info1[k]=="AF" or info1[k]=="VF" or info1[k]=="VAF":
                 pos=k
         if float(info[pos])>=0.3:
             outfile2.write("%s\n"%(site[key]))
