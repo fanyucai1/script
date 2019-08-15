@@ -38,7 +38,6 @@ def run(vcf,samplename,outdir,prefix):
             outfile1.write("%s\n"%(line))
             outfile2.write("%s\n" % (line))
             outfile3.write("%s\n" % (line))
-            outfile4.write("%s\n" % (line))
     infile.close()
     ##################first get info from cosmic###################
     cosmic_id={}
