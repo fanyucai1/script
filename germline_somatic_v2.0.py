@@ -137,7 +137,8 @@ def run(vcf,samplename,outdir,prefix):
 if __name__=="__main__":
     parser=argparse.ArgumentParser("This scipt will divided vcf into somatic and germline.")
     parser.add_argument("-v","--vcf",help="vcf file",required=True)
+    parser.add_argument("-s","--samplename",help="sample name",required=True)
     parser.add_argument("-o","--outdir",help="output directory",required=True)
     parser.add_argument("-p","--prefix",help="prefix of output",required=True)
     args=parser.parse_args()
-    run(args.vcf,args.outdir,args.prefix)
+    run(args.vcf,args.samplename,args.outdir,args.prefix)
