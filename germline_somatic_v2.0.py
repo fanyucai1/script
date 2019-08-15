@@ -127,7 +127,7 @@ def run(vcf,samplename,outdir,prefix):
         for k in range(len(info1)):
             if info1[k]=="AF":
                 pos=k
-        if float(info[k])>=0.3:
+        if float(info[pos])>=0.3:
             outfile2.write("%s\n"%(site[key]))
         else:
             outfile1.write("%s\n" % (site[key]))
