@@ -9,7 +9,7 @@ cosmic_anno="/data/Database/COSMIC/release_v88/CosmicMutantExport.tsv"
 cosmic_vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.vcf"
 clinvar_vcf="/data/Database/clinvar/clinvar.vcf"
 clinvar_anno="/data/Database/clinvar/variant_summary.txt"
-def run(vcf,outdir,prefix):
+def run(vcf,samplename,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
@@ -18,16 +18,23 @@ def run(vcf,outdir,prefix):
     outfile1=open("%s.somatic.vcf"%(out),"w")
     outfile2 = open("%s.germline.vcf"%(out), "w")
     outfile3 = open("%s.snp.vcf"%(out), "w")
-    outfile4 = open("%s.unknow.vcf"%(out), "w")
+    sample_num=0
+    AF=0
     for line in infile:
         line = line.strip()
         array = line.split("\t")
+
         if not line.startswith("#"):
             pattern=re.compile(r'chr(\S+)')
             chr=pattern.findall(array[0])
             tmp=chr[0]+"_"+array[1]+"_"+array[3]+"_"+array[4]
             site[tmp]=line
         else:
+            for i in range(len(array)):
+                if array[i]==samplename:
+                    sample_num=i
+                if array[i]=="FORMAT":
+                    AF=i
             outfile1.write("%s\n"%(line))
             outfile2.write("%s\n" % (line))
             outfile3.write("%s\n" % (line))
@@ -102,21 +109,31 @@ def run(vcf,outdir,prefix):
             array=line.split("\t")
             tmp = array[0] + "_" + array[1] + "_" + array[3] + "_" + array[4]
             if tmp in site:
-                if re.search('somatic',clinvar_id[array[2]]):
-                    outfile1.write("%s\n" % (site[tmp]))
-                    del site[tmp]
-                else:
-                    if re.search('germline',clinvar_id[array[2]]):
-                        outfile2.write("%s\n" % (site[tmp]))
+                if array[2] in clinvar_id:
+                    if re.search('somatic',clinvar_id[array[2]]):
+                        outfile1.write("%s\n" % (site[tmp]))
                         del site[tmp]
+                    else:
+                        if re.search('germline',clinvar_id[array[2]]):
+                            outfile2.write("%s\n" % (site[tmp]))
+                            del site[tmp]
     infile.close()
     ###############################################################
+    pos=0
     for key in site:
-        outfile4.write("%s\n"%(site[key]))
+        array=site[key].split("\t")
+        info=array[sample_num].split(":")
+        info1=array[AF].split(":")
+        for k in range(len(info1)):
+            if info1[k]=="AF":
+                pos=k
+        if float(info[k])>=0.3:
+            outfile2.write("%s\n"%(site[key]))
+        else:
+            outfile1.write("%s\n" % (site[key]))
     outfile1.close()
     outfile2.close()
     outfile3.close()
-    outfile4.close()
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser("This scipt will divided vcf into somatic and germline.")
