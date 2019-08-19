@@ -19,26 +19,26 @@ def run(vcf,samplename,outdir,prefix):
     outfile2 = open("%s.germline.vcf"%(out), "w")
     outfile3 = open("%s.snp.vcf"%(out), "w")
     outfile4 = open("%s.other.vcf" % (out), "w")
-    sample_num=0
-    AF=0
+    sample_num,AF_num,AF,=0,0,0
     for line in infile:
         line = line.strip()
         array = line.split("\t")
-
         if not line.startswith("#"):
             pattern=re.compile(r'chr(\S+)')
             chr=pattern.findall(array[0])
             tmp=chr[0]+"_"+array[1]+"_"+array[3]+"_"+array[4]
             site[tmp]=line
+
         else:
             for i in range(len(array)):
                 if array[i]==samplename:
                     sample_num=i
                 if array[i]=="FORMAT":
-                    AF=i
+                    AF_num=i
             outfile1.write("%s\n"%(line))
             outfile2.write("%s\n" % (line))
             outfile3.write("%s\n" % (line))
+            outfile4.write("%s\n" % (line))
     infile.close()
     ##################first get info from cosmic###################
     cosmic_id={}
@@ -118,19 +118,19 @@ def run(vcf,samplename,outdir,prefix):
                             del site[tmp]
     infile.close()
     ###############################################################
-    pos=0
     for key in site:
         array=site[key].split("\t")
+        info = array[AF_num].split(":")
+        for k in range(len(info)):
+            if info[k] == "AF" or info[k] == "VF" or info[k] == "VAF":
+                AF = k
         info=array[sample_num].split(":")
-        info1=array[AF].split(":")
-        for k in range(len(info1)):
-            if info1[k]=="AF" or info1[k]=="VF" or info1[k]=="VAF":
-                pos=k
-        if re.search(",",info[pos]):
+        if re.search(",",info[AF]):
             outfile4.write("%s\n" % (site[key]))
-        elif float(info[pos])>=0.3:
+        elif float(info[AF])>=0.3:
             outfile2.write("%s\n"%(site[key]))
         else:
+            print(float(info[AF]))
             outfile1.write("%s\n" % (site[key]))
     outfile1.close()
     outfile2.close()
