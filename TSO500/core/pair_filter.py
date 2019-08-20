@@ -15,7 +15,7 @@ for line in infile:
     num+=1
     line=line.strip()
     array=line.split(",")
-    if num!=1 and array[-2]=="DNA":
+    if num!=1 and array[-1]=="DNA":
         t=re.compile(r'(\S+TF)')
         n=re.compile(r'(\S+NF)')
         a=t.findall(array[0])
