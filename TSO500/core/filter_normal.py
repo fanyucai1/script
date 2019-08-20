@@ -4,10 +4,10 @@ import re
 
 root_dir="/data/TSO500"
 samplelist="/data/TSO500/samplelist.csv"
-
+outdir="/data/TSO500/stat"
 normal=[]
 infile=open(samplelist,"r")
-outfile=open("normal.filter.tsv","w")
+outfile=open("%s/normal.filter.tsv"%(outdir),"w")
 outfile.write("SampleID\tRaw_counts\tFilter\n")
 for line in infile:
     line=line.strip()
