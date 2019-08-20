@@ -10,7 +10,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def run(samplelist,outdir="/data/TSO500/",dir="/data/TSO500/"):
+def run(samplelist,outdir="/data/TSO500/stat/",dir="/data/TSO500/"):
     #####################################defined 2d dict
     def dict2d(dict, key_a, key_b, val):
         if key_a in dict:
