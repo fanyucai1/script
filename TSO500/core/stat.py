@@ -10,7 +10,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def run(samplelist,outdir="/data/TSO500/stat/",dir="/data/TSO500/"):
+def run(samplelist,outdir,dir="/data/TSO500/"):
     #####################################defined 2d dict
     def dict2d(dict, key_a, key_b, val):
         if key_a in dict:
@@ -101,7 +101,7 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser("Output TSO stat result.")
     parser.add_argument("-d", "--dir", help="result directory", default="/data/TSO500/")
     parser.add_argument("-s", "--samplelist", required=True)
-    parser.add_argument("-o", "--outdir", help="output directory", default="/data/TSO500/")
+    parser.add_argument("-o", "--outdir", help="output directory", default="/data/TSO500/stat/")
     args = parser.parse_args()
     run(args.samplelist,args.outdir,args.dir)
 
