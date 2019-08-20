@@ -37,8 +37,8 @@ for key in tumor:
                     num+=1
                     line = line.strip()
                     array = line.split("\t")
+                    tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3] + "_" + array[4]
                     if num!=1:
-                        tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3] + "_" + array[4]
                         dict_t[tmp] = line
                 infile.close()
     ###############################################
@@ -52,13 +52,15 @@ for key in tumor:
                      num+=1
                      line = line.strip()
                      array = line.split("\t")
+                     tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3] + "_" + array[4]
                      if num!=1:
-                        tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3] + "_" + array[4]
                         dict_n[tmp] = line
                         if tmp in dict_t:
                             common+=1
                         else:
                             n_unique+=1
+                     else:
+                         pass
                  infile.close()
     for key in dict_t:
         if not key in dict_n:
