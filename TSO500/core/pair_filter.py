@@ -80,3 +80,4 @@ for key in tumor:
             #overlap.close()
             #outfile_n.close()
             out_total.write("%s\t%s\t%s\t%s\t%s\n" % (key, key1,t_unique,common,n_unique))
+out_total.close()
