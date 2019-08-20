@@ -33,9 +33,9 @@ for key in tumor:
     t_unique,n_unique,common=0,0,0
     for key1 in normal:
         if re.search(sampleID[0],key1):
-            outfile_t=open("%s/%s.unique.tsv"%(outdir,key),"w")
-            outfile_n=open("%s/%s.unqiue.tsv"%(outdir,key1),"w")
-            overlap=open("%s/%s_common_%s.tsv"%(outdir,key,key1),"w")
+            #outfile_t=open("%s/%s.unique.tsv"%(outdir,key),"w")
+            #outfile_n=open("%s/%s.unqiue.tsv"%(outdir,key1),"w")
+            #overlap=open("%s/%s_common_%s.tsv"%(outdir,key,key1),"w")
             for (root,dirs,files) in os.walk(root_dir):
                 for dir in dirs:
                     n_path = root + "/" + dir + "/SNV/"+key1+".annovar.tsv"
@@ -59,21 +59,22 @@ for key in tumor:
                             tmp=array[0]+"_"+array[1]+"_"+array[2]+"_"+array[3]+"_"+array[4]
                             dict_t[tmp]=line
                             if num == 1:
-                                outfile_t.write("%s\n" % (line))
-                                outfile_n.write("%s\n" % (line))
-                                overlap.write("%s\n" % (line))
+                                """"""
+                                #outfile_t.write("%s\n" % (line))
+                                #outfile_n.write("%s\n" % (line))
+                                #overlap.write("%s\n" % (line))
                             else:
                                 if not tmp in dict_n:
                                     t_unique+=1
-                                    outfile_t.write("%s\n" % (line))
+                                    #outfile_t.write("%s\n" % (line))
                                 else:
                                     common+=1
-                                    overlap.write("%s\n" % (line))
+                                    #overlap.write("%s\n" % (line))
             for tmp1 in dict_n:
                 if not tmp1 in dict_t:
-                    outfile_n.write("%s\n" % (dict_n[tmp1]))
+                    #outfile_n.write("%s\n" % (dict_n[tmp1]))
                     n_unique+=1
-            outfile_t.close()
-            overlap.close()
-            outfile_n.close()
+            #outfile_t.close()
+            #overlap.close()
+            #outfile_n.close()
             out_total.write("%s\t%s\t%s\t%s\t%s\n" % (key, key1,t_unique,common,n_unique))
