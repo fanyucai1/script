@@ -25,7 +25,7 @@ for line in infile:
         if b!=[]:
             normal.append(array[0])
 infile.close()
-out_total=open("%s/tumor_vs_normal.tsv","w")
+out_total=open("%s/tumor_vs_normal.tsv"%(outdir),"w")
 out_total.write("Tumor\tNormal\tTumor_unique\tOverlap\tNormal_unique\n")
 for key in tumor:
     dict_t={}
