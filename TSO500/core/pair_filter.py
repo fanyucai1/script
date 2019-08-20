@@ -2,9 +2,11 @@ import os
 import sys
 import re
 root_dir="/data/TSO500"
-list="/data/TSO500/samplelist_tmp.csv"
+list="/data/TSO500/samplelist.csv"
 
 outdir="/data/TSO500/tumor_normal_pair"
+if not os.path.exists(outdir):
+    os.mkdir(outdir)
 infile=open(list,"r")
 num=0
 normal=[]
