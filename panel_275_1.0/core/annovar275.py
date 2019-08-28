@@ -5,6 +5,7 @@ import argparse
 import os
 import subprocess
 import re
+form . import format_hgvs
 Canonical_transcript_file="/data/Database/knownCanonical/clinvar_canonical_trans.txt"
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene',
           'ExonicFunc.refGene',	'AAChange.refGene',	'cytoBand',	'1000g2015aug_all',	'avsnp150',	'snp138',
@@ -89,8 +90,7 @@ def run(vcf,outdir,prefix):
                 elif out_name[l] == "Ref_Reads":
                     outfile.write("\t%s" % (Ref_Reads[0]))
                 elif out_name[l] == "AAChange.1":
-                    
-                    outfile.write("\t%s" % (final_nm))
+                    outfile.write("\t%s" % (format_hgvs(final_nm)))
                 elif out_name[l] == "GT":
                     outfile.write("\t%s" % (GT[0]))
                 else:
