@@ -9,4 +9,3 @@ from . import cnv
 from . import stat_qc
 from . import tumor_normal
 from . import MSI_pair
-from . import format_hgvs
