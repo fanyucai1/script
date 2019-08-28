@@ -89,6 +89,7 @@ def run(vcf,outdir,prefix):
                 elif out_name[l] == "Ref_Reads":
                     outfile.write("\t%s" % (Ref_Reads[0]))
                 elif out_name[l] == "AAChange.1":
+                    
                     outfile.write("\t%s" % (final_nm))
                 elif out_name[l] == "GT":
                     outfile.write("\t%s" % (GT[0]))
