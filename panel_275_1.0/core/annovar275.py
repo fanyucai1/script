@@ -6,10 +6,7 @@ import os
 import subprocess
 import re
 import sys
-sub=os.path.abspath(__file__)
-dir_name=os.path.dirname(sub)
-sys.path.append(dir_name)
-from . import format_hgvs
+import format_hgvs
 Canonical_transcript_file="/data/Database/knownCanonical/clinvar_canonical_trans.txt"
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene',
           'ExonicFunc.refGene',	'AAChange.refGene',	'cytoBand',	'1000g2015aug_all',	'avsnp150',	'snp138',
@@ -18,6 +15,23 @@ out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDet
           '1000g2015aug_sas','1000g2015aug_afr','1000g2015aug_amr','1000g2015aug_eur','InterVar_automated','GT','AAChange.1',
           'Ref_Reads',	'Alt_Reads','Var']
 annovar="/software/docker_tumor_base/Resource/Annovar/"
+def run(var_site):
+    p1=re.search(r'[A-Z]fs\*\d+$',var_site)###匹配移码突变
+    p2=re.search(r'del([ACGT]+)ins',var_site)###匹配del和ins
+    if p1:
+        new=re.sub(r'[A-Z]fs\*\d+$',"",var_site)
+        new=new+"fs"
+    else:
+        new=var_site
+    if var_site.endswith("X"):####终止密码子X替换*
+        new1= re.sub(r'X$', "*", new)
+    else:
+        new1=new
+    if p2:
+        new2=re.sub(p2.group(1),"",new1,count=1)
+    else:
+        new2 = new1
+    return new2
 def run(vcf,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
@@ -94,7 +108,7 @@ def run(vcf,outdir,prefix):
                 elif out_name[l] == "Ref_Reads":
                     outfile.write("\t%s" % (Ref_Reads[0]))
                 elif out_name[l] == "AAChange.1":
-                    outfile.write("\t%s" % (format_hgvs(final_nm)))
+                    outfile.write("\t%s" % (run(final_nm)))
                 elif out_name[l] == "GT":
                     outfile.write("\t%s" % (GT[0]))
                 else:
