@@ -14,6 +14,23 @@ out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDet
           'Polyphen2_HDIV_score','Polyphen2_HDIV_pred','esp6500siv2_all','ExAC_ALL','ExAC_EAS','1000g2015aug_eas',
           '1000g2015aug_sas','1000g2015aug_afr','1000g2015aug_amr','1000g2015aug_eur','InterVar_automated','GT','AAChange.1',
           'Ref_Reads',	'Alt_Reads','Var']
+def run_hgvs(var_site):
+    p1=re.search(r'[A-Z]fs\*\d+$',var_site)###匹配移码突变
+    p2=re.search(r'del([ACGT]+)ins',var_site)###匹配del和ins
+    if p1:
+        new=re.sub(r'[A-Z]fs\*\d+$',"",var_site)
+        new=new+"fs"
+    else:
+        new=var_site
+    if var_site.endswith("X"):####终止密码子X替换*
+        new1= re.sub(r'X$', "*", new)
+    else:
+        new1=new
+    if p2:
+        new2=re.sub(p2.group(1),"",new1,count=1)
+    else:
+        new2 = new1
+    return new2
 def run(dir,samplelist,vaf,outdir):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
@@ -141,7 +158,7 @@ def run(dir,samplelist,vaf,outdir):
                             tmp_num = float(a[0]) * 100
                             outfile.write("\t%.2f" % (tmp_num)+"%")
                         elif out_name[l] == "AAChange.1":
-                            outfile.write("\t%s" % (final_nm))
+                            outfile.write("\t%s" % (run_hgvs(final_nm)))
                         elif out_name[l] == "Ref_Reads":
                             outfile.write("\t%s"%(Reads[0]))
                         elif out_name[l] == "Alt_Reads":
