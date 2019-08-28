@@ -13,7 +13,7 @@ out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDet
           '1000g2015aug_sas','1000g2015aug_afr','1000g2015aug_amr','1000g2015aug_eur','InterVar_automated','GT','AAChange.1',
           'Ref_Reads',	'Alt_Reads','Var']
 annovar="/software/docker_tumor_base/Resource/Annovar/"
-def run(var_site):
+def run_hgvs(var_site):
     p1=re.search(r'[A-Z]fs\*\d+$',var_site)###匹配移码突变
     p2=re.search(r'del([ACGT]+)ins',var_site)###匹配del和ins
     if p1:
@@ -106,7 +106,7 @@ def run(vcf,outdir,prefix):
                 elif out_name[l] == "Ref_Reads":
                     outfile.write("\t%s" % (Ref_Reads[0]))
                 elif out_name[l] == "AAChange.1":
-                    outfile.write("\t%s" % (run(final_nm)))
+                    outfile.write("\t%s" % (run_hgvs(final_nm)))
                 elif out_name[l] == "GT":
                     outfile.write("\t%s" % (GT[0]))
                 else:
