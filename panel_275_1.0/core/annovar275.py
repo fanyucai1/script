@@ -5,6 +5,10 @@ import argparse
 import os
 import subprocess
 import re
+import sys
+sub=os.path.abspath(__file__)
+dir_name=os.path.dirname(sub)
+sys.path.append(dir_name)
 from . import format_hgvs
 Canonical_transcript_file="/data/Database/knownCanonical/clinvar_canonical_trans.txt"
 out_name=['Chr','Start','End','Ref','Alt','Func.refGene','Gene.refGene','GeneDetail.refGene',
