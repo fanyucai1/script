@@ -17,8 +17,7 @@ def run(var_site):
         new2=re.sub(p2.group(1),"",new1,count=1)
     else:
         new2 = new1
-    print(new2)
-
+    return new2
 
 if __name__=="__main__":
     if len(sys.argv)!=2:
