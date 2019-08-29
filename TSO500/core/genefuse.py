@@ -2,12 +2,17 @@ import os
 import sys
 import re
 import subprocess
+import multiprocessing
 samplelist="/data/TSO500/samplelist.csv"
 root_dir="/data/TSO500/"
 outdir="/data/TSO500/fuse"
 genefuse="/software/GeneFuse/genefuse"
 ref="/data/Database/hg19/ucsc.hg19.fasta"
 fusion="/software/GeneFuse/genes/cancer.hg19.csv"
+
+def shell_run(cmd):
+    subprocess.check_call(cmd,shell=True)
+
 dict={}
 infile=open(samplelist,"r")
 for line in infile:
