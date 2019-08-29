@@ -49,5 +49,5 @@ for (root,dirs,files) in os.walk(root_dir):
                     outfile.close()
                     infile.close()
                     if i == 0:
-                        subprocess.check_call("rm -rf %s/%s.cnv.tsv" % (outdir, id), shell=True)
-                        print("sample %s not find CNV" % (id))
+                        subprocess.check_call("rm -rf %s/%s.cnv.tsv" % (outdir, sample_name), shell=True)
+                        print("sample %s not find CNV" % (sample_name))
