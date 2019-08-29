@@ -30,7 +30,7 @@ for (root,dirs,files) in os.walk(root_dir):
         array = tmp.split("/")
         sample_name = re.sub(r'_CopyNumberVariants.vcf', "", array[-1])
         if tmp.endswith("CopyNumberVariants.vcf") and sample_name in dict:
-            outfile=open("%s.cnv.tsv"%(sample_name),"w")
+            outfile=open("%s/%s.cnv.tsv"%(outdir,sample_name),"w")
             infile=open(tmp,"r")
             i=0
             for line in infile:
