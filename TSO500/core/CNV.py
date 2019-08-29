@@ -18,7 +18,7 @@ def run(analysis,samplelist,outdir):
         for i in dirs:
             bam_file=bam_dir+i+"/"+i+".bam"
             sh=cmd+" -bamFiles "+bam_file+" -outputFolder "+out_dir
-            #subprocess.check_call(sh,shell=True)
+            subprocess.check_call(sh,shell=True)
     infile=open(samplelist,"r")
     sample=[]
     for line in infile:
