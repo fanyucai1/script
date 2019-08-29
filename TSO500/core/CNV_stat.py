@@ -5,6 +5,8 @@ root_dir="/data/TSO500/"
 sample_list="/data/TSO500/samplelist.csv"
 outdir="/data/TSO500/stat/CNV"
 
+if not os.path.exists(outdir):
+    os.mkdir(outdir)
 dict={}
 infile=open(sample_list,"r")
 num=0
