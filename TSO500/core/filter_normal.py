@@ -8,13 +8,18 @@ normal=[]
 infile=open(samplelist,"r")
 outfile=open("%s/normal.filter.tsv"%(outdir),"w")
 outfile.write("SampleID\tRaw_counts\tFilter\n")
+counts=0
 for line in infile:
     line=line.strip()
     array=line.split(",")
-    pattern=re.compile(r'NF')
-    a=pattern.findall(array[0])
-    if a!=[]:
-        normal.append(array[0])
+    counts+=1
+    if counts==1:
+        for k in range(len(array)):
+            if array[k] == "Remarks":
+                name = k
+    else:
+        if array[name] == "N":
+            normal.append(array[0])
 infile.close()
 for (root,dirs,files) in os.walk(root_dir):
     for file in files:
