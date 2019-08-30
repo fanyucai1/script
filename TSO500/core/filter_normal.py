@@ -32,7 +32,7 @@ for (root,dirs,files) in os.walk(root_dir):
                     num+=1
                     if num!=1:
                         depth=float(array[-2])+float(array[-3])
-                        if depth >50 and float(array[-1].strip("%s"))<=30:
+                        if depth >50:
                             var_num+=1
                 infile.close()
                 outfile.write("%s\t%s\t%s\n"%(b[0],num,var_num))
