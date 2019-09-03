@@ -42,9 +42,9 @@ def run(outdir,prefix):
         if not line.startswith("#"):
             tmp=array[0]+"\t"+array[1]+"\t"+array[3]+"\t"+array[4]
             if re.search(r'SNP',line):
-                outfile3.write("%s\n"%(line))
+                outfile3.write("chr%s\n"%(line))
             elif array[2] in cosmicID:
-                outfile1.write("%s\n"%(line))
+                outfile1.write("chr%s\n"%(line))
                 dict[tmp]=1
             else:
                 pass
@@ -77,9 +77,9 @@ def run(outdir,prefix):
             if not tmp in dict:
                 a=p.findall(line)
                 if a[0] in AlleleID_somatic:
-                    outfile1.write("%s\n"%(line))
+                    outfile1.write("chr%s\n"%(line))
                 if a[0] in AlleleID_germline:
-                    outfile2.write("%s\n" % (line))
+                    outfile2.write("chr%s\n" % (line))
     outfile1.close()
     outfile2.close()
     outfile3.close()
