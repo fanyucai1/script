@@ -33,8 +33,7 @@ def run(outdir,prefix):
                     status = i
         else:
             if array[status]=="Confirmed somatic variant":
-                cosmicID[id_num]=1
-    print(cosmicID)
+                cosmicID[array[id_num]]=1
     infile.close()
     print("done1")
     infile=open(cosmic_vcf,"r")
@@ -46,7 +45,6 @@ def run(outdir,prefix):
             if re.search(r'SNP',line):
                 outfile3.write("chr%s\n"%(line))
             elif array[2] in cosmicID:
-                print(array[2])
                 outfile1.write("chr%s\n"%(line))
                 dict[tmp]=1
             else:
