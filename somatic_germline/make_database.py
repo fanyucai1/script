@@ -1,6 +1,6 @@
 import os
 import re
-import argparse
+import sys
 
 cosmic_anno="/data/Database/COSMIC/release_v88/CosmicMutantExport.tsv"
 cosmic_vcf="/data/Database/COSMIC/release_v88/CosmicCodingMuts.vcf"
@@ -80,3 +80,15 @@ def run(outdir,prefix):
                     outfile1.write("%s\n"%(line))
                 if a[0] in AlleleID_germline:
                     outfile2.write("%s\n" % (line))
+    outfile1.close()
+    outfile2.close()
+    outfile3.close()
+
+if __name__=="__main__":
+    if len(sys.argv)!=3:
+        print("usage:python3 %s outdir prefix\n"%(sys.argv[0]))
+        print("#Email:fanyucai1@126.com")
+    else:
+        outdir=sys.argv[1]
+        prefix=sys.argv[2]
+        run(outdir,prefix)
