@@ -1,6 +1,5 @@
 import os
 import sys
-import re
 
 germline_vcf="/data/Database/germline_somatic/db.germline.vcf"
 somatic_vcf="/data/Database/germline_somatic/db.somatic.vcf"
@@ -67,7 +66,7 @@ def run(vcf,sample,outdir,prefix):
                 outfile3.write("%s\n" % (line))
             else:
                 AF_name=array[format].split(":")
-                for i in range(len(AF)):
+                for i in range(len(AF_name)):
                     if AF_name[i]=="AF" or AF_name[i]=="VAF" or AF_name[i]=="VF":
                         AF=array[sampleID].split(":")[i]
                         if float(AF)>=0.95:
