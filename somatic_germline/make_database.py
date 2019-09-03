@@ -34,6 +34,7 @@ def run(outdir,prefix):
         else:
             if array[status]=="Confirmed somatic variant":
                 cosmicID[id_num]=1
+    print(cosmicID)
     infile.close()
     print("done1")
     infile=open(cosmic_vcf,"r")
