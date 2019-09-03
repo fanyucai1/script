@@ -29,12 +29,26 @@ for(root,dirs,files) in os.walk(root_dir):
         id=sample[-1].split(".")
         if tmp.endswith(".tmb.tsv") and id[0] in dict:
             num=0
+            row=0
             infile=open(tmp,"r")
+            f1, f2, f3, f4 = "", "", "", ""
             for line in infile:
                 line=line.strip()
                 array=line.split("\t")
-                if array[-4]=="Somatic":
-                    num+=1
+                row+=1
+                if row ==1:
+                    for k in range(len(array)):
+                        if array[k]=="GermlineFilterDatabase":
+                            f1=k
+                        if array[k] == "SomaticVariant":
+                            f2=k
+                        if array[k] == "CodingVariant":
+                            f3=k
+                        if array[k] == "GermlineFilterProxi":
+                            f4=k
+                else:
+                    if array[f1]=="False" and array[f2]=="Somatic" and array[f3]=="True"and array[f4]=="False":
+                        num+=1
             infile.close()
             outfile.write ("%s\t%s\n"%(id[0],num))
 outfile.close()
