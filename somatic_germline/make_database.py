@@ -17,10 +17,10 @@ def run(outdir,prefix):
     outfile1.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
     outfile2.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
     outfile3.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
-    dict=[]
+    dict={}
     ############################cosmic
     infile=open(cosmic_anno,"r")
-    id_num,status,num,cosmicID= 0,0,0,[]
+    id_num,status,num,cosmicID= 0,0,0,{}
     for line in infile:
         num += 1
         line = line.strip()
@@ -33,7 +33,7 @@ def run(outdir,prefix):
                     status = i
         else:
             if array[status]=="Confirmed somatic variant":
-                cosmicID.append(id_num)
+                cosmicID[id_num]=1
     infile.close()
     print("done1")
     infile=open(cosmic_vcf,"r")
