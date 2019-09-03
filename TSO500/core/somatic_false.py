@@ -31,7 +31,7 @@ for(root,dirs,files) in os.walk(root_dir):
             num=0
             row=0
             infile=open(tmp,"r")
-            f1, f2, f3, f4 = "", "", "", ""
+            f1, f2, f3, f4 = 0, 0, 0, 0
             for line in infile:
                 line=line.strip()
                 array=line.split("\t")
@@ -47,7 +47,7 @@ for(root,dirs,files) in os.walk(root_dir):
                         if array[k] == "GermlineFilterProxi":
                             f4=k
                 else:
-                    if array[f1]=="False" and array[f2]=="Somatic" and array[f3]=="True"and array[f4]=="False":
+                    if array[f1]=="False" and array[f2]=="Somatic" and array[f3]=="True" and array[f4]=="False":
                         num+=1
             infile.close()
             outfile.write ("%s\t%s\n"%(id[0],num))
