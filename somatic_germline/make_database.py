@@ -35,6 +35,7 @@ def run(outdir,prefix):
             if array[status]=="Confirmed somatic variant":
                 cosmicID.append(id_num)
     infile.close()
+    print("done1")
     infile=open(cosmic_vcf,"r")
     for line in infile:
         line = line.strip()
@@ -49,10 +50,10 @@ def run(outdir,prefix):
             else:
                 pass
     infile.close()
+    print("done2")
     ############################clinvar
     status,AlleleID_somatic,AlleleID_germline=0,[],[]
     infile=open(clinvar_anno,"r")
-    p=re.compile(r'GRCh37')
     for line in infile:
         line = line.strip()
         array = line.split("\t")
@@ -67,6 +68,7 @@ def run(outdir,prefix):
                 if re.search(r'GRCh37', line) and re.search(r'germline', array[status]):
                     AlleleID_germline.append(array[0])
     infile.close()
+    print("done3")
     infile=open(clinvar_vcf,"r")
     p=re.compile(r'ALLELEID=(\d+)')
     for line in infile:
@@ -83,7 +85,7 @@ def run(outdir,prefix):
     outfile1.close()
     outfile2.close()
     outfile3.close()
-
+    print("done4")
 if __name__=="__main__":
     if len(sys.argv)!=3:
         print("usage:python3 %s outdir prefix\n"%(sys.argv[0]))

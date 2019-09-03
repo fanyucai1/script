@@ -1,0 +1,1 @@
+This script will get info from COSMIC and clinvar database to classify sites into germline and somatic.
