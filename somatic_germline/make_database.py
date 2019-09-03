@@ -45,6 +45,7 @@ def run(outdir,prefix):
             if re.search(r'SNP',line):
                 outfile3.write("chr%s\n"%(line))
             elif array[2] in cosmicID:
+                print(array[2])
                 outfile1.write("chr%s\n"%(line))
                 dict[tmp]=1
             else:
