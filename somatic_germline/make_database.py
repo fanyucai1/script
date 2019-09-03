@@ -52,7 +52,7 @@ def run(outdir,prefix):
     infile.close()
     print("done2")
     ############################clinvar
-    status,AlleleID_somatic,AlleleID_germline=0,[],[]
+    status,AlleleID_somatic,AlleleID_germline=0,{},{}
     infile=open(clinvar_anno,"r")
     for line in infile:
         line = line.strip()
@@ -63,10 +63,10 @@ def run(outdir,prefix):
                     status = i
         else:
             if re.search(r'GRCh37',line) and re.search(r'somatic',array[status]):
-                AlleleID_somatic.append(array[0])
+                AlleleID_somatic[array[0]]=1
             else:
                 if re.search(r'GRCh37', line) and re.search(r'germline', array[status]):
-                    AlleleID_germline.append(array[0])
+                    AlleleID_germline[array[0]]=1
     infile.close()
     print("done3")
     infile=open(clinvar_vcf,"r")
