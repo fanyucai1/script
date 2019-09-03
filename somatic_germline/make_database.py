@@ -19,7 +19,7 @@ def run(outdir,prefix):
     outfile3.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
     dict=[]
     ############################cosmic
-    infile=open(cosmic_vcf,"r")
+    infile=open(cosmic_anno,"r")
     id_num,status,num,cosmicID= 0,0,0,[]
     for line in infile:
         num += 1
