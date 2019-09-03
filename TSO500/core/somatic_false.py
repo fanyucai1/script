@@ -40,7 +40,7 @@ for(root,dirs,files) in os.walk(root_dir):
                     for k in range(len(array)):
                         if array[k]=="GermlineFilterDatabase":
                             f1=k
-                        if array[k] == "SomaticVariant":
+                        if array[k] == "SomaticStatus":
                             f2=k
                         if array[k] == "CodingVariant":
                             f3=k
