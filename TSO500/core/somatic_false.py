@@ -56,7 +56,7 @@ for(root,dirs,files) in os.walk(root_dir):
                         Illumina+=1
                         if array[f5]=="True":
                             num+=1
-                            if float(array[f6])<=20:
+                            if float(array[f6])<=10:
                                 VAF10+=1
                             if float(array[f6])<=20:
                                 VAF20+=1
