@@ -1,6 +1,6 @@
 import os
 import sys
-
+import re
 root_dir="/data/TSO500"
 outdir="/data/TSO500/snv_vcf"
 def run(root_dir,outdir):
@@ -13,7 +13,7 @@ def run(root_dir,outdir):
         for file in files:
             tmp=os.path.join(root,file)
             array=tmp.split("/")
-            samplename=array[-2]
+            samplename=re.sub(r'_SmallVariants.genome.vcf',"",array[-1])
             if samplename in sample_ID:
                 dict={}
                 outfile = open("%s/%s.snv.tmp.vcf" % (outdir, samplename), "w")
