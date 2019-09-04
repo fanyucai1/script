@@ -44,4 +44,4 @@ def run(root_dir,outdir):
                     infile.close()
                 outfile.close()
 if __name__=="__main__":
-    run()
+    run(root_dir,outdir)
