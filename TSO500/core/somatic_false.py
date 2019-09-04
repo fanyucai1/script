@@ -22,16 +22,17 @@ for line in infile:
            dict[array[0]]=0
 infile.close()
 outfile=open("%s/normal_false_somatic.tsv"%(outdir),"w")
+outfile.write("SampleID\tIllumina\tOur\tVAF20\VAF30\VAF40\n")
 for(root,dirs,files) in os.walk(root_dir):
     for file in files:
         tmp=os.path.join(root,file)
         sample=tmp.split("/")
         id=sample[-1].split(".")
         if tmp.endswith(".tmb.tsv") and id[0] in dict:
-            num=0
+            Illumina,num,VAF20,VAF30,VAF40=0,0,0,0,0
             row=0
             infile=open(tmp,"r")
-            f1, f2, f3, f4 = 0, 0, 0, 0
+            f1, f2, f3, f4 ,f5,f6= 0, 0, 0, 0,0,0
             for line in infile:
                 line=line.strip()
                 array=line.split("\t")
@@ -46,9 +47,21 @@ for(root,dirs,files) in os.walk(root_dir):
                             f3=k
                         if array[k] == "GermlineFilterProxi":
                             f4=k
+                        if array[k]=="Nonsynonymous":
+                            f5=k
+                        if array[k]=="VAF":
+                            f6=k
                 else:
                     if array[f1]=="False" and array[f2]=="Somatic" and array[f3]=="True" and array[f4]=="False":
-                        num+=1
+                        Illumina+=1
+                        if array[f5]=="True":
+                            num+=1
+                            if float(array[f6])<=20:
+                                VAF20+=1
+                            if float(array[f6])<=30:
+                                VAF30+=1
+                            if float(array[f6]) <= 40:
+                                VAF40+=1
             infile.close()
-            outfile.write ("%s\t%s\n"%(id[0],num))
+            outfile.write ("%s\t%s\t%s\t%s\t%s\t%s\n"%(id[0],Illumina,num,VAF20,VAF30,VAF40))
 outfile.close()
