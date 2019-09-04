@@ -300,8 +300,8 @@ def run_4(root_dir,sample_list,outdir):
         array=key.split("\t")
         outfile.write("%s\t%s\t.\t%s\t%s\t.\t.\tcounts=%s,VAF=%s\n" % (array[0], array[1], array[2], array[3],dict[key],vaf[key]))
     outfile.close()
-    par = " -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305,ljb26_all,intervar_20180118"
-    par += " -operation g,r,f,f,f,f,f,f,f,f,f,f,f "
+    par = " -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305"
+    par += " -operation g,r,f,f,f,f,f,f,f,f,f "
     par += " -nastring . -polish "
     subprocess.check_call("perl %s/table_annovar.pl %s/all_false_somatic.vcf %s/humandb -buildver hg19 -out %s/all_false_somatic -remove %s -vcfinput " % (annovar, outdir, annovar, outdir, par), shell=True)
 
