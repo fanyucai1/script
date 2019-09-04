@@ -12,7 +12,7 @@ if not os.path.exists(outdir):
 if not os.path.exists("%s/CNV"%(outdir)):
     os.mkdir("%s/CNV"%(outdir))
 if not os.path.exists("%s/SNV"%(outdir)):
-    os.mkdir("%s/CNV"%(outdir))
+    os.mkdir("%s/SNV"%(outdir))
 dict = {}
 infile = open(sample_list, "r")
 num = 0
