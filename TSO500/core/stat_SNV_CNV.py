@@ -253,6 +253,7 @@ def run_4(root_dir,sample_list,outdir):
             for k in range(len(array)):
                 if array[remark] == "N":
                     sample_ID.append(array[0])
+                    continue
     print(sample_ID)
     ######################################get SNV information
     dict,vaf={},{}
