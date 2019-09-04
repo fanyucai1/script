@@ -251,7 +251,7 @@ def run_4(root_dir,sample_list,outdir):
                     remark=k
         else:
             if array[remark] == "N":
-                sample_ID.append(array[0])
+                sample_ID[array[0]]=1
     print(sample_ID)
     ######################################get SNV information
     dict,vaf={},{}
@@ -261,6 +261,7 @@ def run_4(root_dir,sample_list,outdir):
             array=path.split("/")
             if path.endswith("tmb.tsv"):
                 samplename=array[-2]
+                print(samplename)
                 if samplename in sample_ID:
                     infile = open(path, "r")
                     num = 0
