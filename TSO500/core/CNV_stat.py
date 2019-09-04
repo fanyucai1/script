@@ -5,6 +5,7 @@ root_dir="/data/TSO500/"
 sample_list="/data/TSO500/samplelist.csv"
 outdir="/data/TSO500/stat/CNV"
 
+
 if not os.path.exists(outdir):
     os.mkdir(outdir)
 dict={}
@@ -29,6 +30,7 @@ for (root,dirs,files) in os.walk(root_dir):
         tmp=os.path.join(root,file)
         array = tmp.split("/")
         sample_name = re.sub(r'_CopyNumberVariants.vcf', "", array[-1])
+
         if tmp.endswith("CopyNumberVariants.vcf") and sample_name in dict:
             outfile=open("%s/%s.cnv.tsv"%(outdir,sample_name),"w")
             infile=open(tmp,"r")
