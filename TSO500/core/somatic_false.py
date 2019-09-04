@@ -56,15 +56,15 @@ for(root,dirs,files) in os.walk(root_dir):
                         Illumina+=1
                         if array[f5]=="True":
                             num+=1
-                            if float(array[f6])<=5:
+                            if float(array[f6])<=0.05:
                                 VAF5+=1
-                            if float(array[f6])<=10:
+                            if float(array[f6])<=0.1:
                                 VAF10+=1
-                            if float(array[f6])<=20:
+                            if float(array[f6])<=0.2:
                                 VAF20+=1
-                            if float(array[f6])<=30:
+                            if float(array[f6])<=0.3:
                                 VAF30+=1
-                            if float(array[f6]) <= 40:
+                            if float(array[f6]) <= 0.4:
                                 VAF40+=1
             infile.close()
             outfile.write ("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(id[0],Illumina,num,VAF40,VAF30,VAF20,VAF10,VAF5))
