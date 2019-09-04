@@ -264,7 +264,6 @@ def run_4(root_dir,sample_list,outdir):
                     print(samplename)
                     infile = open(path, "r")
                     num = 0
-                    dict = {}
                     f1, f2, f3, f4,f5= 0, 0, 0, 0,0
                     for line in infile:
                         line = line.strip()
@@ -303,7 +302,7 @@ def run_4(root_dir,sample_list,outdir):
     par = " -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305"
     par += " -operation g,r,f,f,f,f,f,f,f,f,f "
     par += " -nastring . -polish "
-    #subprocess.check_call("perl %s/table_annovar.pl %s/all_false_somatic.vcf %s/humandb -buildver hg19 -out %s/all_false_somatic -remove %s -vcfinput " % (annovar, outdir, annovar, outdir, par), shell=True)
+    subprocess.check_call("perl %s/table_annovar.pl %s/all_false_somatic.vcf %s/humandb -buildver hg19 -out %s/all_false_somatic -remove %s -vcfinput " % (annovar, outdir, annovar, outdir, par), shell=True)
 
 
 if __name__=="__main__":
