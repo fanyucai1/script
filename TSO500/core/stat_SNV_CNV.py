@@ -240,7 +240,7 @@ def run_4(root_dir,sample_list,outdir):
         os.mkdir(outdir)
     #####################################get sample ID
     infile=open(sample_list,"r")
-    sample_ID,num,remark={},0,0
+    sample_ID,num,remark,content={},0,0,0
     for line in infile:
         line=line.strip()
         array=line.split(",")
@@ -249,9 +249,12 @@ def run_4(root_dir,sample_list,outdir):
             for k in range(len(array)):
                 if array[k] == "Remarks":
                     remark=k
+                if array[k] == "Tumor_content":
+                    content=k
         else:
             if array[remark] == "N":
-                sample_ID[array[0]]=1
+                if array[content]=="." or array[content]=="%0":
+                    sample_ID[array[0]]=1
     ######################################get SNV information
     dict,vaf={},{}
     for (root,dirs,files) in os.walk(root_dir):
