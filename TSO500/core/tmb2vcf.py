@@ -53,6 +53,7 @@ def run(root_dir,outdir):
                                             info=array[-1].split(":")
                                             outfile.write("%s\t%s\t.\t%s\t%s\t.\t.\tGT=%s;AD=%s;Var=%s\n"%(array[0],array[1],array[3],array[4],info[0],info[2],info[4]))
                                 infile.close()
+                                continue
                     outfile.close()
 if __name__=="__main__":
     run(root_dir,outdir)
