@@ -22,14 +22,14 @@ for line in infile:
            dict[array[0]]=0
 infile.close()
 outfile=open("%s/normal_false_somatic.tsv"%(outdir),"w")
-outfile.write("SampleID\tIllumina\tOur\tVAF40\tVAF30\tVAF20\tVAF10\n")
+outfile.write("SampleID\tIllumina\tOur\tVAF40\tVAF30\tVAF20\tVAF10\tVAF5\n")
 for(root,dirs,files) in os.walk(root_dir):
     for file in files:
         tmp=os.path.join(root,file)
         sample=tmp.split("/")
         id=sample[-1].split(".")
         if tmp.endswith(".tmb.tsv") and id[0] in dict:
-            Illumina,num,VAF10,VAF20,VAF30,VAF40=0,0,0,0,0,0
+            Illumina,num,VAF5,VAF10,VAF20,VAF30,VAF40=0,0,0,0,0,0,0
             row=0
             infile=open(tmp,"r")
             f1, f2, f3, f4 ,f5,f6= 0, 0, 0, 0,0,0
@@ -56,6 +56,8 @@ for(root,dirs,files) in os.walk(root_dir):
                         Illumina+=1
                         if array[f5]=="True":
                             num+=1
+                            if float(array[f6])<=5:
+                                VAF5+=1
                             if float(array[f6])<=10:
                                 VAF10+=1
                             if float(array[f6])<=20:
@@ -65,5 +67,5 @@ for(root,dirs,files) in os.walk(root_dir):
                             if float(array[f6]) <= 40:
                                 VAF40+=1
             infile.close()
-            outfile.write ("%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(id[0],Illumina,num,VAF40,VAF30,VAF20,VAF10))
+            outfile.write ("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(id[0],Illumina,num,VAF40,VAF30,VAF20,VAF10,VAF5))
 outfile.close()
