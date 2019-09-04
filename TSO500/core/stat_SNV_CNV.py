@@ -13,6 +13,9 @@ if not os.path.exists("%s/CNV"%(outdir)):
     os.mkdir("%s/CNV"%(outdir))
 if not os.path.exists("%s/SNV"%(outdir)):
     os.mkdir("%s/SNV"%(outdir))
+
+subprocess.check_call('rm -rf %s/SNV/*'%(outdir),shell=True)
+#subprocess.check_call('rm -rf %s/CNV/*'%(outdir),shell=True)
 dict = {}
 infile = open(sample_list, "r")
 num = 0
@@ -29,7 +32,7 @@ for line in infile:
         if array[counts] == "yes":
             dict[array[0]] = 1
 infile.close()
-
+SNV_file=[]
 for (root, dirs, files) in os.walk(root_dir):
     for file in files:
         tmp = os.path.join(root, file)
@@ -38,7 +41,7 @@ for (root, dirs, files) in os.walk(root_dir):
         if tmp.endswith("annovar.tsv"):
             sample_name=re.sub(r'.annovar.tsv', "", array[-1])
             if sample_name in dict:
-                subprocess.check_call('cp %s %s/SNV/'%(tmp,outdir),shell=True)
+                SNV_file.append(tmp)
 """
 
         #############################################################CNV
@@ -66,3 +69,5 @@ for (root, dirs, files) in os.walk(root_dir):
                     subprocess.check_call("rm -rf %s/CNV/%s.cnv.tsv" % (outdir, sample_name), shell=True)
                     print("sample %s not find CNV" % (sample_name))
 """
+for key in SNV_file:
+    subprocess.check_call('cp %s %s/SNV/' % (key, outdir), shell=True)
