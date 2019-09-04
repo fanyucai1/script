@@ -39,6 +39,8 @@ for (root, dirs, files) in os.walk(root_dir):
             sample_name=re.sub(r'.annovar.tsv', "", array[-1])
             if sample_name in dict:
                 subprocess.check_call('cp %s %s/SNV/'%(tmp,outdir),shell=True)
+"""
+
         #############################################################CNV
         if tmp.endswith("CopyNumberVariants.vcf"):
             sample_name = re.sub(r'_CopyNumberVariants.vcf', "", array[-1])
@@ -63,3 +65,4 @@ for (root, dirs, files) in os.walk(root_dir):
                 if i == 0:
                     subprocess.check_call("rm -rf %s/CNV/%s.cnv.tsv" % (outdir, sample_name), shell=True)
                     print("sample %s not find CNV" % (sample_name))
+"""
