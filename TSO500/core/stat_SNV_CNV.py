@@ -240,7 +240,7 @@ def run_4(root_dir,sample_list,outdir):
         os.mkdir(outdir)
     #####################################get sample ID
     infile=open(sample_list,"r")
-    sample_ID,num,remark=[],0,0
+    sample_ID,num,remark={},0,0
     for line in infile:
         line=line.strip()
         array=line.split(",")
