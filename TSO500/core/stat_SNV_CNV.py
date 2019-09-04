@@ -290,9 +290,9 @@ def run_4(root_dir,sample_list,outdir):
                                 else:
                                     dict[tmp]=1
                                 if tmp in vaf:
-                                    vaf[tmp]+=";%s"%array[f5]
+                                    vaf[tmp]+=";%s"%(array[f5])
                                 else:
-                                    vaf[tmp]="%s"%array[f5]
+                                    vaf[tmp]="%s"%(array[f5])
                     infile.close()
     outfile=open("%s/all_false_somatic.vcf"%(outdir),"w")
     outfile.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
@@ -307,11 +307,11 @@ def run_4(root_dir,sample_list,outdir):
 
 
 if __name__=="__main__":
-    run_1(root_dir,sample_list,outdir)
+    #run_1(root_dir,sample_list,outdir)
     print("done1")
-    run_2(root_dir,sample_list,outdir)
+    #run_2(root_dir,sample_list,outdir)
     print("done2")
-    run_3(root_dir,sample_list,outdir)
+    #run_3(root_dir,sample_list,outdir)
     print("done3")
     run_4(root_dir,sample_list,outdir)
     print("done4")
