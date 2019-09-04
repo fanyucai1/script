@@ -3,7 +3,7 @@ import argparse
 import subprocess
 import re
 
-def run(dir,samplelist,vaf,outdir):
+def run(dir,samplelist,outdir):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     #####################################get sample ID
@@ -17,7 +17,6 @@ def run(dir,samplelist,vaf,outdir):
             outfile=open("%s/%s.snv.tmp.vcf"%(outdir,key),"w")
             outfile.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n")
             num=0
-            name=[]
             dict={}
             for line in infile:
                 line=line.strip()
