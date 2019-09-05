@@ -12,7 +12,7 @@ for (root, dirs, files) in os.walk(root_dir):
     for file in files:
         tmp = os.path.join(root, file)
         array=tmp.split("/")
-        if array[-1].endswith("annovar.tsv"):
+        if array[-1].endswith(".tmb.tsv"):
             if re.search('NF',array[-1]):
                 n_path.append(tmp)
             if re.search('TF',array[-1]):
@@ -24,13 +24,25 @@ for tumor in t_path:
     p1=re.compile(r'/SNV/(\S+)TF')
     a=p1.findall(tumor)
     infile = open(tumor, "r")
+    f1, f2, f3, f4 = 0, 0, 0, 0
     for line in infile:
         num+=1
         line = line.strip()
         array = line.split("\t")
         if num!=1:
             tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3] + "_" + array[4]
-            dict_t[tmp] = line
+            if array[f1] == "False" and array[f2] == "Somatic" and array[f3] == "True" and array[f4] == "False":
+                dict_t[tmp] = line
+        else:
+            for k in range(len(array)):
+                if array[k] == "GermlineFilterDatabase":
+                    f1 = k
+                if array[k] == "SomaticStatus":
+                    f2 = k
+                if array[k] == "CodingVariant":
+                    f3 = k
+                if array[k] == "GermlineFilterProxi":
+                    f4 = k
     infile.close()
     num=0
     for normal in n_path:
@@ -41,12 +53,23 @@ for tumor in t_path:
                 line = line.strip()
                 array = line.split("\t")
                 if num!=1:
-                    tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3] + "_" + array[4]
-                    dict_n[tmp] = line
-                    if tmp in dict_t:
-                        common+=1
-                    else:
-                        n_unique+=1
+                    if array[f1] == "False" and array[f2] == "Somatic" and array[f3] == "True" and array[f4] == "False":
+                        tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3] + "_" + array[4]
+                        dict_n[tmp] = line
+                        if tmp in dict_t:
+                            common+=1
+                        else:
+                            n_unique+=1
+                else:
+                    for k in range(len(array)):
+                        if array[k] == "GermlineFilterDatabase":
+                            f1 = k
+                        if array[k] == "SomaticStatus":
+                            f2 = k
+                        if array[k] == "CodingVariant":
+                            f3 = k
+                        if array[k] == "GermlineFilterProxi":
+                            f4 = k
             infile.close()
             for tmp1 in dict_t:
                 if not tmp1 in dict_n:
