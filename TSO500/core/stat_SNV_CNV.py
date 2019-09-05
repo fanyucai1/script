@@ -263,7 +263,6 @@ def run_4(root_dir,sample_list,outdir):
             if path.endswith("tmb.tsv"):
                 samplename=array[-2]
                 if samplename in sample_ID:
-                    print(samplename)
                     infile = open(path, "r")
                     num = 0
                     f1, f2, f3, f4,f5= 0, 0, 0, 0,0
@@ -301,18 +300,18 @@ def run_4(root_dir,sample_list,outdir):
         array=key.split("\t")
         outfile.write("%s\t%s\t.\t%s\t%s\t.\t.\tcounts=%s,VAF=%s\n" % (array[0], array[1], array[2], array[3],dict[key],vaf[key]))
     outfile.close()
-    par = " -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305"
-    par += " -operation g,r,f,f,f,f,f,f,f,f,f "
+    par = " -protocol refGene,cytoBand,snp138,avsnp150,exac03,esp6500siv2_all,1000g2015aug_all,1000g2015aug_eas,gnomad211_exome,gnomad211_genome,cosmic88_coding,clinvar_20190305"
+    par += " -operation g,r,f,f,f,f,f,f,f,f,f,f "
     par += " -nastring . -polish "
     subprocess.check_call("perl %s/table_annovar.pl %s/all_false_somatic.vcf %s/humandb -buildver hg19 -out %s/all_false_somatic -remove %s -vcfinput " % (annovar, outdir, annovar, outdir, par), shell=True)
 
 
 if __name__=="__main__":
-    run_1(root_dir,sample_list,outdir)
+    #run_1(root_dir,sample_list,outdir)
     print("done1")
-    run_2(root_dir,sample_list,outdir)
+    #run_2(root_dir,sample_list,outdir)
     print("done2")
-    run_3(root_dir,sample_list,outdir)
+    #run_3(root_dir,sample_list,outdir)
     print("done3")
     run_4(root_dir,sample_list,outdir)
     print("done4")

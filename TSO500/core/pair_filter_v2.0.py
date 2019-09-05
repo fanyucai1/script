@@ -21,8 +21,8 @@ for (root, dirs, files) in os.walk(root_dir):
 for tumor in t_path:
     t_unique, n_unique, common,num= 0, 0, 0,0
     dict_t,dict_n = {},{}
-    p1=re.compile(r'/SNV/(\S+)TF')
-    a=p1.findall(tumor)
+    tumor_name=tumor.split("/")[-2]
+    normal_name=re.sub(r'TF',"NF",tumor_name)
     infile = open(tumor, "r")
     f1, f2, f3, f4 = 0, 0, 0, 0
     for line in infile:
@@ -30,7 +30,7 @@ for tumor in t_path:
         line = line.strip()
         array = line.split("\t")
         if num!=1:
-            tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3] + "_" + array[4]
+            tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3]
             if array[f1] == "False" and array[f2] == "Somatic" and array[f3] == "True" and array[f4] == "False":
                 dict_t[tmp] = line
         else:
@@ -46,7 +46,7 @@ for tumor in t_path:
     infile.close()
     num=0
     for normal in n_path:
-        if re.search(a[0],normal):
+        if re.search(normal_name,normal):
             infile = open(normal, "r")
             for line in infile:
                 num+=1
@@ -54,7 +54,7 @@ for tumor in t_path:
                 array = line.split("\t")
                 if num!=1:
                     if array[f1] == "False" and array[f2] == "Somatic" and array[f3] == "True" and array[f4] == "False":
-                        tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3] + "_" + array[4]
+                        tmp = array[0] + "_" + array[1] + "_" + array[2] + "_" + array[3]
                         dict_n[tmp] = line
                         if tmp in dict_t:
                             common+=1
@@ -74,7 +74,7 @@ for tumor in t_path:
             for tmp1 in dict_t:
                 if not tmp1 in dict_n:
                     t_unique += 1
-            out_total.write("%s\t%s\t%s\t%s\t%s\n" % (tumor.split("/")[-1].strip(".annovar.tsv"), normal.split("/")[-1].strip(".annovar.tsv"), t_unique, common, n_unique))
+            out_total.write("%s\t%s\t%s\t%s\t%s\n" % (tumor.split("/")[-2], normal.split("/")[-2], t_unique, common, n_unique))
         else:
             pass
 out_total.close()
