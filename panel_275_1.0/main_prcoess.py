@@ -82,4 +82,4 @@ core.stat_qc.run(args.outdir,args.prefix)
 ######################################################################
 end=time.time()
 print("Elapse time is %g seconds" %(end-start))
-core.twillo.run("275_%s"%(args.prefix))
+core.twillo_run.run("275_%s"%(args.prefix))
