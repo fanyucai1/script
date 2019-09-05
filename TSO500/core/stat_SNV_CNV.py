@@ -1,6 +1,5 @@
 import os
 import re
-import argparse
 import glob
 import pandas as pd
 import matplotlib
@@ -309,11 +308,11 @@ def run_4(root_dir,sample_list,outdir):
 
 
 if __name__=="__main__":
-    #run_1(root_dir,sample_list,outdir)
+    run_1(root_dir,sample_list,outdir)
     print("done1")
-    #run_2(root_dir,sample_list,outdir)
+    run_2(root_dir,sample_list,outdir)
     print("done2")
-    #run_3(root_dir,sample_list,outdir)
+    run_3(root_dir,sample_list,outdir)
     print("done3")
     run_4(root_dir,sample_list,outdir)
     print("done4")
