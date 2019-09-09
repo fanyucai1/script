@@ -1,12 +1,8 @@
-import os
-import sys
-import re
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-import plotly.express as px
 
 TMB_MSI="/data/TSO500/stat/TMB_MSI.tsv"
 samplelist="/data/TSO500/samplelist.csv"
