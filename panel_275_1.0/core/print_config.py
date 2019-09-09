@@ -1,7 +1,7 @@
 import os
 import shutil
 import subprocess
-def tumor_only(p1,p2,sampelID,outdir,purity,sex,typen,n1="0",n2="0"):
+def tumor_only(p1,p2,sampelID,outdir,purity,sex,type,n1="0",n2="0"):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     ##################################tumor sample
