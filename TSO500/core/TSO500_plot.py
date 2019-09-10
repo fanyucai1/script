@@ -61,14 +61,14 @@ def run(TMB_MSI,samplelist,outdir):
     outfile.close()
     df = pd.read_csv("%s/plot.tsv" % (outdir), sep="\t",header=0)
     x = df['Pairs_TMB']
-    y = df['Tumor_only_TMB']
+    y = df['Tumor_TMB']
     plt.figure(figsize=(18, 10))
     sns.regplot(x=x, y=y, data=df)
     plt.savefig('%s/TMB.png'%(outdir), dpi=300)
 
 
     x = df['Pairs_MSI']
-    y = df['Tumor_only_MSI']
+    y = df['Tumor_MSI']
     plt.figure(figsize=(18, 10))
     sns.regplot(x=x, y=y, data=df)
     plt.savefig('%s/MSI.png'%(outdir), dpi=300)
