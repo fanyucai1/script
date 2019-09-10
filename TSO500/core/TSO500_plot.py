@@ -49,7 +49,7 @@ def run(TMB_MSI,samplelist,outdir):
                 MSI[array[2]]=array[f5]
     infile.close()
     outfile=open("%s/plot.tsv"%(outdir),"w")
-    outfile.write("SampleID\tPairs_TMB\tTumor_only_TMB\tPairs_MSI\tTumor_only_MSI\n")
+    outfile.write("Tumor_ID\tTumor_TMB\tTumor_MSI\tNormal_ID\tNormal_TMB\tNormal_MSI\tPairs_TMB\tTumor_only_TMB\tPairs_MSI\tTumor_only_MSI\n")
 
     for k in range(len(tumor)):
         if tumor[k] in TMB and tumor[k] in MSI and normal[k] in TMB and normal[k] in MSI:
@@ -59,7 +59,8 @@ def run(TMB_MSI,samplelist,outdir):
 
                 t3=float(MSI[tumor[k]])-float(MSI[normal[k]])
                 t4=MSI[tumor[k]]
-                outfile.write("%s\t%s\t%s\t%s\t%s\n"%(tumor[k],t1,t2,t3,t4))
+                outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"
+                              %(tumor[k],TMB[tumor[k]],MSI[tumor[k]],normal[k],TMB[normal[k]],MSI[normal[k]],t1,t2,t3,t4))
     outfile.close()
     df = pd.read_csv("%s/plot.tsv" % (outdir), sep="\t",header=0)
     x = df['Pairs_TMB']
