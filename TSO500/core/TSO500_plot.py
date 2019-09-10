@@ -55,10 +55,7 @@ def run(TMB_MSI,samplelist,outdir):
         if tumor[k] in TMB and tumor[k] in MSI and normal[k] in TMB and normal[k] in MSI:
             if normal[k]!="TS19387NF" and normal[k]!="TS19033NF":
                 t1=float(TMB[tumor[k]])-float(TMB[normal[k]])
-                t2=float(TMB[tumor[k]])
-
                 t3=float(MSI[tumor[k]])-float(MSI[normal[k]])
-                t4=MSI[tumor[k]]
                 outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"
                               %(tumor[k],TMB[tumor[k]],MSI[tumor[k]],normal[k],TMB[normal[k]],MSI[normal[k]],t1,t3))
     outfile.close()
