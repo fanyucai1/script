@@ -27,7 +27,7 @@ def run(TMB_MSI,samplelist,outdir):
                     rate=k
         else:
             if array[f1]=="yes":
-                if array[f2]=="T" and array[f3]!="." and array[rate]!="D":
+                if array[f2]=="T" and array[f3]!="." and array[rate]!="E":
                     tumor.append(array[0])
                     normal.append(array[f3])
     infile.close()
