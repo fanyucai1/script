@@ -31,9 +31,9 @@ def run(TMB_MSI,samplelist,outdir):
                     tumor.append(array[0])
                     normal.append(array[f3])
     infile.close()
-    TMB,MSI={},{}
+    TMB,MSI,Nonsynonymous_TMB={},{},{}
     infile=open(TMB_MSI,"r")
-    num,f4,f5=0,0,0
+    num,f4,f5,f6=0,0,0,0
     for line in infile:
         line = line.strip()
         array = line.split("\t")
@@ -44,20 +44,23 @@ def run(TMB_MSI,samplelist,outdir):
                     f4 = k
                 if array[k] == "Percent_Unstable_Site":
                     f5 = k
+                if array[k] == "Nonsynonymous_TMB":
+                    f6=k
         if array[f4]!="NaN" and array[f5]!="NaN":
                 TMB[array[2]]=array[f4]
                 MSI[array[2]]=array[f5]
+                Nonsynonymous_TMB[array[2]]=array[f6]
     infile.close()
     outfile=open("%s/plot.tsv"%(outdir),"w")
-    outfile.write("Tumor_ID\tTumor_TMB\tTumor_MSI\tNormal_ID\tNormal_TMB\tNormal_MSI\tPairs_TMB\tPairs_MSI\n")
+    outfile.write("Tumor_ID\tTumor_TMB\tTumor_Nonsynonymous_TMB\tTumor_MSI\tNormal_ID\tNormal_TMB\tNormal_Nonsynonymous_TMB\tNormal_MSI\tPairs_TMB\tPairs_MSI\n")
 
     for k in range(len(tumor)):
         if tumor[k] in TMB and tumor[k] in MSI and normal[k] in TMB and normal[k] in MSI:
             if normal[k]!="TS19387NF" and normal[k]!="TS19033NF":
                 t1=float(TMB[tumor[k]])-float(TMB[normal[k]])
                 t3=float(MSI[tumor[k]])-float(MSI[normal[k]])
-                outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"
-                              %(tumor[k],TMB[tumor[k]],MSI[tumor[k]],normal[k],TMB[normal[k]],MSI[normal[k]],t1,t3))
+                outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"
+                              %(tumor[k],TMB[tumor[k]],Nonsynonymous_TMB[tumor[k]],MSI[tumor[k]],normal[k],TMB[normal[k]],Nonsynonymous_TMB[normal[k]],MSI[normal[k]],t1,t3))
     outfile.close()
     df = pd.read_csv("%s/plot.tsv" % (outdir), sep="\t",header=0)
     x = df['Pairs_TMB']
