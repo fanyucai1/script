@@ -1,7 +1,9 @@
 import os
 import sys
 import subprocess
-
+import seaborn as sns
+import pandas as pd
+import numpy as np
 
 bedtools="/software/bedtools/bedtools2/bin/bedtools"
 
@@ -9,7 +11,7 @@ def run(bed,bam,outdir,prefix):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
-    cmd="%s coverage -a %s -b %s -mean >%s/MeanCoverageBED.bedgraph"%(bedtools,bed,bam,out)
+    cmd="%s coverage -a %s -b %s -mean >%s.MeanCoverageBED.bedgraph"%(bedtools,bed,bam,out)
     subprocess.check_call(cmd,shell=True)
 
 
