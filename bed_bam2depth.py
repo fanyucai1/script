@@ -52,7 +52,7 @@ def run(bed,bam,outdir,prefix):
     plt.xlabel("Depth(X)")
     plt.ylabel("Coverage")
     sns.lineplot(x=x, y=y)
-    plt.savefig('%s/bed_depth.png' % (outdir), dpi=300)
+    plt.savefig('%s/bed_depth.png' % (out), dpi=300)
 
 if __name__=="__main__":
     if len(sys.argv)!=5:
