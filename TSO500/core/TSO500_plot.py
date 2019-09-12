@@ -67,14 +67,14 @@ def run(TMB_MSI,samplelist,outdir):
     y = df['Tumor_TMB']
     plt.figure(figsize=(18, 10))
     sns.regplot(x=x, y=y, data=df)
-    plt.savefig('%s/TMB.png'%(outdir), dpi=300)
+    plt.savefig('%s/TMB_pairs_only.png'%(outdir), dpi=300)
 
 
     x = df['Pairs_MSI']
     y = df['Tumor_MSI']
     plt.figure(figsize=(18, 10))
     sns.regplot(x=x, y=y, data=df)
-    plt.savefig('%s/MSI.png'%(outdir), dpi=300)
+    plt.savefig('%s/MSI_pairs_vs_only.png'%(outdir), dpi=300)
 
 if __name__=="__main__":
     run(TMB_MSI,samplelist,outdir)
