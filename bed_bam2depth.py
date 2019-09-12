@@ -16,7 +16,7 @@ def run(bed,bam,outdir,prefix):
     out=outdir+"/"+prefix
     cmd="%s coverage -a %s -b %s -mean >%s.MeanCoverageBED.bedgraph"%(bedtools,bed,bam,out)
     #subprocess.check_call(cmd,shell=True)
-    infile=open("%s.MeanCoverageBED.bedgraph"%(outdir),"r")
+    infile=open("%s.MeanCoverageBED.bedgraph"%(out),"r")
     x,y=[],[]
     num=0
     for line in infile:
@@ -24,7 +24,7 @@ def run(bed,bam,outdir,prefix):
         x.append(num)
         line=line.strip()
         array=line.split("\t")
-        y.append(array[-1])
+        y.append(float(array[-1]))
     plt.figure(figsize=(18, 10))
     sns.lineplot(x=x, y=sorted(y))
     plt.savefig('%s/bed_depth.png' % (outdir), dpi=300)
