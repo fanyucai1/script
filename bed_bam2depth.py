@@ -4,6 +4,9 @@ import subprocess
 import seaborn as sns
 import pandas as pd
 import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+matplotlib.use('Agg')
 
 bedtools="/software/bedtools/bedtools2/bin/bedtools"
 
@@ -12,7 +15,20 @@ def run(bed,bam,outdir,prefix):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
     cmd="%s coverage -a %s -b %s -mean >%s.MeanCoverageBED.bedgraph"%(bedtools,bed,bam,out)
-    subprocess.check_call(cmd,shell=True)
+    #subprocess.check_call(cmd,shell=True)
+    infile=open("%s.MeanCoverageBED.bedgraph","r")
+    x,y=[],[]
+    num=0
+    for line in infile:
+        num+=1
+        x.append(num)
+        line=line.strip()
+        array=line.split("\t")
+        y.append(array[-1])
+    plt.figure(figsize=(18, 10))
+    sns.lineplot(x=x, y=sorted(y))
+    plt.savefig('%s/bed_depth.png' % (outdir), dpi=300)
+
 
 
 if __name__=="__main__":
