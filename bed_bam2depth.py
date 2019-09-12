@@ -16,7 +16,7 @@ def run(bed,bam,outdir,prefix):
     out=outdir+"/"+prefix
     cmd="%s coverage -a %s -b %s -mean >%s.MeanCoverageBED.bedgraph"%(bedtools,bed,bam,out)
     #subprocess.check_call(cmd,shell=True)
-    infile=open("%s.MeanCoverageBED.bedgraph","r")
+    infile=open("%s.MeanCoverageBED.bedgraph"%(outdir),"r")
     x,y=[],[]
     num=0
     for line in infile:
