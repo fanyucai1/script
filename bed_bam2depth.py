@@ -51,7 +51,7 @@ def run(bed,bam,outdir,prefix):
     plt.figure(figsize=(18, 10))
     plt.xlabel("Depth(X)")
     plt.ylabel("Coverage")
-    sns.lineplot(x=x, y=sorted(y))
+    sns.lineplot(x=x, y=y)
     plt.savefig('%s/bed_depth.png' % (outdir), dpi=300)
 
 if __name__=="__main__":
