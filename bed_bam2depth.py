@@ -6,7 +6,7 @@ import subprocess
 bedtools="/software/bedtools/bedtools2/bin/bedtools"
 
 def run(bed,bam,outdir,prefix):
-    if os.path.exists(outdir):
+    if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
     cmd="%s coverage -a %s -b %s -mean >%s/MeanCoverageBED.bedgraph"%(bedtools,bed,bam,out)
