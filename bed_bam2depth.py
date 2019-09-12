@@ -26,7 +26,8 @@ def run(bed,bam,outdir,prefix):
         array=line.split("\t")
         y.append(float(array[-1]))
     plt.figure(figsize=(18, 10))
-    plt.yticks([50,100,500,1000])
+    plt.xlab("%s(bins)"%(num))
+    plt.ylabel("Mean_Depth")
     sns.lineplot(x=x, y=sorted(y))
     plt.savefig('%s/bed_depth.png' % (outdir), dpi=300)
 
