@@ -15,7 +15,7 @@ def run(bed,bam,outdir,prefix):
     cmd="%s coverage -a %s -b %s -d >%s.site.depth"%(bedtools,bed,bam,out)
     subprocess.check_call(cmd,shell=True)
     infile=open("%s.site.depth"%(out),"r")
-    outfile=open("%s.coverage.tsv","w")
+    outfile=open("%s.coverage.tsv"%(out),"w")
     num=0
     x0,x50,x100,x250,x500,x1000,x3500=0,0,0,0,0,0,0
     for line in infile:
@@ -52,7 +52,7 @@ def run(bed,bam,outdir,prefix):
     plt.xlabel("Depth(X)")
     plt.ylabel("Coverage")
     sns.lineplot(x=x, y=y)
-    plt.savefig('%s/bed_depth.png' % (out), dpi=300)
+    plt.savefig('%s.bed_depth.png' % (out), dpi=300)
 
 if __name__=="__main__":
     if len(sys.argv)!=5:
