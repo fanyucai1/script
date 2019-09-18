@@ -31,7 +31,12 @@ def run_hgvs(var_site):
     else:
         new2 = new1
     return new2
-def run(dir,samplelist,vaf,outdir):
+def run(dir,samplelist,vaf,outdir,genelist):
+    gene = {}
+    infile = open(genelist, "r")
+    for line in infile:
+        line = line.strip()
+        gene[line] = 1
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     #####################################get sample ID
@@ -134,6 +139,8 @@ def run(dir,samplelist,vaf,outdir):
                         name.append(array[i])
                         dict[array[i]] = i
                 else:
+                    if not array[6] in gene:
+                        continue
                     Reads=b[0].split(",")
                     ##########################format output knownCanonical transcript
                     tmp = array[dict['AAChange.refGene']].split(",")
@@ -178,5 +185,6 @@ if __name__=="__main__":
     parser.add_argument("-s", "--samplelist", required=True)
     parser.add_argument("-v", "--vaf", default=0, type=float)
     parser.add_argument("-o", "--outdir", help="output directory", default=os.getcwd())
+    parser.add_argument("-g", "--genelist", help="sub gene list", required=True)
     args = parser.parse_args()
-    run(args.dir, args.samplelist, args.vaf, args.outdir)
+    run(args.dir, args.samplelist, args.vaf, args.outdir,args.genelist)
