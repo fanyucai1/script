@@ -57,6 +57,7 @@ def run(analysis,samplelist,outdir,genelist):
             if i==0:
                 subprocess.check_call("rm -rf %s/%s.cnv.tsv" %(outdir,id),shell=True)
                 print("sample %s not find CNV"%(id))
+
 if __name__=="__main__":
     parser = argparse.ArgumentParser("Run CNV")
     parser.add_argument("-a", "--analysis", help="analysis directory", required=True)
