@@ -89,7 +89,7 @@ def run(pe1,pe2,index,genelist,outdir,SampleID,samplelist=""):
     p1.join()
     p2.join()
     ####################################如果samplelist为空生成临时的samplelist
-    if samplelist=="":
+    if samplelist=="1":
         samplelist=open("%s/sample.list","w")
         samplelist.write("Sample_ID,rate,UP,Original_ID,Batch,Time,Cancer,Years,Library_type,Hospital,Remarks,DNA_RNA,Tumor_content,yes_no_illumina,Integrity Score,Pairs\n")
         samplelist.write("%s\n"%(SampleID))
@@ -117,6 +117,6 @@ if __name__=="__main__":
     parser.add_argument("-s","--sample",help="sample name",required=True)
     parser.add_argument("-g","--genelist",help="sub gene list",required=True)
     parser.add_argument("-i","--index",help="index seq or indexID",required=True)
-    parser.add_argument("--l","--sampelist",help="sample list",default="")
+    parser.add_argument("--l","--sampelist",help="sample list",default="1")
     args=parser.parse_args()
     run(args.pe1, args.pe2, args.index, args.genelist, args.outdir, args.sample, args.samplelist)
