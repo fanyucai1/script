@@ -70,6 +70,7 @@ def run(pe1,pe2,index,genelist,outdir,SampleID,samplelist=""):
     [Data]
     Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2,I5_Index_ID\n""")
     outfile.write("%s,,,,%s,%s,%s,%s,%s\n"%(SampleID,id,i7_seq,i7_num,i5_seq,i5_num))
+    outfile.close()
     ###################################使用fastp在fastq序列中添加UMI序列
     cmd = "%s -i %s -I %s -U --umi_loc per_read --umi_len 7 --umi_skip 1 -o %s.umi.1.fq.gz -O %s.umi.2.fq.gz" \
           % (fastp, pe1, pe2,out, out)
