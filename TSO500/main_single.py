@@ -16,7 +16,7 @@ tmp=cmd.read().strip()
 uid=pattern.findall(tmp)
 TSO500_cmd="/software/TSO500/1.3.1/TruSight_Oncology_500.sh --user=%s --remove --resourcesFolder=/software/TSO500/1.3.1/resources "%(uid[0])
 fastp="/software/fastp/fastp"
-indexfile="/software/TSO500/1.3.1/resources/sampleSheet"
+indexfile="/software/TSO500/1.3.1/resources/sampleSheet/sampleIndexPairsLookup.txt"
 genefuse="/software/GeneFuse/genefuse"
 ref="/data/Database/hg19/ucsc.hg19.fasta"
 fusion="/software/GeneFuse/genes/cancer.hg19.csv"
