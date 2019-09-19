@@ -4,12 +4,19 @@ import subprocess
 from Bio.Seq import Seq
 from Bio.Alphabet import IUPAC
 from multiprocessing import Process
+sub=os.path.abspath(__file__)
+dir_name=os.path.dirname(sub)
+sys.path.append(dir_name)
+import core
 fastp="/software/fastp/fastp"
-TSO500="/software/TSO500/1.3.1/TruSight_Oncology_500.sh"
+TSO500_cmd="/software/TSO500/1.3.1/TruSight_Oncology_500.sh --user=1006 --remove --resourcesFolder=/software/TSO500/1.3.1/resources "
 indexfile="/software/TSO500/1.3.1/resources/sampleSheet"
+genefuse="/software/GeneFuse/genefuse"
+ref="/data/Database/hg19/ucsc.hg19.fasta"
+fusion="/software/GeneFuse/genes/cancer.hg19.csv"
 def shell_run(x):
     subprocess.check_call(x, shell=True)
-def run(pe1,pe2,index1,outdir,SampleID):
+def run(pe1,pe2,index1,genelist,outdir,SampleID,samplelist=""):
     ###############################生产输出文件夹目录
     if not os.path.exists(outdir):
         os.mkdir(outdir)
@@ -75,4 +82,23 @@ def run(pe1,pe2,index1,outdir,SampleID):
     p2.start()
     p1.join()
     p2.join()
-    #####################################
+    ####################################如果samplelist为空生成临时的samplelist
+    if samplelist=="":
+        samplelist=open("%s/sample.list","w")
+        samplelist.write("Sample_ID,rate,UP,Original_ID,Batch,Time,Cancer,Years,Library_type,Hospital,Remarks,DNA_RNA,Tumor_content,yes_no_illumina,Integrity Score,Pairs\n")
+        samplelist.write("%s\n"%(SampleID))
+    ####################################运行docker程序
+    if not os.path.exists("%s/analysis"%(outdir)):
+        os.mkdir("%s/analysis"%(outdir))
+        subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,outdir),shell=True)
+        core.somatic("%s/analysis" % (outdir), samplelist, 0, "%s/SNV" % (outdir), genelist)###注释SNV
+        core.CNV("%s/analysis" % (outdir),samplelist,"%s/CNV"%(outdir))####注释CNV
+        #####################基因融合分析
+        if not os.path.exists("%s/gene_fuse"%(outdir)):
+            os.mkdir("%s/gene_fuse"%(outdir))
+            cmd = "%s --read1 %s_S1_L001_R1_001.fastq.gz --read2 %s_S1_L001_R2_001.fastq.gz --ref %s --html %s.html --json %s.json --fusion %s --thread 10 --unique 3 >%s.txt" \
+                   % (genefuse, out, out, ref,out,out, fusion, out)
+            subprocess.check_call(cmd,shell=True)
+            core.gene_fuse_stat("%s.txt"%(out),outdir,SampleID)
+    else:
+        print("Analysis directory!!!!!!!!")
