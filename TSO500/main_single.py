@@ -45,30 +45,30 @@ def run(pe1,pe2,index,genelist,outdir,SampleID,samplelist=""):
     #####################################生产SampleSheet
     outfile = open("%s/SampleSheet.csv"%(outdir), "w")
     outfile.write("""[Header]
-    IEMFileVersion,4
-    Investigator Name,User Name
-    Experiment Name,Experiment
-    Date,2019/8/1
-    Workflow,From GenerateFASTQ
-    Application,NextSeq FASTQ Only
-    Assay
-    Description
-    Chemistry,Default
+IEMFileVersion,4
+Investigator Name,User Name
+Experiment Name,Experiment
+Date,2019/8/1
+Workflow,From GenerateFASTQ
+Application,NextSeq FASTQ Only
+Assay
+Description
+Chemistry,Default
 
-    [Reads]
-    151
-    151
+[Reads]
+151
+151
 
-    [Settings]
-    Adapter,AGATCGGAAGAGCACACGTCTGAACTCCAGTCA
-    AdapterRead2,AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
-    Read1UMILength,7
-    Read2UMILength,7
-    Read1StartFromCycle,9
-    Read2StartFromCycle,9
+[Settings]
+Adapter,AGATCGGAAGAGCACACGTCTGAACTCCAGTCA
+AdapterRead2,AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
+Read1UMILength,7
+Read2UMILength,7
+Read1StartFromCycle,9
+Read2StartFromCycle,9
 
-    [Data]
-    Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2,I5_Index_ID\n""")
+[Data]
+Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2,I5_Index_ID\n""")
     outfile.write("%s,,,,%s,%s,%s,%s,%s\n"%(SampleID,id,i7_seq,i7_num,i5_seq,i5_num))
     outfile.close()
     ###################################使用fastp在fastq序列中添加UMI序列
