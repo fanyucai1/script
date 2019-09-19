@@ -8,6 +8,8 @@ sub=os.path.abspath(__file__)
 dir_name=os.path.dirname(sub)
 sys.path.append(dir_name)
 import core
+import argparse
+
 fastp="/software/fastp/fastp"
 TSO500_cmd="/software/TSO500/1.3.1/TruSight_Oncology_500.sh --user=1006 --remove --resourcesFolder=/software/TSO500/1.3.1/resources "
 indexfile="/software/TSO500/1.3.1/resources/sampleSheet"
@@ -16,7 +18,7 @@ ref="/data/Database/hg19/ucsc.hg19.fasta"
 fusion="/software/GeneFuse/genes/cancer.hg19.csv"
 def shell_run(x):
     subprocess.check_call(x, shell=True)
-def run(pe1,pe2,index1,genelist,outdir,SampleID,samplelist=""):
+def run(pe1,pe2,index,genelist,outdir,SampleID,samplelist=""):
     ###############################生产输出文件夹目录
     if not os.path.exists(outdir):
         os.mkdir(outdir)
@@ -29,7 +31,7 @@ def run(pe1,pe2,index1,genelist,outdir,SampleID,samplelist=""):
     for line in infile:
         line=line.strip()
         array=line.split("\t")
-        if array[1]==index1 or array[2]==index1:
+        if array[0]==index or array[1]==index or array[2]==index or array[3]==index or array[4]==index:
             id=array[0]
             i7_seq=array[1]
             i7_num=array[2]
@@ -102,3 +104,15 @@ def run(pe1,pe2,index1,genelist,outdir,SampleID,samplelist=""):
             core.gene_fuse_stat("%s.txt"%(out),outdir,SampleID)
     else:
         print("Analysis directory!!!!!!!!")
+
+if __name__=="__main__":
+    parser=argparse.ArgumentParser("This script will run TSO500 with single fastq file.")
+    parser.add_argument("-p1","--pe1",help="5 read fastq(.gz) ",required=True)
+    parser.add_argument("-p2","--pe2",help="3 read fastq(.gz)",required=True)
+    parser.add_argument("-o","--outdir",help="output directory",required=True)
+    parser.add_argument("-s","--sample",help="sample name",required=True)
+    parser.add_argument("-g","--genelist",help="sub gene list",required=True)
+    parser.add_argument("-i","--index",help="index seq or indexID",required=True)
+    parser.add_argument("--l","--sampelist",help="sample list",default="")
+    args=parser.parse_args()
+    run(args.pe1, args.pe2, args.index, args.genelist, args.outdir, args.sample, args.samplelist)
