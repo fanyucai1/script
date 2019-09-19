@@ -110,7 +110,7 @@ def run(pe1,pe2,index,genelist,outdir,SampleID,samplelist=""):
         print("Analysis directory!!!!!!!!")
 
 if __name__=="__main__":
-    parser=argparse.ArgumentParser("This script will run TSO500 with single fastq file.\n")
+    parser=argparse.ArgumentParser("")
     parser.add_argument("-p1","--pe1",help="5 read fastq(.gz) ",required=True)
     parser.add_argument("-p2","--pe2",help="3 read fastq(.gz)",required=True)
     parser.add_argument("-o","--outdir",help="output directory",required=True)
