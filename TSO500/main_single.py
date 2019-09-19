@@ -9,9 +9,13 @@ dir_name=os.path.dirname(sub)
 sys.path.append(dir_name)
 import core
 import argparse
-
+import re
+pattern=re.compile(r'uid=(\d+)')
+cmd=os.popen('id')
+tmp=cmd.read().strip()
+uid=pattern.findall(tmp)
+TSO500_cmd="/software/TSO500/1.3.1/TruSight_Oncology_500.sh --user=%s --remove --resourcesFolder=/software/TSO500/1.3.1/resources "%(uid[0])
 fastp="/software/fastp/fastp"
-TSO500_cmd="/software/TSO500/1.3.1/TruSight_Oncology_500.sh --user=1006 --remove --resourcesFolder=/software/TSO500/1.3.1/resources "
 indexfile="/software/TSO500/1.3.1/resources/sampleSheet"
 genefuse="/software/GeneFuse/genefuse"
 ref="/data/Database/hg19/ucsc.hg19.fasta"
