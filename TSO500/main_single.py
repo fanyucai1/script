@@ -43,7 +43,7 @@ def run(pe1,pe2,index,genelist,outdir,SampleID,samplelist=""):
             i5_num=array[4]
     infile.close()
     #####################################生产SampleSheet
-    outfile = open("SampleSheet.csv", "w")
+    outfile = open("%s/SampleSheet.csv"%(outdir), "w")
     outfile.write("""[Header]
     IEMFileVersion,4
     Investigator Name,User Name
@@ -90,9 +90,11 @@ def run(pe1,pe2,index,genelist,outdir,SampleID,samplelist=""):
     p2.join()
     ####################################如果samplelist为空生成临时的samplelist
     if samplelist=="1":
-        samplelist=open("%s/sample.list","w")
-        samplelist.write("Sample_ID,rate,UP,Original_ID,Batch,Time,Cancer,Years,Library_type,Hospital,Remarks,DNA_RNA,Tumor_content,yes_no_illumina,Integrity Score,Pairs\n")
-        samplelist.write("%s\n"%(SampleID))
+        listfile=open("%s/sample.list"%(outdir),"w")
+        listfile.write("Sample_ID,rate,UP,Original_ID,Batch,Time,Cancer,Years,Library_type,Hospital,Remarks,DNA_RNA,Tumor_content,yes_no_illumina,Integrity Score,Pairs\n")
+        listfile.write("%s\n"%(SampleID))
+        listfile.close()
+        samplelist="%s/sample.list"%(outdir)
     ####################################运行docker程序
     if not os.path.exists("%s/analysis"%(outdir)):
         os.mkdir("%s/analysis"%(outdir))
