@@ -78,10 +78,10 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
     ####################################将index序列反向互补，由于fastp添加的UMI是下划线，这里将下划线转化为+
     my_seq = Seq('%s' % (i5_seq), IUPAC.unambiguous_dna)
     string = {}
-    string["a"] = "zcat < %s.umi.1.fq.gz|sed s:+%s:+%s:g|sed s:_:+:g|gzip -c >%s_S1_L001_R1_001.fastq.gz && rm %s.umi.1.fq.gz" \
-               % (out, my_seq.reverse_complement().tostring(),i5_seq, out, out)
-    string["b"] = "zcat < %s.umi.2.fq.gz|sed s:+%s:+%s:g|sed s:_:+:g|gzip -c >%s_S1_L001_R2_001.fastq.gz && rm %s.umi.2.fq.gz" \
-               % (out, my_seq.reverse_complement().tostring(), i5_seq, out, out)
+    string["a"] = "zcat < %s.umi.1.fq.gz|sed s:+%s:+%s:g|sed s:_:+:g|gzip -c >%s/%s_S1_L001_R1_001.fastq.gz && rm %s.umi.1.fq.gz" \
+               % (out, my_seq.reverse_complement().tostring(),i5_seq, out,SampleID,out)
+    string["b"] = "zcat < %s.umi.2.fq.gz|sed s:+%s:+%s:g|sed s:_:+:g|gzip -c >%s/%s_S1_L001_R2_001.fastq.gz && rm %s.umi.2.fq.gz" \
+               % (out, my_seq.reverse_complement().tostring(), i5_seq, out,SampleID, out)
     ####################################多线程运行
     p1 = Process(target=shell_run, args=(string["a"],))
     p2 = Process(target=shell_run, args=(string["b"],))
@@ -99,7 +99,7 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
     ####################################运行docker程序
     if not os.path.exists("%s/analysis"%(outdir)):
         os.mkdir("%s/analysis"%(outdir))
-        subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,outdir),shell=True)
+        subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,out),shell=True)
         core.somatic("%s/analysis" % (outdir), samplelist, 0, "%s/SNV" % (outdir), genelist)###注释SNV
         core.CNV("%s/analysis" % (outdir),samplelist,"%s/CNV"%(outdir))####注释CNV
         #####################基因融合分析
