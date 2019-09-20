@@ -101,19 +101,16 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
     ####################################运行docker程序
     if not os.path.exists("%s/analysis"%(outdir)):
         os.mkdir("%s/analysis"%(outdir))
-        #subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,outdir),shell=True)
-        core.somatic.run("%s/analysis" % (outdir), samplelist, 0, "%s/SNV" % (outdir), genelist)###注释SNV
-        core.CNV.run("%s/analysis" % (outdir),samplelist,"%s/CNV"%(outdir))####注释CNV
-        #####################基因融合分析
-        if not os.path.exists("%s/gene_fuse"%(outdir)):
-            os.mkdir("%s/gene_fuse"%(outdir))
-            cmd = "%s --read1 %s_S1_L001_R1_001.fastq.gz --read2 %s_S1_L001_R2_001.fastq.gz --ref %s --html %s.html --json %s.json --fusion %s --thread 10 --unique 3 >%s.txt" \
-                   % (genefuse, out, out, ref,out,out, fusion, out)
-            subprocess.check_call(cmd,shell=True)
-            core.gene_fuse_stat.run("%s.txt"%(out),outdir,SampleID)
-    else:
-        print("Analysis directory!!!!!!!!")
-
+    #subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,outdir),shell=True)
+    core.somatic.run("%s/analysis" % (outdir), samplelist, 0, "%s/SNV" % (outdir), genelist)###注释SNV
+    core.CNV.run("%s/analysis" % (outdir),samplelist,"%s/CNV"%(outdir))####注释CNV
+    #####################基因融合分析
+    if not os.path.exists("%s/gene_fuse"%(outdir)):
+        os.mkdir("%s/gene_fuse"%(outdir))
+        cmd = "%s --read1 %s_S1_L001_R1_001.fastq.gz --read2 %s_S1_L001_R2_001.fastq.gz --ref %s --html %s.html --json %s.json --fusion %s --thread 10 --unique 3 >%s.txt" \
+               % (genefuse, out, out, ref,out,out, fusion, out)
+        subprocess.check_call(cmd,shell=True)
+        core.gene_fuse_stat.run("%s.txt"%(out),outdir,SampleID)
 if __name__=="__main__":
     parser=argparse.ArgumentParser("")
     parser.add_argument("-p1","--pe1",help="5 read fastq(.gz) ",required=True)
