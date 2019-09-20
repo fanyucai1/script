@@ -102,8 +102,8 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
     if not os.path.exists("%s/analysis"%(outdir)):
         os.mkdir("%s/analysis"%(outdir))
     #subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,outdir),shell=True)
-    core.somatic.run("%s/analysis" % (outdir), samplelist, 0, "%s/SNV" % (outdir), genelist)###注释SNV
-    core.CNV.run("%s/analysis" % (outdir),samplelist,"%s/CNV"%(outdir))####注释CNV
+    #core.somatic.run("%s/analysis" % (outdir), samplelist, 0, "%s/SNV" % (outdir), genelist)###注释SNV
+    core.CNV.run("%s/analysis" % (outdir),samplelist,"%s/CNV"%(outdir),genelist)####注释CNV
     #####################基因融合分析
     if not os.path.exists("%s/gene_fuse"%(outdir)):
         os.mkdir("%s/gene_fuse"%(outdir))
