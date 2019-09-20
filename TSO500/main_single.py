@@ -74,9 +74,8 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
     ###################################使用fastp在fastq序列中添加UMI序列
     cmd = "%s -i %s -I %s -U --umi_loc per_read --umi_len 7 --umi_skip 1 -o %s.umi.1.fq.gz -O %s.umi.2.fq.gz" \
           % (fastp, pe1, pe2,out, out)
-    #subprocess.check_call(cmd, shell=True)
+    subprocess.check_call(cmd, shell=True)
     ####################################将index序列反向互补，由于fastp添加的UMI是下划线，这里将下划线转化为+
-    """
     my_seq = Seq('%s' % (i5_seq), IUPAC.unambiguous_dna)
     string = {}
     string["a"] = "zcat < %s.umi.1.fq.gz|sed s:+%s:+%s:g|sed s:_:+:g|gzip -c >%s/%s_S1_L001_R1_001.fastq.gz && rm %s.umi.1.fq.gz" \
@@ -90,7 +89,6 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
     p2.start()
     p1.join()
     p2.join()
-    """
     ####################################如果samplelist为空生成临时的samplelist
     if samplelist=="1":
         listfile=open("%s/sample.list"%(outdir),"w")
@@ -101,16 +99,16 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
     ####################################运行docker程序
     if not os.path.exists("%s/analysis"%(outdir)):
         os.mkdir("%s/analysis"%(outdir))
-    #subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,outdir),shell=True)
-    #core.somatic.run("%s/analysis" % (outdir), samplelist, 0, "%s/SNV" % (outdir), genelist)###注释SNV
-    #core.CNV.run("%s/analysis" % (outdir),samplelist,"%s/CNV"%(outdir),genelist)####注释CNV
+    subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,outdir),shell=True)
+    core.somatic.run("%s/analysis" % (outdir), samplelist, 0, "%s/SNV" % (outdir), genelist)###注释SNV
+    core.CNV.run("%s/analysis" % (outdir),samplelist,"%s/CNV"%(outdir),genelist)####注释CNV
     #####################基因融合分析
     if not os.path.exists("%s/gene_fuse"%(outdir)):
         os.mkdir("%s/gene_fuse"%(outdir))
     cmd = "%s --read1 %s/%s_S1_L001_R1_001.fastq.gz --read2 %s/%s_S1_L001_R2_001.fastq.gz --ref %s --html %s.html --json %s.json --fusion %s --thread 10 --unique 3 >%s.txt" \
            % (genefuse, out,SampleID, out,SampleID, ref,out,out, fusion, out)
     subprocess.check_call(cmd,shell=True)
-    core.gene_fuse_stat.run("%s.txt"%(out),outdir,SampleID)
+    core.gene_fuse_stat.run("%s.txt"%(out),"%s/gene_fuse/"%(outdir),SampleID)
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser("")
