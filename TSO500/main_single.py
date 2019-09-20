@@ -44,38 +44,39 @@ def run(pe1,pe2,index,genelist,outdir,SampleID,samplelist=""):
     infile.close()
     #####################################生产SampleSheet
     outfile = open("%s/SampleSheet.csv"%(outdir), "w")
-    outfile.write("""[Header]
-IEMFileVersion,4
-Investigator Name,User Name
-Experiment Name,Experiment
-Date,2019/8/1
-Workflow,From GenerateFASTQ
-Application,NextSeq FASTQ Only
-Assay
-Description
-Chemistry,Default
-
-[Reads]
-151
-151
-
-[Settings]
-Adapter,AGATCGGAAGAGCACACGTCTGAACTCCAGTCA
-AdapterRead2,AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
-Read1UMILength,7
-Read2UMILength,7
-Read1StartFromCycle,9
-Read2StartFromCycle,9
-
-[Data]
+    outfile.write("""[Header],,,,,,,,
+IEMFileVersion,4,,,,,,,
+Investigator Name,User Name,,,,,,,
+Experiment Name,Experiment,,,,,,,
+Date,2018/8/27,,,,,,,
+Workflow,From GenerateFASTQ,,,,,,,
+Application,NextSeq FASTQ Only,,,,,,,
+Assay,,,,,,,,
+Description,,,,,,,,
+Chemistry,Default,,,,,,,
+,,,,,,,,
+[Reads],,,,,,,,
+151,,,,,,,,
+151,,,,,,,,
+,,,,,,,,
+[Settings],,,,,,,,
+Adapter,AGATCGGAAGAGCACACGTCTGAACTCCAGTCA,,,,,,,
+AdapterRead2,AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT,,,,,,,
+Read1UMILength,7,,,,,,,
+Read2UMILength,7,,,,,,,
+Read1StartFromCycle,9,,,,,,,
+Read2StartFromCycle,9,,,,,,,
+,,,,,,,,
+[Data],,,,,,,,
 Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2,I5_Index_ID\n""")
     outfile.write("%s,,,,%s,%s,%s,%s,%s\n"%(SampleID,id,i7_seq,i7_num,i5_seq,i5_num))
     outfile.close()
     ###################################使用fastp在fastq序列中添加UMI序列
     cmd = "%s -i %s -I %s -U --umi_loc per_read --umi_len 7 --umi_skip 1 -o %s.umi.1.fq.gz -O %s.umi.2.fq.gz" \
           % (fastp, pe1, pe2,out, out)
-    subprocess.check_call(cmd, shell=True)
+    #subprocess.check_call(cmd, shell=True)
     ####################################将index序列反向互补，由于fastp添加的UMI是下划线，这里将下划线转化为+
+    """
     my_seq = Seq('%s' % (i5_seq), IUPAC.unambiguous_dna)
     string = {}
     string["a"] = "zcat < %s.umi.1.fq.gz|sed s:+%s:+%s:g|sed s:_:+:g|gzip -c >%s/%s_S1_L001_R1_001.fastq.gz && rm %s.umi.1.fq.gz" \
@@ -89,6 +90,7 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
     p2.start()
     p1.join()
     p2.join()
+    """
     ####################################如果samplelist为空生成临时的samplelist
     if samplelist=="1":
         listfile=open("%s/sample.list"%(outdir),"w")
