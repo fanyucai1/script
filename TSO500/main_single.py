@@ -109,6 +109,7 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
            % (genefuse, out,SampleID, out,SampleID, ref,out,out, fusion, out)
     subprocess.check_call(cmd,shell=True)
     core.gene_fuse_stat.run("%s.txt"%(out),"%s/gene_fuse/"%(outdir),SampleID)
+    core.twilio_run.run("TSO500_%s"%(SampleID))
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser("")
