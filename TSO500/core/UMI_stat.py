@@ -18,7 +18,7 @@ dict1={}
 dict2={}
 for line in infile:
     line=line.strip()
-    array=line.split("\t")
+    array=line.split(" ")
     array1=array[0].split(":")
     UMI=array1[-1].split("+")
     if not UMI[0] in dict1:
