@@ -34,10 +34,10 @@ b=sorted(dict2.items(), key=operator.itemgetter(1),reverse=True)
 
 outfile=open("%s.UMI.1.stat"%(out),"w")
 for key in a:
-    outfile.write("%s,%s"%(key))
+    outfile.write("%s,%s\n"%(key))
 outfile.close()
 
 outfile=open("%s.UMI.2.stat"%(out),"w")
 for key in b:
-    outfile.write("%s,%s"%(key))
+    outfile.write("%s,%s\n"%(key))
 outfile.close()
