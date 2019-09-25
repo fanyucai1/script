@@ -8,7 +8,10 @@ prefix=sys.argv[2]
 outdir=os.getcwd()
 
 out=outdir+"/"+prefix
-subprocess.check_call('grep @ %s >%s.tmp.seq'%(fastq,out),shell=True)
+if fastq.endswith("gz"):
+    subprocess.check_call('zcat %s|grep @ >%s.tmp.seq' % (fastq, out), shell=True)
+else:
+    subprocess.check_call('grep @ %s >%s.tmp.seq'%(fastq,out),shell=True)
 infile=open("%s.tmp.seq"%(out),"r")
 dict={}
 for line in infile:
