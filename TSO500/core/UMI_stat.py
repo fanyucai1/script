@@ -22,7 +22,7 @@ for line in infile:
     UMI=array1[-1].split("+")
     if not UMI[0] in dict:
         dict[UMI[0]]=0
-    if not UMI[0] in dict:
+    if not UMI[1] in dict:
         dict[UMI[1]]=0
     dict[UMI[0]]+=1
     dict[UMI[1]]+=1
