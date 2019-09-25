@@ -7,8 +7,9 @@ fastq=sys.argv[1]
 prefix=sys.argv[2]
 outdir=os.getcwd()
 
-subprocess.check_call('grep @ %s >%s/tmp.seq'%(fastq,outdir),shell=True)
-infile=open("%s/tmp.seq"%(outdir),"r")
+out=outdir+"/"+prefix
+subprocess.check_call('grep @ %s >%s.tmp.seq'%(fastq,out),shell=True)
+infile=open("%s.tmp.seq"%(out),"r")
 dict={}
 for line in infile:
     line=line.strip()
@@ -20,7 +21,7 @@ for line in infile:
 infile.close()
 b = sorted(dict.items(), key=operator.itemgetter(1),reverse=True)
 
-outfile=open("%s/UMI.stat"%(outdir),"w")
+outfile=open("%s.UMI.stat"%(out),"w")
 for key in b:
     outfile.write("%s"%(key))
 outfile.close()
