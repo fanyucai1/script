@@ -46,7 +46,7 @@ for root,dirs,files in os.walk(indir):
                             snv[array[-2]]+=1
                         if array1[8]=="insertion":
                             insertion[array[-2]]+=1
-                        if array1[8]=="SNV":
+                        if array1[8]=="deletion":
                             deletion[array[-2]]+=1
                 indel[array[-2]]=insertion[array[-2]]+deletion[array[-2]]
                 infile.close()
