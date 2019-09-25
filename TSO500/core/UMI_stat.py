@@ -8,6 +8,7 @@ prefix=sys.argv[2]
 outdir=os.getcwd()
 
 out=outdir+"/"+prefix
+
 if fastq.endswith("gz"):
     subprocess.check_call('zcat %s|grep @ >%s.tmp.seq' % (fastq, out), shell=True)
 else:
@@ -19,8 +20,13 @@ for line in infile:
     array=line.split("\t")
     array1=array[0].split(":")
     UMI=array1[-1].split("+")
+    if not UMI[0] in dict:
+        dict[UMI[0]]=0
+    if not UMI[0] in dict:
+        dict[UMI[1]]=0
     dict[UMI[0]]+=1
-    dict[UMI[1]] += 1
+    dict[UMI[1]]+=1
+
 infile.close()
 b = sorted(dict.items(), key=operator.itemgetter(1),reverse=True)
 
