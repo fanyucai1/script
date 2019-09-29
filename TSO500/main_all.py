@@ -51,3 +51,12 @@ def run(SampleSheet,samplelist,BCLdir,genelist,outdir):
             core.gene_fuse_stat.run("%s/%s.txt" % (outdir,array[0]), "%s/gene_fuse/" % (outdir),array[0])
     infile.close()
     core.twilio_run.run("TSO500")
+
+if __name__=="__main__":
+    if len(sys.argv)!=6:
+        print("python3 %s SampleSheet.csv samplelist.csv BCLdir genelist outdir"%(sys.argv[0]))
+        print("\nEmail:fanyucai1@126.com\n")
+    else:
+        SampleSheet, samplelist, BCLdir, genelist, outdir=\
+            sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5]
+        run(SampleSheet, samplelist, BCLdir, genelist, outdir)
