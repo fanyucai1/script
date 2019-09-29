@@ -55,7 +55,7 @@ def run(SampleSheet,samplelist,BCLdir,genelist,outdir):
 if __name__=="__main__":
     if len(sys.argv)!=6:
         print("python3 %s SampleSheet.csv samplelist.csv BCLdir genelist outdir"%(sys.argv[0]))
-        print("\nEmail:fanyucai1@126.com\n")
+        print("\n\nEmail:fanyucai1@126.com")
     else:
         SampleSheet, samplelist, BCLdir, genelist, outdir=\
             sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5]
