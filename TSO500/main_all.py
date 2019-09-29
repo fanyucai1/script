@@ -6,8 +6,6 @@ sub=os.path.abspath(__file__)
 dir_name=os.path.dirname(sub)
 sys.path.append(dir_name)
 import core
-
-
 pattern=re.compile(r'uid=(\d+)')
 cmd=os.popen('id')
 tmp=cmd.read().strip()
@@ -48,7 +46,7 @@ def run(SampleSheet,samplelist,BCLdir,genelist,outdir):
             cmd = "%s --read1 %s/gene_fuse/%s.R1.fq --read2 %s/gene_fuse/%s.R2.fq --ref %s --fusion %s --thread 10 --unique 3 >%s/%s.txt"\
                   % (genefuse, outdir, array[0], outdir, array[0], ref, fusion, outdir,array[0])
             subprocess.check_call(cmd, shell=True)
-            core.gene_fuse_stat.run("%s/%s.txt" % (outdir,array[0]), "%s/gene_fuse/" % (outdir),array[0])
+            core.gene_fuse_stat.run("%s/%s.txt" % (outdir,array[0]), genelist,"%s/gene_fuse/" % (outdir),array[0])
     infile.close()
     core.twilio_run.run("TSO500")
 

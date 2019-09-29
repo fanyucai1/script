@@ -3,7 +3,12 @@ import re
 import sys
 import subprocess
 
-def run(genefuse,outdir,prefix):
+def run(genefuse,genelist,outdir,prefix):
+    gene = {}
+    infile = open(genelist, "r")
+    for line in infile:
+        line = line.strip()
+        gene[line] = 1
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+prefix
@@ -27,17 +32,19 @@ def run(genefuse,outdir,prefix):
             Gene_Right=array2[0].split("_")[0]
             Unique_Read_Depth=p2.findall(line)[0]
             chr=p1.findall(line)
-            outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(chr[0],Pos_Left,Gene_Left,chr[1],Pos_Right,Gene_Right,Unique_Read_Depth,array[0],array[1]))
+            if Gene_Left in gene:
+                outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(chr[0],Pos_Left,Gene_Left,chr[1],Pos_Right,Gene_Right,Unique_Read_Depth,array[0],array[1]))
     outfile.close()
     if num==0:
         subprocess.check_call("rm -rf %s.tsv"%(out),shell=True)
         print("Sample %s not find fuse."%(prefix))
 if __name__=="__main__":
-    if len(sys.argv)!=4:
-        print("usage:python3 %s genefuse_out.txt outdir prefix\n"%(sys.argv[0]))
+    if len(sys.argv)!=5:
+        print("usage:python3 %s genefuse_out.txt genelist outdir prefix\n"%(sys.argv[0]))
         print("#Email:fanyucai1@126.com")
     else:
         genefuse=sys.argv[1]
-        outdir=sys.argv[2]
-        prefix=sys.argv[3]
-        run(genefuse,outdir,prefix)
+        genelist=sys.argv[2]
+        outdir=sys.argv[3]
+        prefix=sys.argv[4]
+        run(genefuse,genelist,outdir,prefix)
