@@ -1,18 +1,17 @@
 import paramiko
 from scp import SCPClient
+import os
+import sys
 
-Host = '192.168.1.100'
-user = "admin"
-passwd = "87838"
+Host = '192.168.1.118'
+user = "root"
+passwd = "2ghlmcl1hblsqT"
 port =22
 
-ssh = paramiko.SSHClient()
-ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(Host,port,user, passwd)
-scpclient = SCPClient(ssh.get_transport())
-remotepath='/tmp/test.txt'
-localpath='test.txt'
-scpclient.put(localpath, remotepath) # 上传到服务器指定文件
-localpath1 = 'get.txt'
-scpclient.get(remotepath, localpath1) #从服务器中获取文件
-ssh.close()
+def run(local_file,To_dir):
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(Host, port, user, passwd)
+    scpclient = SCPClient(ssh.get_transport())
+    scpclient.put(local_file, To_dir) # 上传到服务器指定文件
+    ssh.close()
