@@ -7,7 +7,7 @@ import re
 
 parser=argparse.ArgumentParser()
 parser.add_argument("-d","--dir",help="diretory TSO500 default:/data/TSO500/",default="/data/TSO500")
-parser.add_argument("-o","--outdir",help="output directory",default=os.getcwd())
+parser.add_argument("-o","--outdir",help="output directory",default="/data/TSO500/stat/")
 parser.add_argument("-s","--samplelist",help="sample list",required=True)
 args=parser.parse_args()
 ###############################################
