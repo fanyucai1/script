@@ -21,14 +21,13 @@ infile.close()
 ###############################################
 outfile=open("%s/TSO_somatic2germline.tsv"%(args.outdir),"w")
 outfile.write("Chr\tPosition\tRef\tAlt\tSomatic-Score\tGermline-Score\tTotal_counts\n")
-dict_s,dict_g,dict,counts={},{},{},{}
+dict_s,dict_g,dict={},{},{}
 for(root,dirs,files) in os.walk(args.dir):
-    for dir in dirs:
-        for id in sample:
-            path=root+"/"+dir+"/analysis/Logs_Intermediates/Tmb/%s/%s.tmb.tsv" %(id,id)
-            if os.path.exists(path):
+    for file in files:
+        tmbfile = os.path.join(root,file)
+        if tmbfile.endswith("tmb.tsv") and tmbfile.split("/")[-3]=="Tmb" and tmbfile.split("/")[-2] in sample:
                 num,name=0,[]
-                infile=open(path,"r")
+                infile=open(tmbfile,"r")
                 for line in infile:
                     line=line.strip()
                     array=re.split('[,\t]',line)
@@ -49,7 +48,6 @@ for(root,dirs,files) in os.walk(args.dir):
                                     dict_s[tmp] =dict_s[tmp]+ 1 if tmp in dict_s else 1
                                 else:
                                     dict_g[tmp] = dict_g[tmp]+1 if tmp in dict_g else 1
-                                counts[tmp]=counts[tmp]+1 if tmp in counts else 1
                         dict[tmp]=1
                 infile.close()
 for key in dict:
