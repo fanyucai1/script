@@ -12,11 +12,17 @@ parser.add_argument("-s","--samplelist",help="sample list",required=True)
 args=parser.parse_args()
 ###############################################
 infile=open(args.samplelist,"r")
-sample=[]
+sample,fail=[],0
 for line in infile:
     line=line.strip()
-    array=re.split('[,\t]',line)
-    sample.append(array[0])
+    array = re.split('[,\t]', line)
+    if line.startswith("Sample_ID"):
+        for i in range(len(array)):
+            if array[i]=="Failed":
+                fail=i
+    else:
+        if array[fail]!="yes":
+            sample.append(array[0])
 infile.close()
 ###############################################
 outfile=open("%s/TSO_somatic2germline.tsv"%(args.outdir),"w")
