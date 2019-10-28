@@ -26,7 +26,7 @@ for line in infile:
 infile.close()
 ###############################################
 outfile=open("%s/TSO_somatic2germline.tsv"%(args.outdir),"w")
-outfile.write("Chr\tPosition\tRef\tAlt\tSomatic-Score\tGermline-Score\tTotal_counts\n")
+outfile.write("Chr\tPosition\tRef\tAlt\tSomatic-Score\tGermline-Score\n")
 dict_s,dict_g,dict={},{},{}
 for(root,dirs,files) in os.walk(args.dir):
     for file in files:
