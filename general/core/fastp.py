@@ -13,7 +13,7 @@ def run(pe1,pe2,prefix,outdir):
     pe1=os.path.abspath(pe1)
     pe2=os.path.abspath(pe2)
     os.chdir(outdir)
-    par=" --detect_adapter_for_pe -W 4 -M 15 -l 75 -w 20 -j %s.json -h %s.html " %(prefix,prefix)
+    par=" --detect_adapter_for_pe -W 4 -M 20 -l 75 -w 8 -j %s.json -h %s.html " %(prefix,prefix)
     cmd="%s -i %s -I %s -o %s.R1.fq.gz -O %s.R2.fq.gz %s " %(fastp,pe1,pe2,prefix,prefix,par)
     subprocess.check_call(cmd, shell=True)
     json_file= os.path.abspath("%s/%s.json"%(outdir,prefix))
