@@ -2,7 +2,7 @@ import subprocess
 import sys
 
 env="export PATH=/software/java/jdk1.8.0_202/bin:/software/R/R-v3.5.2/bin/:"
-env+="/software/vardict/1.5.7/VarDictJava-1.5.7/bin:/software/perl/perl-v5.28.1/bin/:$PATH"
+env+="/software/vardict/VarDict-1.6.0/bin/:/software/perl/perl-v5.28.1/bin/:$PATH"
 ref="/data/Database/hg19/ucsc.hg19.fasta"
 
 def tumor_only(vaf,bamfile,bedfile,prefix,outdir):
