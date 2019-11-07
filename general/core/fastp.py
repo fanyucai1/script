@@ -29,8 +29,7 @@ def run(pe1,pe2,minlen,prefix,outdir):
         clean3 = load_dict['summary']['after_filtering']['q20_rate']
         clean4 = load_dict['summary']['after_filtering']['q30_rate']
         clean5 = load_dict['summary']['after_filtering']['gc_content']
-    outfile.write(
-        "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (args.prefix, raw1, clean1, raw2, clean2, clean3, clean4, clean5))
+    outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (args.prefix, raw1, clean1, raw2, clean2, clean3, clean4, clean5))
     outfile.close()
 
 if __name__=="__main__":
