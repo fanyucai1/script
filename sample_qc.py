@@ -20,7 +20,7 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
         " BAIT_INTERVALS=%s/probe.interval_list COVMAX=1000000 "%(picard,bam,out,ref,outdir,outdir)
     subprocess.check_call(cmd,shell=True)
     ####Assess sequence coverage by a wide array of metrics, partitioned by sample, read group, or library#############
-    cmd="java -Xmx40g -jar %s -T DepthOfCoverage -allowPotentiallyMisencodedQuals --minBaseQuality 20 --minMappingQuality 20 -R %s -I %s -o %s -ct 1 -ct 5 -ct 10 -ct 50 -ct 100 -ct 250 -ct 500 -ct 1000 -ct 10000 -L %s/target.interval_list"\
+    cmd="java -Xmx40g -jar %s -T DepthOfCoverage -allowPotentiallyMisencodedQuals --minBaseQuality 20 --minMappingQuality 20 -R %s -I %s -o %s -ct 1 -ct 5 -ct 10 -ct 50 -ct 100 -ct 250 -ct 500 -ct 1000 -L %s/target.interval_list"\
         %(gatk3,ref,bam,out,outdir)
     subprocess.check_call(cmd,shell=True)
     ################Count On-Target Reads##########
@@ -96,8 +96,6 @@ def run(target_bed,probe_bed,bam,outdir,prefix):
                     outfile.write("%%_bases_above_500X\t%s\n" % (array[i]))
                 if name[i] == "%_bases_above_1000":
                     outfile.write("%%_bases_above_1000\t%s\n" % (array[i]))
-                if name[i] == "%_bases_above_10000":
-                    outfile.write("%%_bases_above_10000X\t%s\n" % (array[i]))
     infile.close()
     outfile.close()
 
