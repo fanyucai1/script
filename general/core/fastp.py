@@ -18,8 +18,7 @@ def run(pe1,pe2,minlen,prefix,outdir):
     subprocess.check_call(cmd, shell=True)
     json_file= os.path.abspath("%s/%s.json"%(outdir,prefix))
     outfile = open("%s/%s.csv" % (outdir, prefix), "w")
-    outfile.write(
-        "SampleID\tRaw_reads\tClean_reads\tRaw_bases\tClean_bases\tClean_q20_rate\tClean_q30_rate\tClean_gc_content\n")
+    outfile.write("SampleID\tRaw_reads\tClean_reads\tRaw_bases\tClean_bases\tClean_q20_rate\tClean_q30_rate\tClean_gc_content\n")
     with open("%s" % (json_file), "r") as load_f:
         load_dict = json.load(load_f)
         raw1 = load_dict['summary']['before_filtering']["total_reads"]
