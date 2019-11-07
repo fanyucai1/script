@@ -6,14 +6,14 @@ import argparse
 import subprocess
 import json
 fastp="/software/fastp/fastp"
-def run(pe1,pe2,prefix,outdir):
+def run(pe1,pe2,minlen,prefix,outdir):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     outdir=os.path.abspath(outdir)
     pe1=os.path.abspath(pe1)
     pe2=os.path.abspath(pe2)
     os.chdir(outdir)
-    par=" --detect_adapter_for_pe -W 4 -M 20 -l 75 -w 8 -j %s.json -h %s.html " %(prefix,prefix)
+    par=" --detect_adapter_for_pe -W 4 -M 20 -l %s -w 8 -j %s.json -h %s.html " %(minlen,prefix,prefix)
     cmd="%s -i %s -I %s -o %s.R1.fq.gz -O %s.R2.fq.gz %s " %(fastp,pe1,pe2,prefix,prefix,par)
     subprocess.check_call(cmd, shell=True)
     json_file= os.path.abspath("%s/%s.json"%(outdir,prefix))
@@ -39,5 +39,6 @@ if __name__=="__main__":
     parser.add_argument("-p2", "--pe2", help="3 reads", required=True)
     parser.add_argument("-o", "--outdir", help="output directory", default=os.getcwd())
     parser.add_argument("-p", "--prefix", help="prefix of output", default="out.clean")
+    parser.add_argument("-l","--minlen",help="min length output default is 75",default=75)
     args = parser.parse_args()
-    run(args.pe1,args.pe2,args.prefix,args.outdir)
+    run(args.pe1,args.pe2,args.minlen,args.prefix,args.outdir)
