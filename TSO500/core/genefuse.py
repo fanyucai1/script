@@ -43,7 +43,7 @@ for (root,dirs,files) in os.walk(root_dir):
                 tmp4 = re.sub(r'L001', "L004", tmp1)
                 cmd1="zcat %s %s %s %s >%s_R1.fastq"%(tmp1,tmp2,tmp3,tmp4,out)
                 cmd2=re.sub(r'_R1',"_R2",cmd1)
-                cmd3="%s --read1 %s_R1.fastq --read2 %s_R2.fastq --ref %s --html %s/html/%s.html --json %s/json/%s.json --fusion %s --thread 10 --unique 3 >%s.txt"\
+                cmd3="%s --read1 %s_R1.fastq --read2 %s_R2.fastq --ref %s --html %s/html/%s.html --json %s/json/%s.json --fusion %s --thread 10 --unique 5 >%s.txt"\
                      %(genefuse,out,out,ref,outdir,sample_name,outdir,sample_name,fusion,out)
                 cmd=cmd1+" && "+cmd2+" && "+cmd3
                 print(cmd)
