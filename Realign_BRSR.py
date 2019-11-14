@@ -16,7 +16,7 @@ parser=argparse.ArgumentParser("Run GATK BQSR.")
 parser.add_argument("-b","--bam",help="bam file",required=True)
 parser.add_argument("-l","--bed",help="target region bed file")
 parser.add_argument("-o","--outdir",help="output directory",default=os.getcwd())
-parser.add_argument("-p","--phg19_refix",help="phg19_refix of output",default="out")
+parser.add_argument("-p","--prefix",help="prefix of output",default="out")
 parser.add_argument("-c","--config",help="config file",required=True)
 
 args=parser.parse_args()
