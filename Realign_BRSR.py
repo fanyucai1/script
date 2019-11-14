@@ -12,7 +12,7 @@ class Myconf(configparser.ConfigParser):
         configparser.ConfigParser.__init__(self, defaults=defaults)
     def optionxform(self, optionstr):
         return optionstr
-parser=argparse.ArgumentParser("Run GATK BQSR.")
+parser=argparse.ArgumentParser("Run GATK BQSR")
 parser.add_argument("-b","--bam",help="bam file",required=True)
 parser.add_argument("-l","--bed",help="target region bed file")
 parser.add_argument("-o","--outdir",help="output directory",default=os.getcwd())
