@@ -18,8 +18,8 @@ parser.add_argument("-l","--bed",help="target region bed file")
 parser.add_argument("-o","--outdir",help="output directory",default=os.getcwd())
 parser.add_argument("-p","--prefix",help="prefix of output",default="out")
 parser.add_argument("-c","--config",help="config file",required=True)
-
 args=parser.parse_args()
+
 if not os.path.exists(args.outdir):
     os.mkdir(args.outdir)
 args.outdir=os.path.abspath(args.outdir)
@@ -28,7 +28,7 @@ par=""
 if os.path.exists(args.bed):
     args.bed=os.path.abspath(args.bed)
     par+=" -L %s " %(args.bed)
-config = configparser.RawConfigParser()
+config =Myconf()
 config.read(args.config)
 java=config.get('software','java')
 gatk4=config.get('software','gatk4.1.3')
@@ -50,8 +50,8 @@ subprocess.check_call(cmd,shell=True)
 ####################Recalibrate Bases
 subprocess.check_call("%s -Xmx40G -jar %s BaseRecalibrator --use-original-qualities -R %s -I %s.realign.bam --known-sites %s --known-sites %s -O %s.recal_data.table %s"
                       %(java,gatk4,hg19_ref,out,dbsnp138,mill_indel,out,par),shell=True)
-subprocess.check_call("%s -Xmx40G -jar %s ApplyBQSR -R %s -I %s.realign.bam --bqsr-recal-file %s.recal_data.table -O %s.recal.bam"
-                      %(java,gatk4,hg19_ref,out,out,out),shell=True)
+subprocess.check_call("%s -Xmx40G -jar %s ApplyBQSR -R %s -I %s.realign.bam --bqsr-recal-file %s.recal_data.table -O %s.recal.bam && rm %s.realign.bam %s.target.list %s.recal_data.table"
+                      %(java,gatk4,hg19_ref,out,out,out,out,out,out),shell=True)
 end=time.time()
 
 print("Elapse time is %g seconds" %(end-start))
