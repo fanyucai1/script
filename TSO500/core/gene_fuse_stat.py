@@ -32,8 +32,9 @@ def run(genefuse,genelist,outdir,prefix):
             Gene_Right=array2[0].split("_")[0]
             Unique_Read_Depth=p2.findall(line)[0]
             chr=p1.findall(line)
-            if Gene_Left in gene:
-                outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(chr[0],Pos_Left,Gene_Left,chr[1],Pos_Right,Gene_Right,Unique_Read_Depth,array[0],array[1]))
+            #if Gene_Left in gene:
+                #outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n"%(chr[0],Pos_Left,Gene_Left,chr[1],Pos_Right,Gene_Right,Unique_Read_Depth,array[0],array[1]))
+            outfile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (chr[0], Pos_Left, Gene_Left, chr[1], Pos_Right, Gene_Right, Unique_Read_Depth, array[0], array[1]))
     outfile.close()
     if num==0:
         subprocess.check_call("rm -rf %s.tsv"%(out),shell=True)
