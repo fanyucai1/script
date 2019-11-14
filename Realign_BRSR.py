@@ -1,5 +1,5 @@
 #Email:fanyucai1@126.com
-#2019.1.18
+#2019.11.14
 
 import os
 import argparse
@@ -45,8 +45,8 @@ def run(bam,outdir,bed,configfile,prefix):
     ####################Recalibrate Bases
     subprocess.check_call("%s -Xmx40G -jar %s BaseRecalibrator --use-original-qualities -R %s -I %s.realign.bam --known-sites %s --known-sites %s -O %s.recal_data.table %s"
                           %(java,gatk4,hg19_ref,out,dbsnp138,mill_indel,out,par),shell=True)
-    subprocess.check_call("%s -Xmx40G -jar %s ApplyBQSR -R %s -I %s.realign.bam --bqsr-recal-file %s.recal_data.table -O %s.recal.bam && rm %s.realign.bam %s.target.list %s.recal_data.table"
-                          %(java,gatk4,hg19_ref,out,out,out,out,out,out),shell=True)
+    subprocess.check_call("%s -Xmx40G -jar %s ApplyBQSR -R %s -I %s.realign.bam --bqsr-recal-file %s.recal_data.table -O %s.recal.bam && rm %s.realign.bam.bai %s.realign.bam %s.target.list %s.recal_data.table"
+                          %(java,gatk4,hg19_ref,out,out,out,out,out,out,out),shell=True)
     end=time.time()
 
     print("Elapse time is %g seconds" %(end-start))
