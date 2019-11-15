@@ -19,7 +19,7 @@ def run(tumor_bam,tumor_name,normal_bam,bed,outdir,configfile,pon):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     out=outdir+"/"+tumor_name
-    par=" --create-output-bam-index true --min-base-quality-score 20 --native-pair-hmm-threads 8 "
+    par=" -unique 2 --callable-depth 30 --create-output-bam-index true --min-base-quality-score 20 --native-pair-hmm-threads 8 "
     par+=" -R %s -bamout %s.bam --germline-resource %s "%(hg19_ref,out,germline_resource)
     if pon!="0":
         par+=" -pon %s "%(pon)
@@ -31,7 +31,7 @@ def run(tumor_bam,tumor_name,normal_bam,bed,outdir,configfile,pon):
         par+=" -L %s.interval_list "%(out)
     cmd="%s -Xmx40G -jar %s Mutect2 -I %s -tumor %s %s -O %s.vcf.gz"%(java,gatk4,tumor_bam,tumor_name,par,out)
     subprocess.check_call(cmd,shell=True)
-    cmd="%s -Xmx40G -jar %s FilterMutectCalls -R %s -V %s -O %s.filtered.vcf.gz"%(java,gatk4,hg19_ref,out,out)
+    cmd="%s -Xmx40G -jar %s FilterMutectCalls --min-reads-per-strand 1 -R %s -V %s -O %s.filtered.vcf.gz"%(java,gatk4,hg19_ref,out,out)
     subprocess.check_call(cmd,shell=True)
 
 

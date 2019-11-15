@@ -48,7 +48,6 @@ def run(bam,outdir,bed,configfile,prefix):
     subprocess.check_call("%s -Xmx40G -jar %s ApplyBQSR -R %s -I %s.realign.bam --bqsr-recal-file %s.recal_data.table -O %s.recal.bam && rm %s.realign.bam.bai %s.realign.bam %s.target.list %s.recal_data.table"
                           %(java,gatk4,hg19_ref,out,out,out,out,out,out,out),shell=True)
     end=time.time()
-
     print("Elapse time is %g seconds" %(end-start))
 
 if __name__=="__main__":
