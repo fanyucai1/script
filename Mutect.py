@@ -9,7 +9,7 @@ class Myconf(configparser.ConfigParser):
         configparser.ConfigParser.__init__(self, defaults=defaults)
     def optionxform(self, optionstr):
         return optionstr
-def run(tumor_bam,tumor_name,normal_bam,bed,outdir,prefix,configfile,pon):
+def run(tumor_bam,tumor_name,normal_bam,bed,outdir,configfile,pon):
     config = Myconf()
     config.read(configfile)
     java = config.get('software', 'java')
@@ -38,11 +38,11 @@ def run(tumor_bam,tumor_name,normal_bam,bed,outdir,prefix,configfile,pon):
 if __name__=="__main__":
     parser=argparse.ArgumentParser("Run GATK Mutect")
     parser.add_argument("--tbam",help="tumor bam file",required=True)
-    parser.add_argument("--tname",help="tumor bam file",required=True)
+    parser.add_argument("--tname",help="tumor sample name",required=True)
     parser.add_argument("--nbam", help="normal bam file", default="0")
     parser.add_argument("-b","--bed",help="target region bed file",default="0")
     parser.add_argument("-o","--outdir",help="output directory",default=os.getcwd())
     parser.add_argument("-c","--config",help="config file",required=True)
     parser.add_argument("-v", "--pon", help="panel-of-normals vcf file",default="0")
     args=parser.parse_args()
-    run(args.tbam, args.tname,args.nbam, args.bed, args.outdir, args.prefix, args.configfile,args.pon)
+    run(args.tbam, args.tname,args.nbam, args.bed, args.outdir, args.configfile,args.pon)
