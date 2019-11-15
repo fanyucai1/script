@@ -18,7 +18,7 @@ def run(tumor_bam,tumor_name,normal_bam,bed,outdir,prefix,configfile,pon):
     germline_resource=config.get('database','germline-resource')
     if not os.path.exists(outdir):
         os.mkdir(outdir)
-    out=outdir+"/"+prefix
+    out=outdir+"/"+tumor_name
     par=" --create-output-bam-index true --min-base-quality-score 20 --native-pair-hmm-threads 8 "
     par+=" -R %s -bamout %s.bam --germline-resource %s "%(hg19_ref,out,germline_resource)
     if pon!="0":
@@ -29,9 +29,10 @@ def run(tumor_bam,tumor_name,normal_bam,bed,outdir,prefix,configfile,pon):
         cmd="%s -Xmx40G -jar %s BedToIntervalList -I %s -O %s.interval_list -SD %s"%(java,gatk4,bed,out,hg19_ref)
         subprocess.check_call(cmd,shell=True)
         par+=" -L %s.interval_list "%(out)
-    cmd="%s -Xmx40G -jar %s -I %s -tumor %s %s"%(java,gatk4,tumor_bam,tumor_name,par)
+    cmd="%s -Xmx40G -jar %s Mutect2 -I %s -tumor %s %s -O %s.vcf.gz"%(java,gatk4,tumor_bam,tumor_name,par,out)
     subprocess.check_call(cmd,shell=True)
-
+    cmd="%s -Xmx40G -jar %s FilterMutectCalls -R %s -V %s -O %s.filtered.vcf.gz"%(java,gatk4,hg19_ref,out,out)
+    subprocess.check_call(cmd,shell=True)
 
 
 if __name__=="__main__":
@@ -41,7 +42,6 @@ if __name__=="__main__":
     parser.add_argument("--nbam", help="normal bam file", default="0")
     parser.add_argument("-b","--bed",help="target region bed file",default="0")
     parser.add_argument("-o","--outdir",help="output directory",default=os.getcwd())
-    parser.add_argument("-p","--prefix",help="prefix of output",default="out")
     parser.add_argument("-c","--config",help="config file",required=True)
     parser.add_argument("-v", "--pon", help="panel-of-normals vcf file",default="0")
     args=parser.parse_args()
