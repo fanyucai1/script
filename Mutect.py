@@ -5,6 +5,7 @@ import os
 import configparser
 import argparse
 import subprocess
+import time
 
 class Myconf(configparser.ConfigParser):
     def __init__(self, defaults=None):
@@ -12,6 +13,7 @@ class Myconf(configparser.ConfigParser):
     def optionxform(self, optionstr):
         return optionstr
 def run(tumor_bam,tumor_name,normal_bam,bed,outdir,configfile,pon):
+    start = time.time()
     config = Myconf()
     config.read(configfile)
     java = config.get('software', 'java')
@@ -35,6 +37,8 @@ def run(tumor_bam,tumor_name,normal_bam,bed,outdir,configfile,pon):
     subprocess.check_call(cmd,shell=True)
     cmd="%s -Xmx40G -jar %s FilterMutectCalls --min-reads-per-strand 1 -R %s -V %s -O %s.filtered.vcf.gz"%(java,gatk4,hg19_ref,out,out)
     subprocess.check_call(cmd,shell=True)
+    end=time.time()
+    print("Elapse time is %g seconds" % (end - start))
 
 
 if __name__=="__main__":
