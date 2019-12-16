@@ -22,7 +22,7 @@ ref="/data/Database/hg19/ucsc.hg19.fasta"
 fusion="/software/GeneFuse/genes/cancer.hg19.csv"
 def shell_run(x):
     subprocess.check_call(x, shell=True)
-def run(pe1,pe2,index,genelist,outdir,SampleID,samplelist=""):
+def run(pe1,pe2,index,genelist,outdir,SampleID,samplelist="",purity=0):
     ###############################生产输出文件夹目录
     if not os.path.exists(outdir):
         os.mkdir(outdir)
@@ -101,7 +101,7 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
         os.mkdir("%s/analysis"%(outdir))
     subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,outdir),shell=True)
     core.somatic.run("%s/analysis" % (outdir), samplelist, 0, "%s/SNV" % (outdir), genelist)###注释SNV
-    core.CNV.run("%s/analysis" % (outdir),samplelist,"%s/CNV"%(outdir),genelist)####注释CNV
+    core.CNV.run("%s/analysis" % (outdir),samplelist,"%s/CNV"%(outdir),genelist,purity)####注释CNV
     #####################基因融合分析
     if not os.path.exists("%s/gene_fuse"%(outdir)):
         os.mkdir("%s/gene_fuse"%(outdir))
@@ -120,5 +120,6 @@ if __name__=="__main__":
     parser.add_argument("-g","--genelist",help="sub gene list",required=True)
     parser.add_argument("-i","--index",help="index seq or indexID",required=True)
     parser.add_argument("-l","--samplelist",help="sample list",default="1")
+    parser.add_argument("-t", "--purity", help="tumor purity", default=0, type=float)
     args=parser.parse_args()
-    run(args.pe1, args.pe2, args.index, args.genelist, args.outdir, args.sample, args.samplelist)
+    run(args.pe1, args.pe2, args.index, args.genelist, args.outdir, args.sample, args.samplelist,args.pruity)

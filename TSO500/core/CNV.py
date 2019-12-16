@@ -8,7 +8,7 @@ import re
 cmd="cd /software/TSO500/1.3.1/craft_1.0.0.49/resource/ && /software/dotnet/dotnet /software/TSO500/1.3.1/craft_1.0.0.49/Craft.dll " \
     "-baselineFile craft_baseline.txt -manifestFile craft_manifest.txt  -callGender true -genderThreshold 0.05 " \
     "-genomeFolder /software/TSO500/1.3.1/resources/genomes/hg19_hardPAR -geneThresholdFile CnvGeneThresholds.csv"
-def run(analysis,samplelist,outdir,genelist):
+def run(analysis,samplelist,outdir,genelist,purity=0):
     gene={}
     infile=open(genelist,"r")
     for line in infile:
@@ -37,7 +37,10 @@ def run(analysis,samplelist,outdir,genelist):
         if os.path.exists(path):
             infile=open(path,"r")
             outfile=open("%s/%s.cnv.tsv" %(outdir,id),"w")
-            outfile.write("#Chr\tStart\tend\tRef\tType\tGene\n")
+            if purity != 0:
+                outfile.write("#Chr\tStart\tend\tRef\tType\tGene\tCopy_number\n")
+            else:
+                outfile.write("#Chr\tStart\tend\tRef\tType\tGene\n")
             i=0
             print(path)
             for line in infile:
@@ -50,9 +53,12 @@ def run(analysis,samplelist,outdir,genelist):
                         p2=re.compile(r'ANT=(\S+)')
                         a=p1.findall(line)
                         b=p2.findall(line)
-                        if b[0] in gene:
-                            tmp = array[0] + "\t" + array[1] +"\t"+a[0]+"\t"+array[3]+"\t"+array[4]+"\t"+b[0]
-                            outfile.write("%s\n"%(tmp))
+                        tmp = array[0] + "\t" + array[1] +"\t"+a[0]+"\t"+array[3]+"\t"+array[4]+"\t"+b[0]
+                        if purity != 0:
+                            cn = (200 * float(array[-1]) - 2 * (100 - purity)) / purity
+                            outfile.write("%s\t%s\n" % (tmp, cn))
+                        else:
+                            outfile.write("%s\n" % (tmp))
             outfile.close()
             if i==0:
                 subprocess.check_call("rm -rf %s/%s.cnv.tsv" %(outdir,id),shell=True)
@@ -64,5 +70,6 @@ if __name__=="__main__":
     parser.add_argument("-o", "--outdir", help="output directory", default=os.getcwd())
     parser.add_argument("-s", "--samplelist", help="sample list", required=True)
     parser.add_argument("-g","--genelist",help="sub gene list",required=True)
+    parser.add_argument("-t", "--purity", help="tumor purity", default=0, type=float)
     args = parser.parse_args()
-    run(args.analysis,args.samplelist,args.outdir,args.genelist)
+    run(args.analysis,args.samplelist,args.outdir,args.genelist,args.purity)
