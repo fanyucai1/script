@@ -17,6 +17,7 @@ def run(fq1,fq2,samplesheet,outdir,prefix):
     subprocess.check_call(cmd, shell=True)
     cmd = "cp %s %s/fastq/%s._S1_L001_R2_001.fastq.gz" % (fq2, outdir, prefix)
     subprocess.check_call(cmd, shell=True)
+
     if not os.path.exists("%s/fastq/SampleSheet.csv"%(outdir)):
         cmd="cp %s %s/fastq/SampleSheet.csv"%(samplesheet,outdir)
         subprocess.check_call(cmd,shell=True)
