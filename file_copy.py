@@ -2,6 +2,7 @@ import os
 import sys
 import re
 import subprocess
+
 def copy(indir,keywords,outdir):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
