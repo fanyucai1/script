@@ -59,6 +59,14 @@ def run(dir,samplelist,vaf,outdir,genelist):
                 tmp = array[j].split(".")
                 transcript[array[0]].append(tmp[0])
     infile.close()
+    ###############################backlist
+    hotspot = open("/data/Database/Cancer_hotspots/hotspot.tsv", "r")
+    backlist = {}
+    for line in hotspot:
+        line = line.strip()
+        array = line.split("\t")
+        backlist[array[0] + "\t" + array[1] + "\t" + array[2] + "\t" + array[3]] = 1
+    hotspot.close()
     ######################################get SNV information
     for key in sample_ID:
         path=dir+"/Logs_Intermediates/Tmb/%s/%s.tmb.tsv"%(key,key)
@@ -93,7 +101,7 @@ def run(dir,samplelist,vaf,outdir,genelist):
                             result +=1
                         if name[i]=="SomaticStatus" and array[i]=="Somatic":
                             result +=1
-                    if result==4:
+                    if result==4 or tmp in backlist:
                         tmp = array[0] + "\t" + array[1] + "\t" + array[2] + "\t" + array[3]
                         dict[tmp]=1
             infile.close()
