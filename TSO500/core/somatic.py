@@ -101,8 +101,8 @@ def run(dir,samplelist,vaf,outdir,genelist):
                             result +=1
                         if name[i]=="SomaticStatus" and array[i]=="Somatic":
                             result +=1
+                    tmp = array[0] + "\t" + array[1] + "\t" + array[2] + "\t" + array[3]
                     if result==4 or tmp in backlist:
-                        tmp = array[0] + "\t" + array[1] + "\t" + array[2] + "\t" + array[3]
                         dict[tmp]=1
             infile.close()
             infile=open(vcf,"r")
