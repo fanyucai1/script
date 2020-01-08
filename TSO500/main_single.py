@@ -120,6 +120,6 @@ if __name__=="__main__":
     parser.add_argument("-g","--genelist",help="sub gene list",required=True)
     parser.add_argument("-i","--index",help="index seq or indexID",required=True)
     parser.add_argument("-l","--samplelist",help="sample list",default="1")
-    parser.add_argument("-t", "--purity", help="tumor purity", default=0, type=float)
+    parser.add_argument("-t", "--purity", help="tumor purity", default=0)
     args=parser.parse_args()
-    run(args.pe1, args.pe2, args.index, args.genelist, args.outdir, args.sample, args.samplelist,args.pruity)
+    run(args.pe1, args.pe2, args.index, args.genelist, args.outdir, args.sample, args.samplelist,args.purity)
