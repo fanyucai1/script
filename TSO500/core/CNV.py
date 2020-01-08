@@ -8,13 +8,7 @@ import re
 cmd="cd /software/TSO500/1.3.1/craft_1.0.0.49/resource/ && /software/dotnet/dotnet /software/TSO500/1.3.1/craft_1.0.0.49/Craft.dll " \
     "-baselineFile craft_baseline.txt -manifestFile craft_manifest.txt  -callGender true -genderThreshold 0.05 " \
     "-genomeFolder /software/TSO500/1.3.1/resources/genomes/hg19_hardPAR -geneThresholdFile CnvGeneThresholds.csv"
-def run(analysis,samplelist,outdir,genelist,purity=0):
-    gene={}
-    infile=open(genelist,"r")
-    for line in infile:
-        line=line.strip()
-        gene[line]=1
-    ##################
+def run(analysis,samplelist,outdir,purity):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     bam_dir=analysis+"/Logs_Intermediates/IndelRealignment/"
@@ -24,13 +18,14 @@ def run(analysis,samplelist,outdir,genelist,purity=0):
         for i in dirs:
             bam_file=bam_dir+i+"/"+i+".bam"
             sh=cmd+" -bamFiles "+bam_file+" -outputFolder "+out_dir
-            subprocess.check_call(sh,shell=True)
+            #subprocess.check_call(sh,shell=True)
     infile=open(samplelist,"r")
     sample=[]
     for line in infile:
-        line=line.strip()
-        array=re.split('[\t,]',line)
-        sample.append(array[0])
+        if not line.startswith("Sample_ID"):
+            line=line.strip()
+            array=re.split('[\t,]',line)
+            sample.append(array[0])
     infile.close()
     for id in sample:
         path=analysis+"/Logs_Intermediates/CNV/%s_CopyNumberVariants.vcf" %(id)
@@ -54,11 +49,12 @@ def run(analysis,samplelist,outdir,genelist,purity=0):
                         a=p1.findall(line)
                         b=p2.findall(line)
                         tmp = array[0] + "\t" + array[1] +"\t"+a[0]+"\t"+array[3]+"\t"+array[4]+"\t"+b[0]
+                        print(tmp)
                         if purity != 0:
                             cn = (200 * float(array[-1]) - 2 * (100 - purity)) / purity
-                            outfile.write("%s\t%s\n" % (tmp, cn))
+                            outfile.write("%s\t%s\n" %(tmp, cn))
                         else:
-                            outfile.write("%s\n" % (tmp))
+                            outfile.write("%s\n"%(tmp))
             outfile.close()
             if i==0:
                 subprocess.check_call("rm -rf %s/%s.cnv.tsv" %(outdir,id),shell=True)
@@ -69,7 +65,6 @@ if __name__=="__main__":
     parser.add_argument("-a", "--analysis", help="analysis directory", required=True)
     parser.add_argument("-o", "--outdir", help="output directory", default=os.getcwd())
     parser.add_argument("-s", "--samplelist", help="sample list", required=True)
-    parser.add_argument("-g","--genelist",help="sub gene list",required=True)
-    parser.add_argument("-t", "--purity", help="tumor purity", default=0, type=float)
+    parser.add_argument("-t", "--purity", help="tumor purity", default=0)
     args = parser.parse_args()
-    run(args.analysis,args.samplelist,args.outdir,args.genelist,args.purity)
+    run(args.analysis,args.samplelist,args.outdir,args.purity)
