@@ -90,8 +90,9 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
     ####################################运行docker程序
     if not os.path.exists("%s/analysis"%(outdir)):
         os.mkdir("%s/analysis"%(outdir))
-    subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,outdir),shell=True)
-    core.somatic.run("%s/analysis" % (outdir), 0, "%s/SNV" % (outdir))###注释SNV
+        if not os.path.exists("%s/analysis/Results/MetricsReport.tsv"):
+            subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,outdir),shell=True)
+    core.somatic.run("%s/analysis" % (outdir), "%s/SNV" % (outdir))###注释SNV
     core.CNV.run("%s/analysis" % (outdir),"%s/CNV"%(outdir),SampleID,purity)####注释CNV
 
 if __name__=="__main__":
