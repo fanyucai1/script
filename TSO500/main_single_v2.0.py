@@ -69,24 +69,25 @@ Read2StartFromCycle,9,,,,,,,
 Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2,I5_Index_ID\n""")
     outfile.write("%s,,,,%s,%s,%s,%s,%s\n"%(SampleID,id,i7_seq,i7_num,i5_seq,i5_num))
     outfile.close()
-    ###################################使用fastp在fastq序列中添加UMI序列
-    cmd = "%s -i %s -I %s -U --umi_loc per_read --umi_len 7 --umi_skip 1 -o %s.umi.1.fq.gz -O %s.umi.2.fq.gz" \
-          % (fastp, pe1, pe2,out, out)
-    subprocess.check_call(cmd, shell=True)
-    ####################################将index序列反向互补，由于fastp添加的UMI是下划线，这里将下划线转化为+
-    my_seq = Seq('%s' % (i5_seq), IUPAC.unambiguous_dna)
-    string = {}
-    string["a"] = "zcat < %s.umi.1.fq.gz|sed s:+%s:+%s:g|sed s:_:+:g|gzip -c >%s/%s_S1_L001_R1_001.fastq.gz && rm %s.umi.1.fq.gz" \
-               % (out, my_seq.reverse_complement().tostring(),i5_seq, out,SampleID,out)
-    string["b"] = "zcat < %s.umi.2.fq.gz|sed s:+%s:+%s:g|sed s:_:+:g|gzip -c >%s/%s_S1_L001_R2_001.fastq.gz && rm %s.umi.2.fq.gz" \
-               % (out, my_seq.reverse_complement().tostring(), i5_seq, out,SampleID, out)
-    ####################################多线程运行
-    p1 = Process(target=shell_run, args=(string["a"],))
-    p2 = Process(target=shell_run, args=(string["b"],))
-    p1.start()
-    p2.start()
-    p1.join()
-    p2.join()
+    if not os.path.exists("%s/%s_S1_L001_R2_001.fastq.gz"%(out,SampleID)):
+        ###################################使用fastp在fastq序列中添加UMI序列
+        cmd = "%s -i %s -I %s -U --umi_loc per_read --umi_len 7 --umi_skip 1 -o %s.umi.1.fq.gz -O %s.umi.2.fq.gz" \
+              % (fastp, pe1, pe2,out, out)
+        subprocess.check_call(cmd, shell=True)
+        ####################################将index序列反向互补，由于fastp添加的UMI是下划线，这里将下划线转化为+
+        my_seq = Seq('%s' % (i5_seq), IUPAC.unambiguous_dna)
+        string = {}
+        string["a"] = "zcat < %s.umi.1.fq.gz|sed s:+%s:+%s:g|sed s:_:+:g|gzip -c >%s/%s_S1_L001_R1_001.fastq.gz && rm %s.umi.1.fq.gz" \
+                   % (out, my_seq.reverse_complement().tostring(),i5_seq, out,SampleID,out)
+        string["b"] = "zcat < %s.umi.2.fq.gz|sed s:+%s:+%s:g|sed s:_:+:g|gzip -c >%s/%s_S1_L001_R2_001.fastq.gz && rm %s.umi.2.fq.gz" \
+                   % (out, my_seq.reverse_complement().tostring(), i5_seq, out,SampleID, out)
+        ####################################多线程运行
+        p1 = Process(target=shell_run, args=(string["a"],))
+        p2 = Process(target=shell_run, args=(string["b"],))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
     ####################################运行docker程序
     if not os.path.exists("%s/analysis"%(outdir)):
         os.mkdir("%s/analysis"%(outdir))
@@ -100,8 +101,8 @@ if __name__=="__main__":
     parser.add_argument("-p1","--pe1",help="5 read fastq(.gz) ",required=True)
     parser.add_argument("-p2","--pe2",help="3 read fastq(.gz)",required=True)
     parser.add_argument("-o","--outdir",help="output directory",required=True)
-    parser.add_argument("-s","--sample",help="sample name",required=True)
+    parser.add_argument("-p","--prefix",help="prefix of output",required=True)
     parser.add_argument("-i","--index",help="index seq or indexID",required=True)
     parser.add_argument("-t", "--purity", help="tumor purity", default=0)
     args=parser.parse_args()
-    run(args.pe1, args.pe2, args.index, args.outdir, args.sample,args.purity)
+    run(args.pe1, args.pe2, args.index, args.outdir, args.prefix,args.purity)
