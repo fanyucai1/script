@@ -95,6 +95,7 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
             subprocess.check_call("%s --analysisFolder %s/analysis/ --fastqFolder %s"%(TSO500_cmd,outdir,outdir),shell=True)
     core.somatic.run("%s/analysis" % (outdir), "%s/SNV" % (outdir))###注释SNV
     core.CNV.run("%s/analysis" % (outdir),"%s/CNV"%(outdir),SampleID,purity)####注释CNV
+    core.copy_DNA.copy_DNA(outdir)
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser("")

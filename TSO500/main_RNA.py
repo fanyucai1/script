@@ -59,6 +59,7 @@ Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_ID,index,I7_Index_ID,index2
         %(outdir,outdir,docker_name)
     print(cmd)
     subprocess.check_call(cmd,shell=True)
+    core.copy_RNA.copy_RNA(outdir)
 
 if __name__=="__main__":
     if len(sys.argv)!=6:
