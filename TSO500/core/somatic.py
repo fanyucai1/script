@@ -56,7 +56,7 @@ def run(dir,outdir):
     hotspot.close()
     ######################################get SNV information
     prefix,path,vcf="","",""
-    for(root,dirs,files) in os.walk(dir+"/Logs_Intermediates/Tmb"):
+    for(root,dirs,files) in os.walk(dir):
         for file in files:
             tmp=os.path.join(root,file)
             if tmp.endswith(".tmb.tsv"):
@@ -72,8 +72,7 @@ def run(dir,outdir):
         line=line.strip()
         num+=1
         array=line.split("\t")
-        vaf =0
-        Depth = 0
+        vaf,Depth =0,0
         if num==1:
             for i in range(len(array)):
                 name.append(array[i])
@@ -111,7 +110,7 @@ def run(dir,outdir):
     par += ",1000g2015aug_sas,1000g2015aug_afr,1000g2015aug_amr,1000g2015aug_eur "
     par += " -operation g,r,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f "
     par += " -nastring . -polish "
-    subprocess.check_call("cd %s && perl %s/table_annovar.pl %s/%s.snv.tmp.vcf %s/humandb -buildver hg19 -out %s -remove %s -vcfinput " %(outdir,annovar,outdir,key,annovar,key,par),shell=True)
+    subprocess.check_call("cd %s && perl %s/table_annovar.pl %s/%s.snv.tmp.vcf %s/humandb -buildver hg19 -out %s -remove %s -vcfinput " %(outdir,annovar,outdir,prefix,annovar,prefix,par),shell=True)
     #########################output final result
     infile=open("%s/%s.hg19_multianno.txt"%(outdir,prefix),"r")
     outfile=open("%s/%s.annovar.tsv"%(outdir,prefix),"w")
@@ -173,7 +172,7 @@ def run(dir,outdir):
             outfile.write("\n")
     infile.close()
     outfile.close()
-    subprocess.check_call("cd %s && rm -rf %s.hg19_multianno.txt %s.hg19_multianno.vcf %s.snpeff.vcf %s.snv.tmp.vcf %s.avinput snpEff_summary.html snpEff_genes.txt "%(outdir,key,key,key,key,key),shell=True)
+    subprocess.check_call("cd %s && rm -rf %s.hg19_multianno.txt %s.hg19_multianno.vcf %s.snpeff.vcf %s.snv.tmp.vcf %s.avinput snpEff_summary.html snpEff_genes.txt "%(outdir,prefix,prefix,prefix,prefix,prefix),shell=True)
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser("")
