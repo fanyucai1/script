@@ -50,9 +50,11 @@ def run(dir,outdir):
     hotspot = open("/data/Database/Cancer_hotspots/hotspot.tsv", "r")
     backlist = {}
     for line in hotspot:
-        line = line.strip()
-        array = line.split("\t")
-        backlist[array[0] + "\t" + array[1] + "\t" + array[2] + "\t" + array[3]] = 1
+        if not re.search('germline',line) and not re.search('Germline',line):
+            line = line.strip()
+            line = line.strip()
+            array = line.split("\t")
+            backlist[array[0] + "\t" + array[1] + "\t" + array[2] + "\t" + array[3]] = 1
     hotspot.close()
     ######################################get SNV information
     prefix,path,vcf="","",""
