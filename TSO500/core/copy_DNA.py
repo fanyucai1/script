@@ -17,16 +17,13 @@ def run(out_prefix,local_file):
     scpclient.put(local_file, recursive=True,remote_path=To_dir) # 上传到服务器指定文件
     ssh.close()
 
-def copy_DNA(root_dir):
+def copy_DNA(root_dir,prefix):
     for(root,dirs,files) in os.walk(root_dir):
         for file in files:
             tmp=os.path.join(root,file)
             if tmp.endswith("annovar.tsv")or tmp.endswith("cnv.tsv"):
-                prefix = tmp.split("/")[-3]
                 run(prefix, tmp)
             if tmp.endswith("MetricsReport.tsv") or tmp.endswith("BiomarkerReport.txt"):
-                prefix = tmp.split("/")[-4]
                 run(prefix, tmp)
             if tmp.endswith("stitched.bam") or tmp.endswith("stitched.bam.bai"):
-                prefix=tmp.split("/")[-2]
                 run(prefix,tmp)

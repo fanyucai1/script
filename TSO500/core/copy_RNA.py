@@ -16,10 +16,9 @@ def run(out_prefix,local_file):
     scpclient.put(local_file, recursive=True,remote_path=To_dir) # 上传到服务器指定文件
     ssh.close()
 
-def copy_RNA(root_file):
+def copy_RNA(root_file,prefix):
     for(root,dirs,files) in os.walk(root_file):
         for file in files:
             tmp=os.path.join(root,file)
             if tmp.endswith("_Fusions.csv") or tmp.endswith("_HighConfidenceVariants.csv") or tmp.endswith("_PublishedFusions.csv") or tmp.endswith("_SpliceVariants.vcf"):
-                prefix=tmp.split("/")[-4]
                 run(prefix,tmp)
