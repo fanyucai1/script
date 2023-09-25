@@ -4,18 +4,19 @@ use warnings;
 use Getopt::Long;
 use Cwd;
 use Cwd 'abs_path';
+use Config::IniFiles;
 use FindBin qw($Bin);
 use File::Basename;
 
-my $bwa="/software/bwa/0.7.17/bwa-0.7.17/bwa";
-my $bowtie="/software/bowtie/bowtie-1.2.2-linux-x86_64";
-my $bowtie2="/software/bowtie2/2.3.4.3/bowtie2-2.3.4.3-linux-x86_64";
-my $samtools="/software/samtools/1.9/samtools-1.9/bin/samtools";
-my $picard="/software/picard/2.8.12/picard.jar";
-my $blast="/software/blast/ncbi-blast-2.8.1+/bin/makeblastdb";
-my $qsub="/data/fanyucai/qsub_sge.pl";
-my $hisat2="/software/hisat2/hisat2-2.1.0";
-my $star="/software/STAR/STAR-2.7.0e/bin/Linux_x86_64/STAR";
+my $bwa="/local_data1/software/bwa/bwa-0.7.17/bwa";
+my $bowtie="/local_data1/software//bowtie/bowtie-1.2.2-linux-x86_64";
+my $bowtie2="/local_data1/software//bowtie2/bowtie2-2.3.4.1-linux-x86_64";
+my $samtools="/local_data1/software/samtools/samtools-1.9/samtools";
+my $picard="/local_data1/software//picard/picard.jar";
+my $blast="/local_data1/software//blast+/ncbi-blast-2.7.1+/bin/makeblastdb";
+my $qsub="/home/fanyucai/software/qsub/qsub-pbs.pl";
+my $hisat2="/local_data1/software//hisat2/hisat2-2.1.0";
+my $star="/local_data1/software/STAR/STAR-2.6.0a/bin/Linux_x86_64/STAR";
 my($ref,$prefix,$outdir,$gtf);
 $outdir||=getcwd;
 $prefix||="ref";
@@ -50,7 +51,7 @@ Vesion:2.0
 system "mkdir -p $outdir";
 $ref=abs_path($ref);
 $outdir=abs_path($outdir);
-
+system "ln -s $ref $outdir/$prefix.fasta";
 open(INDEX,">$outdir/index.sh");
 #bwa index
 print INDEX "cd $outdir && $bwa index -a bwtsw $prefix.fasta\n";
@@ -67,7 +68,7 @@ print INDEX "cd $outdir && $blast -in $prefix.fasta -dbtype nucl\n";
 #make hisat2 index
 print INDEX "cd $outdir && $hisat2/hisat2-build -p 10 $prefix.fasta $prefix.fasta\n";
 #make STAR index
-if(defined $gtf)
+if(-e $gtf)
 {
     $gtf=abs_path($gtf);
     system "mkdir -p $outdir/genomeDir";
