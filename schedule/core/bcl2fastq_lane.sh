@@ -1,0 +1,1 @@
+dragen --bcl-conversion-only true --bcl-input-directory ${1} --output-directory ${2} --force --sample-sheet ${3} --no-lane-splitting false
